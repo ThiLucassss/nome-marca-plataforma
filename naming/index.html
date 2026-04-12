@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naming · Top 3 Finalistas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#08080D;--surface:#0F0F16;--surface-2:#16161F;--surface-3:#1C1C28;
+  --border:rgba(255,255,255,0.06);--border-md:rgba(255,255,255,0.10);--border-card:rgba(255,255,255,0.07);
+  --accent:#6366F1;--accent-2:#818CF8;--accent-dim:rgba(99,102,241,0.10);--accent-glow:rgba(99,102,241,0.15);
+  --text:#F4F4F5;--text-2:rgba(244,244,245,0.55);--text-3:rgba(244,244,245,0.30);
+  --green-bg:rgba(52,211,153,0.08);--green-text:#34D399;
+  --warn-bg:rgba(251,191,36,0.08);--warn-text:#FCD34D;
+  --deny-bg:rgba(239,68,68,0.08);--deny-text:#F87171;
+  --font:'Inter',system-ui,sans-serif;--font-head:'Instrument Sans','Inter',system-ui,sans-serif;--font-num:'Manrope','Inter',system-ui,sans-serif;--radius:12px;--radius-sm:8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:#fff}
+
+/* HEADER */
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,13,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:52px}
+.logo{font-size:.82rem;font-weight:600;letter-spacing:.05em;color:var(--text);display:flex;align-items:center;gap:.6rem}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.logo-sub{font-size:.6rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding-left:.6rem;border-left:1px solid var(--border-md)}
+.tab-nav{display:flex;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--border)}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{background:none;border:none;border-bottom:2px solid transparent;color:var(--text-3);font-family:var(--font);font-size:.7rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:0 20px;min-height:44px;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s;flex-shrink:0}
+.tab-btn:hover{color:var(--text-2)}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--accent)}
+
+/* PANELS */
+.panel{display:none;padding-top:108px;padding-bottom:5rem;min-height:100vh}
+.panel.active{display:block}
+.container{max-width:960px;margin:0 auto;padding:0 1.5rem}
+
+/* TYPOGRAPHY */
+h1{font-family:var(--font-head);font-size:clamp(2.4rem,8vw,4rem);font-weight:700;letter-spacing:-0.03em;line-height:1.05}
+h2{font-family:var(--font-head);font-size:clamp(1.2rem,3vw,1.6rem);font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin-bottom:1rem}
+h3{font-family:var(--font-head);font-size:1rem;font-weight:600;letter-spacing:-0.01em;margin-bottom:.5rem}
+h4{font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2);margin-bottom:.6rem}
+p{color:var(--text-2);font-size:.9rem;line-height:1.75;margin-bottom:.9rem}
+p:last-child{margin-bottom:0}
+strong{color:var(--text);font-weight:600}
+
+/* HERO */
+.name-hero{padding:3.5rem 0 2.5rem;border-bottom:1px solid var(--border)}
+.hero-label{font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-2);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.hero-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent-2)}
+.name-display{color:var(--text);margin-bottom:.75rem}
+.name-sub{font-size:.9rem;color:var(--text-3);max-width:500px;font-style:italic}
+
+/* SECTIONS */
+.section{padding:2.5rem 0;border-bottom:1px solid var(--border)}
+.section:last-child{border-bottom:none}
+.section-label{font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:1.5rem}
+
+/* GRADIENT SEPARATOR (Nubien style) */
+.grad-sep{height:1px;background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.1) 50%,rgba(255,255,255,0.02));max-width:100%;margin:2rem 0}
+
+/* CARDS (Nubien-inspired with layers) */
+.card{background:var(--surface);border:1px solid var(--border-card);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden;transition:border-color .2s}
+.card:hover{border-color:var(--border-md)}
+.card-accent{border-left:2px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0}
+/* Highlight line on top */
+.card-highlight::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:170px;height:1px;background:linear-gradient(90deg,rgba(99,102,241,0),#6366F1 50%,rgba(99,102,241,0))}
+/* Inner glow */
+.card-glow{box-shadow:inset 0 10px 5px -1px var(--accent-glow)}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+
+/* DATA ROW */
+.data-block{display:flex;flex-direction:column;gap:.75rem}
+.data-row{display:grid;grid-template-columns:140px 1fr;gap:1rem;align-items:start;padding:.85rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.data-key{font-size:.72rem;font-weight:600;color:var(--text-3);letter-spacing:.04em;padding-top:.05rem}
+.data-val{font-size:.85rem;color:var(--text-2);line-height:1.55}
+.data-val strong{color:var(--text)}
+
+/* METRICS */
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1rem}
+.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem .75rem;text-align:center}
+.metric-val{font-family:var(--font-num);font-size:1.5rem;font-weight:700;letter-spacing:-0.03em;color:var(--accent-2);line-height:1;margin-bottom:.25rem}
+.metric-label{font-size:.62rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+
+/* PILLS */
+.pill-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.pill{font-size:.7rem;font-weight:500;letter-spacing:.06em;padding:.3rem .65rem;border-radius:4px;background:var(--accent-dim);color:var(--accent-2);border:1px solid rgba(99,102,241,0.15)}
+
+/* ASS LIST */
+.ass-list{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-top:.75rem}
+.ass-list li{font-size:.85rem;color:var(--text-2);padding:.6rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);display:flex;align-items:flex-start;gap:.6rem}
+.ass-list li::before{content:'\2192';color:var(--accent-2);flex-shrink:0;font-size:.75rem;margin-top:.1rem}
+
+/* SEMANTIC */
+.semantic-block{background:var(--surface-2);border:1px solid var(--border-md);border-radius:var(--radius);padding:1.5rem;font-family:'Courier New',monospace}
+.semantic-row{display:grid;grid-template-columns:80px 1fr;gap:.5rem 1rem;align-items:center;margin-bottom:.4rem}
+.sem-key{font-size:.85rem;font-weight:700;color:var(--accent)}
+.sem-val{font-size:.8rem;color:var(--text-2)}
+.sem-line{border:none;border-top:1px solid var(--border-md);margin:.75rem 0}
+.sem-total{font-size:.82rem;color:var(--text);font-style:italic}
+
+/* NAMING SCORE */
+.ns-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent-dim);border:1px solid rgba(99,102,241,0.2);border-radius:var(--radius-sm);padding:.5rem 1rem;margin-bottom:.75rem}
+.ns-score{font-family:var(--font-num);font-size:1.4rem;font-weight:700;color:var(--accent);letter-spacing:-0.02em}
+.ns-label{font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+
+/* QUOTE */
+.quote-block{background:var(--accent-dim);border:1px solid rgba(99,102,241,0.18);border-radius:var(--radius);padding:1.75rem 2rem;position:relative;overflow:hidden}
+.quote-block::before{content:'\201C';position:absolute;top:-1rem;left:1.25rem;font-size:5rem;line-height:1;color:var(--accent);opacity:.15;font-family:Georgia,serif}
+.quote-text{font-size:1rem;font-weight:500;color:var(--text);line-height:1.6;position:relative}
+
+/* HEADLINE */
+.headline-card{background:var(--surface-2);border:1px solid var(--border-md);border-radius:var(--radius);padding:1.75rem}
+.headline-eyebrow{font-size:.62rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem}
+.headline-text{font-size:1.05rem;font-weight:600;color:var(--text);line-height:1.45;letter-spacing:-0.01em}
+.sub-text{font-size:.88rem;color:var(--text-2);margin-top:.6rem}
+.descriptor-display{font-size:1.1rem;font-weight:600;color:var(--text);letter-spacing:-0.01em}
+.descriptor-display span{color:var(--text-3);font-weight:400}
+
+/* DOMAIN */
+.domain-row{display:flex;flex-wrap:wrap;gap:.5rem}
+.domain-tag{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;font-weight:500;padding:.3rem .65rem;border-radius:4px}
+.domain-ok{background:var(--green-bg);color:var(--green-text);border:1px solid rgba(52,211,153,0.15)}
+.domain-warn{background:var(--warn-bg);color:var(--warn-text);border:1px solid rgba(251,191,36,0.15)}
+.domain-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* COMPARISON TABLE */
+.comp-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.comp-table th{padding:.75rem 1rem;font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);text-align:left;border-bottom:1px solid var(--border-md)}
+.comp-table th:not(:first-child){text-align:center;color:var(--accent-2)}
+.comp-table td{padding:.9rem 1rem;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:middle}
+.comp-table td:not(:first-child){text-align:center}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr:hover td{background:var(--surface-2)}
+.comp-table .row-key{color:var(--text);font-weight:500}
+.comp-table .score{font-family:var(--font-num);font-weight:700;color:var(--text)}
+.comp-score-5{color:var(--accent-2)!important}
+.comp-risk-none{color:var(--green-text);font-size:.8rem}
+.comp-risk-low{color:var(--warn-text);font-size:.8rem}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:2rem 0}
+
+/* ══ OVERVIEW (Finalistas) ══ */
+#finalistas{padding-bottom:0}
+.overview-header{padding:1.75rem 0 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+.overview-eyebrow{font-size:.62rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3)}
+.overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin:0 -1.5rem}
+.name-card-full{background:var(--bg);padding:2.75rem 2.25rem 2.25rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem;cursor:pointer;transition:background .25s;height:calc(100vh - 192px);min-height:520px;position:relative;overflow:hidden}
+.name-card-full:hover{background:var(--surface)}
+.name-card-full.card-featured{background:var(--surface);border-top:2px solid var(--accent)}
+.name-card-full.card-featured:hover{background:var(--surface-2)}
+/* Highlight line on top of finalist cards */
+.name-card-full::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:170px;height:1px;background:linear-gradient(90deg,rgba(99,102,241,0),#6366F1 50%,rgba(99,102,241,0));z-index:1}
+
+.card-name-row{display:flex;align-items:center;gap:1rem}
+.card-mark-wrap{width:52px;height:52px;flex-shrink:0}
+.card-mark-wrap svg{width:100%;height:100%}
+.card-name{font-family:var(--font-head);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-0.03em;line-height:1;color:var(--text)}
+.card-featured-badge{display:inline-block;font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2);background:var(--accent-dim);border:1px solid rgba(99,102,241,0.2);border-radius:3px;padding:.2rem .5rem;margin-top:.4rem}
+.card-essence{font-size:.82rem;color:var(--text-3);line-height:1.6;font-style:italic;max-width:200px}
+.card-metrics-mini{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;width:100%}
+.mn-card{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.6rem .5rem;text-align:center}
+.mn-val{font-family:var(--font-num);font-size:1.1rem;font-weight:700;color:var(--accent-2);letter-spacing:-0.02em;line-height:1;margin-bottom:.2rem}
+.mn-label{font-size:.56rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.card-ns{width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.65rem;background:var(--accent-dim);border:1px solid rgba(99,102,241,0.18);border-radius:var(--radius-sm)}
+.ci-score{font-family:var(--font-num);font-size:1.4rem;font-weight:700;color:var(--accent);letter-spacing:-0.02em;line-height:1}
+.ci-label{font-size:.58rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+.card-action{margin-top:auto;width:100%;padding:.8rem;background:none;border:1px solid var(--border-md);border-radius:var(--radius-sm);color:var(--text-3);font-family:var(--font);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s}
+.card-action:hover{border-color:rgba(99,102,241,0.35);color:var(--accent-2)}
+
+/* 5 MENORES */
+.runners-up{padding:2rem 0;background:var(--bg)}
+.runners-up-title{font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:1rem;text-align:center}
+.runners-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem}
+.runner-card{background:var(--surface);border:1px solid var(--border-card);border-radius:var(--radius-sm);padding:1.25rem 1rem;text-align:center;position:relative;overflow:hidden}
+.runner-name{font-family:var(--font-head);font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:.4rem;letter-spacing:-0.01em}
+.runner-essence{font-size:.7rem;color:var(--text-3);line-height:1.5;margin-bottom:.6rem}
+.runner-score{font-size:.65rem;font-weight:600;color:var(--accent-2);letter-spacing:.06em}
+
+/* Hero mark */
+.hero-with-mark{display:flex;align-items:center;gap:1.5rem;margin-bottom:.75rem}
+.hero-mark{width:52px;height:52px;flex-shrink:0;color:var(--accent)}
+
+/* PROCESS TAB */
+.process-timeline{display:flex;flex-direction:column;gap:0}
+.process-step{display:grid;grid-template-columns:80px 1fr;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--border)}
+.process-step:last-child{border-bottom:none}
+.step-num{font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-2)}
+.step-title{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:.3rem;letter-spacing:-0.01em}
+.step-desc{font-size:.82rem;color:var(--text-2);line-height:1.6}
+
+/* Name grids in process */
+.names-cloud{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
+.name-pill{font-size:.65rem;color:var(--text-3);padding:.2rem .5rem;background:var(--surface);border:1px solid var(--border);border-radius:3px;letter-spacing:.02em}
+.name-pill.highlight{color:var(--accent-2);border-color:rgba(99,102,241,0.3);background:var(--accent-dim)}
+.name-pill.top3{color:var(--text);border-color:var(--accent);background:rgba(99,102,241,0.15);font-weight:600}
+
+/* Stat strip */
+.stat-strip{display:flex;justify-content:center;gap:1.5rem;padding:2rem 0;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-val{font-family:var(--font-num);font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+.stat-val.accent{color:var(--accent-2)}
+.stat-label{font-size:.58rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-top:.15rem}
+.stat-arrow{color:var(--text-3);font-size:.8rem;display:flex;align-items:center}
+
+/* DOWNLOAD BUTTON */
+.dl-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;background:var(--accent-dim);border:1px solid rgba(99,102,241,0.2);border-radius:var(--radius-sm);color:var(--accent-2);font-family:var(--font);font-size:.72rem;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s,border-color .2s;margin-top:1.5rem}
+.dl-btn:hover{background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.4)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .header-top{padding:0 1rem;height:48px}
+  .logo-sub{display:none}
+  .tab-btn{padding:0 14px;font-size:.65rem;min-height:44px}
+  .panel{padding-top:100px}
+  .container{padding:0 1rem}
+  .name-hero{padding:2.5rem 0 2rem}
+  h1{font-size:clamp(2rem,11vw,3.5rem)}
+  .overview-header{flex-direction:column;gap:.35rem}
+  .overview-grid{grid-template-columns:1fr;margin:0 -1rem}
+  .name-card-full{height:auto;min-height:460px;padding:2rem 1.75rem}
+  .hero-with-mark{gap:1rem}
+  .hero-mark{width:40px;height:40px}
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr 1fr}
+  .metrics-row{grid-template-columns:1fr 1fr}
+  .data-row{grid-template-columns:1fr;gap:.25rem}
+  .data-key{color:var(--accent-2)}
+  .comp-table{font-size:.78rem}
+  .comp-table th,.comp-table td{padding:.65rem .6rem}
+  .runners-grid{grid-template-columns:1fr 1fr}
+  .process-step{grid-template-columns:60px 1fr;gap:1rem}
+}
+@media(max-width:480px){
+  .grid-3{grid-template-columns:1fr}
+  .metrics-row{grid-template-columns:1fr 1fr}
+  .runners-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      Naming
+      <span class="logo-sub">Top 3 Finalistas</span>
+    </div>
+  </div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="show('processo',this)">O Processo</button>
+    <button class="tab-btn" onclick="show('finalistas',this)">Finalistas</button>
+    <button class="tab-btn" onclick="show('perfyce',this)">Perfyce</button>
+    <button class="tab-btn" onclick="show('fullmade',this)">FullMade</button>
+    <button class="tab-btn" onclick="show('reifygen',this)">ReifyGen</button>
+    <button class="tab-btn" onclick="show('comp',this)">Comparativo</button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════
+     O PROCESSO
+     ══════════════════════════════════════ -->
+<div id="processo" class="panel active">
+<div class="container">
+
+  <div class="name-hero">
+    <div class="hero-label">Como chegamos aqui</div>
+    <h1 class="name-display">670+ nomes gerados.<br>3 chegaram até aqui.</h1>
+  </div>
+
+  <div class="process-timeline">
+
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div>
+        <div class="step-title">Posicionamento</div>
+        <div class="step-desc">Arquétipos (Mago 55% · Sábio 25% · Criador 20%), essência, inimigo da marca, tom de voz, valores e narrativa completa.</div>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div>
+        <div class="step-title">Geração · 670+ nomes</div>
+        <div class="step-desc">Múltiplas rodadas: neologismos, raízes latinas/gregas, compostos, pesquisa etimológica, idiomas, emoção do cliente, fonética pura. Volume intencional.</div>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div>
+        <div class="step-title">Longlist · 200 nomes</div>
+        <div class="step-desc">Primeiro corte. Eliminados por sonoridade fraca, domínios inviáveis, conflitos com marcas existentes e falta de peso semântico.</div>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <div>
+        <div class="step-title">Shortlist · 50 nomes</div>
+        <div class="step-desc">Alinhamento com arquétipos, pronúncia multilíngue (PT/EN/ES), domínios .com e .ai, eliminação de 14 nomes com energia militar.</div>
+        <div class="names-cloud">
+          <span class="name-pill">Outcraft</span><span class="name-pill">Rendaut</span><span class="name-pill">Launthor</span><span class="name-pill">Frontaut</span><span class="name-pill">Overcraft</span><span class="name-pill">Forgerun</span><span class="name-pill">Authance</span><span class="name-pill">Boldcraft</span><span class="name-pill">Surgeant</span><span class="name-pill">Paceborn</span><span class="name-pill">Fronter</span><span class="name-pill">Rendyr</span><span class="name-pill">Exekut</span><span class="name-pill">Rendor</span><span class="name-pill">Launchyt</span><span class="name-pill">Craftr</span><span class="name-pill">Bolden</span><span class="name-pill">Frontur</span><span class="name-pill">Produkt</span><span class="name-pill">Launter</span><span class="name-pill">Outrun</span><span class="name-pill">Prevail</span><span class="name-pill">Outlead</span><span class="name-pill">Outstage</span><span class="name-pill">Surgen</span><span class="name-pill">Ascend</span><span class="name-pill">Forged</span><span class="name-pill">Contour</span><span class="name-pill">Overture</span><span class="name-pill">DarkCraft</span><span class="name-pill">BriefStorm</span><span class="name-pill">RawSignal</span><span class="name-pill">Groundswell</span><span class="name-pill">Upperhand</span><span class="name-pill">InsightForge</span><span class="name-pill">LaunchLedge</span><span class="name-pill">Torrent</span><span class="name-pill">Invoke</span><span class="name-pill">Outpour</span><span class="name-pill">Unfurl</span><span class="name-pill">Ensemble</span><span class="name-pill">Catalys</span><span class="name-pill">Rendall</span><span class="name-pill">Craftout</span><span class="name-pill">Fulgent</span><span class="name-pill">Thrulane</span><span class="name-pill">Craftend</span><span class="name-pill">Praxyr</span><span class="name-pill">Makrent</span><span class="name-pill">Endcraft</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-num">05</div>
+      <div>
+        <div class="step-title">Finalistas · 15 nomes</div>
+        <div class="step-desc">Análise de essência, teste A.S.S., naming semântico e Naming Score.</div>
+        <div class="names-cloud">
+          <span class="name-pill top3">Perfyce</span><span class="name-pill top3">FullMade</span><span class="name-pill top3">ReifyGen</span><span class="name-pill highlight">OutPacen</span><span class="name-pill highlight">Overturer</span><span class="name-pill">Autoryt</span><span class="name-pill">Reinder</span><span class="name-pill">Fronter</span><span class="name-pill">LauncHub</span><span class="name-pill">Launter</span><span class="name-pill">Outcraft</span><span class="name-pill">Unfurl</span><span class="name-pill">Ascendly</span><span class="name-pill">Ensemble</span><span class="name-pill">Outrun</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-num">06</div>
+      <div>
+        <div class="step-title">Último filtro · 8 nomes</div>
+        <div class="step-desc">Verificação de domínio, fonética final, alinhamento estratégico.</div>
+        <div class="names-cloud">
+          <span class="name-pill top3">Perfyce</span><span class="name-pill top3">FullMade</span><span class="name-pill top3">ReifyGen</span><span class="name-pill highlight">OutPacen</span><span class="name-pill highlight">Overturer</span><span class="name-pill highlight">Upperedg</span><span class="name-pill highlight">OverKraft</span><span class="name-pill highlight">Offhandr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-num">07</div>
+      <div>
+        <div class="step-title">Top 3</div>
+        <div class="step-desc">Os três nomes que passaram por todos os filtros.</div>
+        <div class="names-cloud">
+          <span class="name-pill top3">Perfyce</span><span class="name-pill top3">FullMade</span><span class="name-pill top3">ReifyGen</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="grad-sep"></div>
+
+  <div class="stat-strip">
+    <div class="stat-item"><div class="stat-val">670+</div><div class="stat-label">gerados</div></div>
+    <div class="stat-arrow">→</div>
+    <div class="stat-item"><div class="stat-val">200</div><div class="stat-label">longlist</div></div>
+    <div class="stat-arrow">→</div>
+    <div class="stat-item"><div class="stat-val">50</div><div class="stat-label">shortlist</div></div>
+    <div class="stat-arrow">→</div>
+    <div class="stat-item"><div class="stat-val">15</div><div class="stat-label">finalistas</div></div>
+    <div class="stat-arrow">→</div>
+    <div class="stat-item"><div class="stat-val">8</div><div class="stat-label">filtro final</div></div>
+    <div class="stat-arrow">→</div>
+    <div class="stat-item"><div class="stat-val accent">3</div><div class="stat-label">nomes</div></div>
+  </div>
+
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     FINALISTAS — OVERVIEW
+     ══════════════════════════════════════ -->
+<div id="finalistas" class="panel">
+<div class="container">
+
+  <div class="overview-header">
+    <span class="overview-eyebrow">Top 3 Finalistas</span>
+  </div>
+
+  <div class="overview-grid">
+
+    <!-- Perfyce — featured -->
+    <div class="name-card-full card-featured" onclick="show('perfyce', document.querySelectorAll('.tab-btn')[2])">
+      <div class="card-name-row">
+        <div class="card-mark-wrap"><svg viewBox="0 0 48 48" fill="none"><defs><linearGradient id="g2" x1="4" y1="24" x2="46" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#6366F1"/><stop offset="100%" stop-color="#DDD6FE"/></linearGradient></defs><line x1="4" y1="6" x2="42" y2="24" stroke="url(#g2)" stroke-width="4" stroke-linecap="round"/><line x1="4" y1="24" x2="42" y2="24" stroke="url(#g2)" stroke-width="4" stroke-linecap="round"/><line x1="4" y1="42" x2="42" y2="24" stroke="url(#g2)" stroke-width="4" stroke-linecap="round"/><circle cx="43" cy="24" r="5" fill="#DDD6FE"/></svg></div>
+        <div>
+          <div class="card-name">Perfyce</div>
+          <div class="card-featured-badge">Naming Score Máxima</div>
+        </div>
+      </div>
+      <div class="card-essence">Do latim <em>perficere</em> — accomplish, finish, complete.</div>
+      <div class="card-metrics-mini">
+        <div class="mn-card"><div class="mn-val">9</div><div class="mn-label">Fluidez</div></div>
+        <div class="mn-card"><div class="mn-val">9</div><div class="mn-label">Memória</div></div>
+        <div class="mn-card"><div class="mn-val">8</div><div class="mn-label">Impacto</div></div>
+        <div class="mn-card" style="border-color:rgba(99,102,241,0.3);"><div class="mn-val" style="color:var(--accent);">10</div><div class="mn-label">Original.</div></div>
+      </div>
+      <div class="card-ns" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.3);">
+        <span class="ci-score" style="font-size:1.75rem;">+5</span>
+        <span class="ci-label">Naming Score · máximo</span>
+      </div>
+      <button class="card-action" style="border-color:rgba(99,102,241,0.2);color:var(--accent-2);">Ver análise completa →</button>
+    </div>
+
+    <!-- FullMade -->
+    <div class="name-card-full" onclick="show('fullmade', document.querySelectorAll('.tab-btn')[3])">
+      <div class="card-name-row">
+        <div class="card-mark-wrap"><svg viewBox="0 0 48 48" fill="none"><defs><linearGradient id="g1" x1="4" y1="44" x2="44" y2="4" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4F46E5"/><stop offset="100%" stop-color="#C4B5FD"/></linearGradient></defs><line x1="5" y1="42" x2="13" y2="18" stroke="url(#g1)" stroke-width="5" stroke-linecap="round"/><line x1="20" y1="42" x2="29" y2="10" stroke="url(#g1)" stroke-width="5" stroke-linecap="round"/><line x1="35" y1="42" x2="45" y2="4" stroke="url(#g1)" stroke-width="5" stroke-linecap="round"/></svg></div>
+        <div class="card-name">FullMade</div>
+      </div>
+      <div class="card-essence">Completo, feito por inteiro. O output pronto para publicar.</div>
+      <div class="card-metrics-mini">
+        <div class="mn-card"><div class="mn-val">9</div><div class="mn-label">Fluidez</div></div>
+        <div class="mn-card"><div class="mn-val">7</div><div class="mn-label">Memória</div></div>
+        <div class="mn-card"><div class="mn-val">6</div><div class="mn-label">Impacto</div></div>
+        <div class="mn-card"><div class="mn-val">5</div><div class="mn-label">Original.</div></div>
+      </div>
+      <div class="card-ns">
+        <span class="ci-score">+3</span>
+        <span class="ci-label">Naming Score</span>
+      </div>
+      <button class="card-action">Ver análise completa →</button>
+    </div>
+
+    <!-- ReifyGen -->
+    <div class="name-card-full" onclick="show('reifygen', document.querySelectorAll('.tab-btn')[4])">
+      <div class="card-name-row">
+        <div class="card-mark-wrap"><svg viewBox="0 0 48 48"><defs><linearGradient id="g3" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A5B4FC"/><stop offset="100%" stop-color="#4F46E5"/></linearGradient></defs><circle cx="10" cy="10" r="2.5" fill="url(#g3)" opacity="0.18"/><circle cx="24" cy="10" r="3" fill="url(#g3)" opacity="0.28"/><circle cx="38" cy="10" r="3.5" fill="url(#g3)" opacity="0.42"/><circle cx="10" cy="24" r="3" fill="url(#g3)" opacity="0.28"/><circle cx="24" cy="24" r="4.5" fill="url(#g3)" opacity="0.55"/><circle cx="38" cy="24" r="6" fill="url(#g3)" opacity="0.75"/><circle cx="10" cy="38" r="3.5" fill="url(#g3)" opacity="0.42"/><circle cx="24" cy="38" r="6" fill="url(#g3)" opacity="0.75"/><circle cx="38" cy="38" r="8.5" fill="url(#g3)" opacity="1.0"/></svg></div>
+        <div class="card-name">ReifyGen</div>
+      </div>
+      <div class="card-essence">Tornar concreto o abstrato, pela geração. O mecanismo filosófico da plataforma como nome.</div>
+      <div class="card-metrics-mini">
+        <div class="mn-card"><div class="mn-val">7</div><div class="mn-label">Fluidez</div></div>
+        <div class="mn-card"><div class="mn-val">8</div><div class="mn-label">Memória</div></div>
+        <div class="mn-card"><div class="mn-val">9</div><div class="mn-label">Impacto</div></div>
+        <div class="mn-card"><div class="mn-val">10</div><div class="mn-label">Original.</div></div>
+      </div>
+      <div class="card-ns">
+        <span class="ci-score">+4</span>
+        <span class="ci-label">Naming Score</span>
+      </div>
+      <button class="card-action">Ver análise completa →</button>
+    </div>
+
+  </div>
+
+  <!-- 5 Runners-up -->
+  <div class="runners-up">
+    <div class="runners-up-title">Também no último filtro</div>
+    <div class="runners-grid">
+      <div class="runner-card">
+        <div class="runner-name">OutPacen</div>
+        <div class="runner-essence">Superar o ritmo como estado permanente. Variação de OutPace + -en germânico.</div>
+        <div class="runner-score">Score +2</div>
+      </div>
+      <div class="runner-card">
+        <div class="runner-name">Overturer</div>
+        <div class="runner-essence">Aquele que faz a abertura. O maestro que inicia a sinfonia.</div>
+        <div class="runner-score">Score +2</div>
+      </div>
+      <div class="runner-card">
+        <div class="runner-name">Upperedg</div>
+        <div class="runner-essence">Upper + Edge cortado. Vantagem superior, fio cortante.</div>
+        <div class="runner-score">Score +1</div>
+      </div>
+      <div class="runner-card">
+        <div class="runner-name">OverKraft</div>
+        <div class="runner-essence">Over + Kraft. Força e ofício alemão acima do padrão.</div>
+        <div class="runner-score">Score +2</div>
+      </div>
+      <div class="runner-card">
+        <div class="runner-name">Offhandr</div>
+        <div class="runner-essence">A facilidade de quem domina sem esforço aparente.</div>
+        <div class="runner-score">Score +1</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PERFYCE
+     ══════════════════════════════════════ -->
+<div id="perfyce" class="panel">
+<div class="container">
+
+  <div class="name-hero">
+    <div class="hero-label">Finalista 01</div>
+    <div class="hero-with-mark">
+      <svg class="hero-mark" viewBox="0 0 48 48" fill="none"><defs><linearGradient id="g5" x1="4" y1="24" x2="46" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#6366F1"/><stop offset="100%" stop-color="#DDD6FE"/></linearGradient></defs><line x1="4" y1="6" x2="42" y2="24" stroke="url(#g5)" stroke-width="4" stroke-linecap="round"/><line x1="4" y1="24" x2="42" y2="24" stroke="url(#g5)" stroke-width="4" stroke-linecap="round"/><line x1="4" y1="42" x2="42" y2="24" stroke="url(#g5)" stroke-width="4" stroke-linecap="round"/><circle cx="43" cy="24" r="5" fill="#DDD6FE"/></svg>
+      <h1 class="name-display">Perfyce</h1>
+    </div>
+    <p class="name-sub">Do latim <em>perficere</em> — o imperativo: "complete isso." Encontrado no livro etimológico de "perfect".</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">B5 — Base Técnica</div>
+    <div class="data-block">
+      <div class="data-row"><span class="data-key">Técnica</span><span class="data-val">Etimologia latina — imperativo de <strong>perficere</strong> (per = completamente + facere = fazer). Y no lugar do I para diferenciação e disponibilidade de domínio.</span></div>
+      <div class="data-row"><span class="data-key">Sonoridade</span><span class="data-val">Três sílabas suaves: <strong>PER-fy-ce</strong>. PT: per-fi-se · EN: per-fis · ES: per-fi-se · FR: per-fis. Limpo e elegante em todos os idiomas.</span></div>
+      <div class="data-row"><span class="data-key">Domínios</span><span class="data-val"><div class="domain-row"><span class="domain-tag domain-warn"><span class="domain-dot"></span>perfyce.com — verificar</span><span class="domain-tag domain-ok"><span class="domain-dot"></span>perfyce.ai — provável</span><span class="domain-tag domain-ok"><span class="domain-dot"></span>perfyce.io — provável</span></div></span></div>
+      <div class="data-row"><span class="data-key">Instagram</span><span class="data-val"><div class="domain-row"><span class="domain-tag domain-ok"><span class="domain-dot"></span>@perfyce — provável</span></div></span></div>
+      <div class="data-row"><span class="data-key">Distinção</span><span class="data-val">Único nome de plataforma no setor que carrega um imperativo latino de completude. Não é "perfect" (adjetivo vazio) — é "complete it" (o comando que o mercado não conseguia cumprir).</span></div>
+      <div class="data-row"><span class="data-key">Alinhamento</span><span class="data-val"><strong>Mago:</strong> a transformação se completa, o output simplesmente aparece. <strong>Sábio:</strong> padrão de completude, não acidente. <strong>Criador:</strong> o output está realmente pronto.</span></div>
+    </div>
+    <div class="metrics-row">
+      <div class="metric-card"><div class="metric-val">9</div><div class="metric-label">Fluidez</div></div>
+      <div class="metric-card"><div class="metric-val">9</div><div class="metric-label">Memória</div></div>
+      <div class="metric-card"><div class="metric-val">8</div><div class="metric-label">Impacto</div></div>
+      <div class="metric-card"><div class="metric-val">10</div><div class="metric-label">Originalidade</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">B6 — Essência e Profundidade</div>
+    <div class="card card-accent" style="margin-bottom:1.5rem;">
+      <h4>Essência em Síntese</h4>
+      <p style="margin:0;">Perfyce é simultaneamente o nome da marca e o comando que define sua promessa: <em>"complete isso."</em> Nenhuma outra plataforma tem um nome que é ao mesmo tempo identidade e imperativo. A marca não precisa explicar o que faz — o nome já diz, em latim, há dois milênios.</p>
+    </div>
+    <div class="grid-2" style="margin-bottom:1.5rem;">
+      <div class="card">
+        <h4>Fator X — Keywords</h4>
+        <div class="pill-row"><span class="pill">completude</span><span class="pill">imperativo</span><span class="pill">perfeição</span><span class="pill">latim</span><span class="pill">finalização</span></div>
+      </div>
+      <div class="card">
+        <h4>Naming Score</h4>
+        <div class="ns-badge"><span class="ns-score comp-score-5">+5</span><span class="ns-label">/ 5 pontos · máxima</span></div>
+        <p style="margin:0;font-size:.82rem;">Palavra que não existe no vocabulário comum mas carrega significado exato. Tensão produtiva entre familiar (perfect) e estranho (perfyce). Registrável. Sonoridade global.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h4>Teste A.S.S. — Associações Culturais</h4>
+      <ul class="ass-list">
+        <li>"Perfect" — o filho moderno desta palavra. A herança sem o clichê.</li>
+        <li>Roma e o latim — permanência, autoridade, civilização de 2000 anos</li>
+        <li><em>Per aspera ad astra</em> — mesmo prefixo "per": através do esforço, ao fim</li>
+        <li>Arte italiana — per-fy-ce soa como palavra italiana (Renascimento, precisão)</li>
+        <li>Medicina e farmácia — sufixo -ice/-yce evoca substância ativa, princípio fundamental</li>
+        <li>O artesão medieval que só assina quando a peça está verdadeiramente pronta</li>
+        <li>O imperativo como identidade: não "nós completamos" — "complete!" — a marca executa a ordem</li>
+        <li>Apple Design Philosophy — perfeição como obsessão, não como adjetivo</li>
+      </ul>
+    </div>
+    <div class="semantic-block">
+      <h4 style="margin-bottom:1rem;">Naming Semântico</h4>
+      <div class="semantic-row"><span class="sem-key">PER</span><span class="sem-val">através, completamente, intensificador latino (per-fect, per-form, per-fuse)</span></div>
+      <div class="semantic-row"><span class="sem-key">FYCE</span><span class="sem-val">de "facere" = fazer, executar (faz, confecciona, realiza até o fim) + Y diferenciador</span></div>
+      <hr class="sem-line">
+      <div class="sem-total">"Fazer completamente. Levar ao fim, sem faltar nada."</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">B7 — Posicionamento Completo</div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h4>Imaginário Coletivo</h4>
+      <p style="margin:0;">O artesão que assina a peça apenas quando está verdadeiramente terminada. O <em>finis</em> do manuscrito medieval. O selo de cera sobre o envelope lacrado. Não existe entrega parcial — existe o que foi <em>perfecto</em> e o que ainda não foi.</p>
+    </div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h4>Exemplo de Posicionamento</h4>
+      <p style="margin:0;">Perfyce entra no mercado com autoridade histórica: o nome tem dois mil anos e chegou até aqui intacto, esperando por esta marca. Posiciona-se como a plataforma que restaurou o significado original de "entrega".</p>
+    </div>
+    <div class="grid-2">
+      <div class="headline-card">
+        <div class="headline-eyebrow">Descriptor Strategy</div>
+        <div class="descriptor-display">Perfyce <span>· Do Brief ao Asset. Completo.</span></div>
+      </div>
+      <div class="headline-card">
+        <div class="headline-eyebrow">Sub-headline</div>
+        <div class="headline-text" style="font-size:.9rem;font-weight:400;">A plataforma que só para quando está feito.</div>
+      </div>
+    </div>
+    <div class="quote-block" style="margin-top:1rem;">
+      <div class="quote-text">"O mercado aprendeu a chamar rascunho de entrega. Nós não."</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     FULLMADE
+     ══════════════════════════════════════ -->
+<div id="fullmade" class="panel">
+<div class="container">
+
+  <div class="name-hero">
+    <div class="hero-label">Finalista 02</div>
+    <div class="hero-with-mark">
+      <svg class="hero-mark" viewBox="0 0 48 48" fill="none"><defs><linearGradient id="g4" x1="4" y1="44" x2="44" y2="4" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4F46E5"/><stop offset="100%" stop-color="#C4B5FD"/></linearGradient></defs><line x1="5" y1="42" x2="13" y2="18" stroke="url(#g4)" stroke-width="5" stroke-linecap="round"/><line x1="20" y1="42" x2="29" y2="10" stroke="url(#g4)" stroke-width="5" stroke-linecap="round"/><line x1="35" y1="42" x2="45" y2="4" stroke="url(#g4)" stroke-width="5" stroke-linecap="round"/></svg>
+      <h1 class="name-display">FullMade</h1>
+    </div>
+    <p class="name-sub">Compound Resultado — completo, feito por inteiro. O output pronto para publicar.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">B5 — Base Técnica</div>
+    <div class="data-block">
+      <div class="data-row"><span class="data-key">Técnica</span><span class="data-val">Compound Resultado — fusão de <strong>Full</strong> + <strong>Made</strong>. Descreve o output literal: entrega completa, totalmente feita.</span></div>
+      <div class="data-row"><span class="data-key">Sonoridade</span><span class="data-val">Duas sílabas claras: <strong>FULL-made</strong>. Som firme e conclusivo. PT: "Fulmêid" · EN: pronúncia nativa. Zero atrito fonético.</span></div>
+      <div class="data-row"><span class="data-key">Domínios</span><span class="data-val"><div class="domain-row"><span class="domain-tag domain-warn"><span class="domain-dot"></span>fullmade.com — verificar</span><span class="domain-tag domain-warn"><span class="domain-dot"></span>fullmade.ai — verificar</span><span class="domain-tag domain-warn"><span class="domain-dot"></span>fullmade.io — verificar</span></div></span></div>
+      <div class="data-row"><span class="data-key">Instagram</span><span class="data-val"><div class="domain-row"><span class="domain-tag domain-warn"><span class="domain-dot"></span>@fullmade — verificar</span></div></span></div>
+      <div class="data-row"><span class="data-key">Distinção</span><span class="data-val">Nomeia pelo resultado final — o asset pronto. Raro no setor de IA para marketing, onde a maioria evoca inteligência ou automação, nunca a entrega concreta.</span></div>
+      <div class="data-row"><span class="data-key">Alinhamento</span><span class="data-val"><strong>Criador:</strong> algo foi construído, materializado. <strong>Mago:</strong> completude total, nada ficou pela metade. <strong>Sábio:</strong> clareza semântica, direto ao ponto.</span></div>
+    </div>
+    <div class="metrics-row">
+      <div class="metric-card"><div class="metric-val">9</div><div class="metric-label">Fluidez</div></div>
+      <div class="metric-card"><div class="metric-val">7</div><div class="metric-label">Memória</div></div>
+      <div class="metric-card"><div class="metric-val">6</div><div class="metric-label">Impacto</div></div>
+      <div class="metric-card"><div class="metric-val">5</div><div class="metric-label">Originalidade</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">B6 — Essência e Profundidade</div>
+    <div class="card card-accent" style="margin-bottom:1.5rem;">
+      <h4>Essência em Síntese</h4>
+      <p style="margin:0;">FullMade mata o "quase-pronto" com uma palavra. Enquanto o mercado inteiro para no meio do caminho — na estratégia, no rascunho — FullMade declara que o trabalho terminou. Completamente feito. Não é um assistente, não é um copiloto. É a linha de chegada embutida no nome.</p>
+    </div>
+    <div class="grid-2" style="margin-bottom:1.5rem;">
+      <div class="card">
+        <h4>Fator X — Keywords</h4>
+        <div class="pill-row"><span class="pill">completude</span><span class="pill">entrega</span><span class="pill">acabamento</span><span class="pill">materialização</span><span class="pill">suficiência</span></div>
+      </div>
+      <div class="card">
+        <h4>Naming Score</h4>
+        <div class="ns-badge"><span class="ns-score">+3</span><span class="ns-label">/ 5 pontos</span></div>
+        <p style="margin:0;font-size:.82rem;">Comunica com clareza cirúrgica. Personalidade funcional forte. Perde em profundidade cultural. Território de GoPro, Basecamp, Shopify.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h4>Teste A.S.S. — Associações Culturais</h4>
+      <ul class="ass-list">
+        <li>"Full house" — mão completa no poker, vitória incontestável</li>
+        <li>"Self-made" — o empreendedor que se fez sozinho, autonomia e conquista</li>
+        <li>"Handmade" / "Tailor-made" — feito sob medida, com cuidado e intenção</li>
+        <li>"Full metal" — Kubrick, rigor absoluto, nada pela metade</li>
+        <li>"Ready-made" — Duchamp, o objeto que já é arte no momento em que é declarado</li>
+        <li>"Made it" — expressão de conquista: "consegui", "está feito"</li>
+        <li>"Full stack" — domínio completo de ponta a ponta</li>
+        <li>"Well-made" — tradição de manufatura, qualidade do que foi construído com propósito</li>
+      </ul>
+    </div>
+    <div class="semantic-block">
+      <h4 style="margin-bottom:1rem;">Naming Semântico</h4>
+      <div class="semantic-row"><span class="sem-key">FULL</span><span class="sem-val">completo, inteiro, sem falta, máximo, saturado (Old English "full")</span></div>
+      <div class="semantic-row"><span class="sem-key">MADE</span><span class="sem-val">feito, produzido, construído, transformado em algo concreto (Old English "macian")</span></div>
+      <hr class="sem-line">
+      <div class="sem-total">"Completamente feito. Tudo, até o fim."</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">B7 — Posicionamento Completo</div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h4>Imaginário Coletivo</h4>
+      <p style="margin:0;">Uma linha de produção onde matéria-prima entra e produto acabado sai — embalado, pronto para a prateleira. Uma fábrica limpa, precisa, silenciosa. Para o profissional exausto de montar peças que nunca ficam prontas, FullMade soa como abrir o forno e o bolo já estar decorado.</p>
+    </div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h4>Exemplo de Posicionamento</h4>
+      <p style="margin:0;">FullMade se posiciona como a primeira plataforma de produção completa de marketing por IA. Em um mercado onde "IA para marketing" significa "IA que te ajuda a fazer marketing", FullMade significa "IA que faz o marketing". Concorre menos com Jasper e mais com a decisão de contratar mais três pessoas.</p>
+    </div>
+    <div class="grid-2">
+      <div class="headline-card">
+        <div class="headline-eyebrow">Descriptor Strategy</div>
+        <div class="descriptor-display">FullMade <span>· From brief to publish.</span></div>
+      </div>
+      <div class="headline-card">
+        <div class="headline-eyebrow">Sub-headline</div>
+        <div class="headline-text" style="font-size:.9rem;font-weight:400;">13 agentes de IA. Uma campanha completa. Zero trabalho de montagem.</div>
+      </div>
+    </div>
+    <div class="quote-block" style="margin-top:1rem;">
+      <div class="quote-text">"As outras ferramentas te dão peças. Nós te damos a campanha pronta."</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     REIFYGEN
+     ══════════════════════════════════════ -->
+<div id="reifygen" class="panel">
+<div class="container">
+
+  <div class="name-hero">
+    <div class="hero-label">Finalista 03</div>
+    <div class="hero-with-mark">
+      <svg class="hero-mark" viewBox="0 0 48 48"><defs><linearGradient id="g6" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A5B4FC"/><stop offset="100%" stop-color="#4F46E5"/></linearGradient></defs><circle cx="10" cy="10" r="2.5" fill="url(#g6)" opacity="0.18"/><circle cx="24" cy="10" r="3" fill="url(#g6)" opacity="0.28"/><circle cx="38" cy="10" r="3.5" fill="url(#g6)" opacity="0.42"/><circle cx="10" cy="24" r="3" fill="url(#g6)" opacity="0.28"/><circle cx="24" cy="24" r="4.5" fill="url(#g6)" opacity="0.55"/><circle cx="38" cy="24" r="6" fill="url(#g6)" opacity="0.75"/><circle cx="10" cy="38" r="3.5" fill="url(#g6)" opacity="0.42"/><circle cx="24" cy="38" r="6" fill="url(#g6)" opacity="0.75"/><circle cx="38" cy="38" r="8.5" fill="url(#g6)" opacity="1.0"/></svg>
+      <h1 class="name-display">ReifyGen</h1>
+    </div>
+    <p class="name-sub">Portmanteau filosófico — tornar concreto o abstrato, pela geração.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">B5 — Base Técnica</div>
+    <div class="data-block">
+      <div class="data-row"><span class="data-key">Técnica</span><span class="data-val">Portmanteau filosófico — <strong>Reify</strong> (tornar concreto o abstrato, do latim <em>res</em> = coisa) + <strong>Gen</strong> (gerar, genesis, origem)</span></div>
+      <div class="data-row"><span class="data-key">Sonoridade</span><span class="data-val">Quatro sílabas com ritmo crescente: <strong>RE-i-fy-GEN</strong>. Ligeiramente mais complexo — memorável por isso.</span></div>
+      <div class="data-row"><span class="data-key">Domínios</span><span class="data-val"><div class="domain-row"><span class="domain-tag domain-ok"><span class="domain-dot"></span>reifygen.com — provável</span><span class="domain-tag domain-ok"><span class="domain-dot"></span>reifygen.ai — provável</span><span class="domain-tag domain-ok"><span class="domain-dot"></span>reifygen.io — provável</span></div></span></div>
+      <div class="data-row"><span class="data-key">Instagram</span><span class="data-val"><div class="domain-row"><span class="domain-tag domain-ok"><span class="domain-dot"></span>@reifygen — provável</span></div></span></div>
+      <div class="data-row"><span class="data-key">Distinção</span><span class="data-val">Único nome do setor que encapsula o mecanismo filosófico da plataforma sem mencionar "AI", "marketing" ou "launch".</span></div>
+      <div class="data-row"><span class="data-key">Alinhamento</span><span class="data-val"><strong>Mago:</strong> materialização do impossível. <strong>Sábio:</strong> processo fundamentado, não acidente.</span></div>
+    </div>
+    <div class="metrics-row">
+      <div class="metric-card"><div class="metric-val">7</div><div class="metric-label">Fluidez</div></div>
+      <div class="metric-card"><div class="metric-val">8</div><div class="metric-label">Memória</div></div>
+      <div class="metric-card"><div class="metric-val">9</div><div class="metric-label">Impacto</div></div>
+      <div class="metric-card"><div class="metric-val">10</div><div class="metric-label">Originalidade</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">B6 — Essência e Profundidade</div>
+    <div class="card card-accent" style="margin-bottom:1.5rem;">
+      <h4>Essência em Síntese</h4>
+      <p style="margin:0;">ReifyGen é o único nome que descreve o mecanismo filosófico exato da marca — tornar real o que era abstrato. Para quem conhece "reify", a profundidade é imediata. Para quem não conhece, pesquisa — e a descoberta reforça a marca.</p>
+    </div>
+    <div class="grid-2" style="margin-bottom:1.5rem;">
+      <div class="card">
+        <h4>Fator X — Keywords</h4>
+        <div class="pill-row"><span class="pill">materialização</span><span class="pill">genesis</span><span class="pill">concreto</span><span class="pill">transformação</span><span class="pill">filosófico</span></div>
+      </div>
+      <div class="card">
+        <h4>Naming Score</h4>
+        <div class="ns-badge"><span class="ns-score">+4</span><span class="ns-label">/ 5 pontos</span></div>
+        <p style="margin:0;font-size:.82rem;">Altíssimo impacto para público sofisticado. Perde 1 ponto pela barreira de familiaridade filosófica.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h4>Teste A.S.S. — Associações Culturais</h4>
+      <ul class="ass-list">
+        <li>Filosofia — reification (Lukács, Marx, Hegel): tornar concreto o abstrato</li>
+        <li>Programação OO — instantiation: criar o objeto concreto a partir da classe abstrata</li>
+        <li>Genesis — o livro, a origem, o começo de tudo que existe</li>
+        <li>Alquimia — tornar real o que era apenas ideia, transmutação do abstrato</li>
+        <li>"The Matrix" — o código que se torna realidade tangível</li>
+        <li>DNA — <em>gen</em> como código genético da campanha, o blueprint que gera</li>
+        <li>GenAI — capitaliza o momento cultural sem ser óbvio</li>
+        <li>Biologia — a geração de organismos completos a partir do código</li>
+      </ul>
+    </div>
+    <div class="semantic-block">
+      <h4 style="margin-bottom:1rem;">Naming Semântico</h4>
+      <div class="semantic-row"><span class="sem-key">REIFY</span><span class="sem-val">do latim "res" (coisa) + inglês "-ify" (tornar): materializar o abstrato</span></div>
+      <div class="semantic-row"><span class="sem-key">GEN</span><span class="sem-val">do grego "genesis" (origem, geração): o ponto de onde algo novo emerge</span></div>
+      <hr class="sem-line">
+      <div class="sem-total">"Tornar real pela geração. O abstrato que vira campanha."</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">B7 — Posicionamento Completo</div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h4>Imaginário Coletivo</h4>
+      <p style="margin:0;">O momento em que a ideia sai da cabeça e aparece no mundo com peso e forma. O arquiteto que entrega a maquete e de repente o prédio existe. A diferença entre "vamos fazer uma campanha" e ter a campanha na mão.</p>
+    </div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h4>Exemplo de Posicionamento</h4>
+      <p style="margin:0;">ReifyGen entra no mercado como a plataforma que nomeou o problema filosoficamente antes de resolvê-lo tecnicamente. A maioria das ferramentas trabalha no campo do abstrato — sugerem, recomendam, rascunham. ReifyGen está no campo do concreto: materializa.</p>
+    </div>
+    <div class="grid-2">
+      <div class="headline-card">
+        <div class="headline-eyebrow">Descriptor Strategy</div>
+        <div class="descriptor-display">ReifyGen <span>· Da Ideia ao Asset Publicável.</span></div>
+      </div>
+      <div class="headline-card">
+        <div class="headline-eyebrow">Sub-headline</div>
+        <div class="headline-text" style="font-size:.9rem;font-weight:400;">O briefing é o pensamento. ReifyGen é o momento em que ele se torna real.</div>
+      </div>
+    </div>
+    <div class="quote-block" style="margin-top:1rem;">
+      <div class="quote-text">"A campanha não existia. Agora existe. E está pronta para publicar."</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     COMPARATIVO
+     ══════════════════════════════════════ -->
+<div id="comp" class="panel">
+<div class="container">
+
+  <div class="name-hero">
+    <div class="hero-label">Análise Comparativa</div>
+    <h1 class="name-display" style="font-size:clamp(1.8rem,5vw,2.8rem);">Os três lado a lado.</h1>
+    <p class="name-sub">Mesmo critério, três candidatos. Para a decisão final.</p>
+  </div>
+
+  <div class="section">
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th>Perfyce</th>
+            <th>FullMade</th>
+            <th>ReifyGen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="row-key">Técnica</td><td>Etimologia latina</td><td>Compound resultado</td><td>Portmanteau filosófico</td></tr>
+          <tr><td class="row-key">Fluidez</td><td class="score">9</td><td class="score">9</td><td class="score">7</td></tr>
+          <tr><td class="row-key">Memorabilidade</td><td class="score">9</td><td class="score">7</td><td class="score">8</td></tr>
+          <tr><td class="row-key">Impacto Emocional</td><td class="score">8</td><td class="score">6</td><td class="score">9</td></tr>
+          <tr><td class="row-key">Originalidade</td><td class="score comp-score-5">10</td><td class="score">5</td><td class="score comp-score-5">10</td></tr>
+          <tr><td class="row-key">Naming Score</td><td class="score comp-score-5">+5</td><td class="score">+3</td><td class="score">+4</td></tr>
+          <tr><td class="row-key">Domínio .com</td><td><span class="comp-risk-low">verificar (perfyce)</span></td><td><span class="comp-risk-low">verificar</span></td><td><span class="comp-risk-none">provável</span></td></tr>
+          <tr><td class="row-key">Domínio .ai</td><td><span class="comp-risk-none">provável</span></td><td><span class="comp-risk-low">verificar</span></td><td><span class="comp-risk-none">provável</span></td></tr>
+          <tr><td class="row-key">Instagram</td><td><span class="comp-risk-none">provável</span></td><td><span class="comp-risk-low">verificar</span></td><td><span class="comp-risk-none">provável</span></td></tr>
+          <tr><td class="row-key">Risco principal</td><td><span class="comp-risk-none">Nenhum identificado</span></td><td><span class="comp-risk-low">Profundidade limitada</span></td><td><span class="comp-risk-low">Barreira filosófica</span></td></tr>
+          <tr><td class="row-key">Registro</td><td>Conclusão · latim</td><td>Resultado · output</td><td>Filosofia · materialização</td></tr>
+          <tr><td class="row-key">Headline</td><td style="font-style:italic;font-size:.8rem;">"O mercado chama rascunho de entrega. Nós não."</td><td style="font-style:italic;font-size:.8rem;">"As outras ferramentas te dão peças. Nós te damos a campanha pronta."</td><td style="font-style:italic;font-size:.8rem;">"A campanha não existia. Agora existe."</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Leitura Final</div>
+    <div class="grid-3">
+      <div class="card" style="border-color:rgba(99,102,241,0.3);">
+        <h4 style="color:var(--accent);">Perfyce ★</h4>
+        <h3>O mais sólido</h3>
+        <p style="font-size:.85rem;margin:0;">Naming Score máxima. Nenhum risco técnico. O nome que carrega dois mil anos de significado esperando por esta marca.</p>
+      </div>
+      <div class="card">
+        <h4>FullMade</h4>
+        <h3>O mais direto</h3>
+        <p style="font-size:.85rem;margin:0;">Comunica o resultado sem explicação. Risco: profundidade cultural limitada. Funcional e honesto.</p>
+      </div>
+      <div class="card">
+        <h4>ReifyGen</h4>
+        <h3>O mais profundo</h3>
+        <p style="font-size:.85rem;margin:0;">Maior impacto emocional para público sofisticado. Exige que a marca construa o significado — mas quando constrói, é inatacável.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function downloadDS() {
+  const md = `# Design System — Naming Finalistas\n\n## Tokens de Cor\n\n| Token | Valor |\n|---|---|\n| --bg | #08080D |\n| --surface | #0F0F16 |\n| --surface-2 | #16161F |\n| --surface-3 | #1C1C28 |\n| --border | rgba(255,255,255,0.06) |\n| --border-md | rgba(255,255,255,0.10) |\n| --border-card | rgba(255,255,255,0.07) |\n| --accent | #6366F1 |\n| --accent-2 | #818CF8 |\n| --accent-dim | rgba(99,102,241,0.10) |\n| --accent-glow | rgba(99,102,241,0.15) |\n| --text | #F4F4F5 |\n| --text-2 | rgba(244,244,245,0.55) |\n| --text-3 | rgba(244,244,245,0.30) |\n| --green-text | #34D399 |\n| --warn-text | #FCD34D |\n| --deny-text | #F87171 |\n\n## Tipografia\n\n| Elemento | Font | Size | Weight | Letter-spacing |\n|---|---|---|---|---|\n| h1 | Inter | clamp(2.4rem,8vw,4rem) | 700 | -0.03em |\n| h2 | Inter | clamp(1.2rem,3vw,1.6rem) | 600 | -0.02em |\n| h3 | Inter | 1rem | 600 | -0.01em |\n| h4 (label) | Inter | 0.65rem | 500 | 0.12em, uppercase |\n| body | Inter | 0.9rem | 400 | normal |\n| small | Inter | 0.72rem | 500 | 0.06em |\n\n## Espaçamento\n\n| Token | Valor |\n|---|---|\n| Section padding | 2.5rem 0 |\n| Card padding | 1.5rem |\n| Grid gap | 1rem |\n| Pill padding | 0.3rem 0.65rem |\n\n## Bordas e Radius\n\n| Token | Valor |\n|---|---|\n| --radius | 12px |\n| --radius-sm | 8px |\n| Card border | 1px solid rgba(255,255,255,0.07) |\n| Highlight line | linear-gradient(90deg, transparent, accent, transparent) |\n\n## Sombras\n\n| Tipo | Valor |\n|---|---|\n| Inner glow | box-shadow: inset 0 10px 5px -1px rgba(99,102,241,0.15) |\n| Card hover | border-color transition to rgba(255,255,255,0.10) |\n\n## Componentes\n\n### Card\n- background: var(--surface)\n- border: 1px solid var(--border-card)\n- border-radius: var(--radius)\n- Highlight line on top (optional)\n\n### Pill/Tag\n- background: var(--accent-dim)\n- border: 1px solid rgba(99,102,241,0.15)\n- color: var(--accent-2)\n- border-radius: 4px\n\n### Gradient Separator\n- height: 1px\n- background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.02))\n`;
+  const blob = new Blob([md], {type: 'text/markdown'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'design-system-naming.md';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

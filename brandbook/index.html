@@ -1,0 +1,2419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[NOME] — Brandbook Estratégico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   TOKENS
+   ============================================= */
+:root {
+  --bg:          #08080D;
+  --surface:     #0F0F16;
+  --surface-2:   #16161F;
+  --surface-3:   #1C1C28;
+  --border:      rgba(255,255,255,0.06);
+  --border-md:   rgba(255,255,255,0.10);
+  --accent:      #6366F1;
+  --accent-2:    #818CF8;
+  --accent-dim:  rgba(99,102,241,0.10);
+  --accent-glow: rgba(99,102,241,0.20);
+  --text:        #F4F4F5;
+  --text-2:      rgba(244,244,245,0.55);
+  --text-3:      rgba(244,244,245,0.30);
+  --deny-bg:     rgba(239,68,68,0.08);
+  --deny-text:   #F87171;
+  --allow-bg:    rgba(99,102,241,0.08);
+  --allow-text:  #818CF8;
+  --font:        'Inter', system-ui, -apple-system, sans-serif;
+  --radius:      12px;
+  --radius-sm:   8px;
+  --transition:  0.2s ease;
+}
+
+/* =============================================
+   RESET
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.7;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: #fff; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* =============================================
+   TYPOGRAPHY
+   ============================================= */
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+h3 {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.75rem;
+}
+h4 {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 0.75rem;
+}
+p {
+  color: var(--text-2);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+p:last-child { margin-bottom: 0; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--text); font-style: italic; }
+
+/* =============================================
+   LAYOUT
+   ============================================= */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(8,8,13,0.85);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+.logo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.logo-tag {
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--border-md);
+}
+.logo-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* =============================================
+   NAV TABS
+   ============================================= */
+.tab-nav {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-3);
+  font-family: var(--font);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0 18px;
+  height: 60px;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text-2); }
+.tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+/* =============================================
+   PANELS
+   ============================================= */
+.tab-panel {
+  display: none;
+  padding-top: 88px;
+  padding-bottom: 6rem;
+  min-height: 100vh;
+}
+.tab-panel.active { display: block; }
+
+/* =============================================
+   SECTION COMPONENTS
+   ============================================= */
+
+/* Hero block */
+.hero-block {
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent-2);
+}
+.hero-headline {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  max-width: 700px;
+  margin-bottom: 1.5rem;
+}
+.hero-headline .accent { color: var(--accent-2); }
+.hero-sub {
+  font-size: 1rem;
+  color: var(--text-2);
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+/* Section */
+.section {
+  padding: 3.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+
+.section-header {
+  margin-bottom: 2.5rem;
+}
+.section-number {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.5rem;
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  transition: border-color var(--transition), background var(--transition);
+}
+.card:hover {
+  border-color: var(--border-md);
+  background: var(--surface-2);
+}
+.card-accent {
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.card-elevated {
+  background: var(--surface-2);
+  border-color: var(--border-md);
+}
+
+/* Grid layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.grid-2-cell {
+  background: var(--surface);
+  padding: 1.75rem;
+  transition: background var(--transition);
+}
+.grid-2-cell:hover { background: var(--surface-2); }
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+/* Quote block */
+.quote-block {
+  background: var(--accent-dim);
+  border: 1px solid rgba(99,102,241,0.18);
+  border-radius: var(--radius);
+  padding: 2rem 2.5rem;
+  position: relative;
+}
+.quote-block::before {
+  content: '"';
+  position: absolute;
+  top: -0.75rem;
+  left: 2rem;
+  font-size: 6rem;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.2;
+  font-family: Georgia, serif;
+}
+.quote-text {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--text);
+  font-weight: 400;
+  position: relative;
+}
+
+/* Stat strip */
+.stat-strip {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  flex-wrap: wrap;
+}
+.stat-item { display: flex; flex-direction: column; gap: 0.1rem; }
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.stat-divider {
+  width: 1px;
+  height: 2rem;
+  background: var(--border-md);
+  flex-shrink: 0;
+}
+
+/* Tag */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+  background: var(--accent-dim);
+  color: var(--accent-2);
+  border: 1px solid rgba(99,102,241,0.15);
+}
+
+/* Pill row */
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 2rem 0;
+}
+.divider-strong {
+  background: var(--border-md);
+}
+
+/* Table */
+.brand-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.brand-table th {
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-md);
+}
+.brand-table td {
+  padding: 1rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.brand-table tr:last-child td { border-bottom: none; }
+.brand-table tr:hover td { background: var(--surface-2); }
+.brand-table .col-key {
+  color: var(--text);
+  font-weight: 500;
+  width: 40%;
+}
+.brand-table .col-allow { color: var(--allow-text); }
+.brand-table .col-deny { color: var(--deny-text); }
+
+/* Allow/Deny rows */
+.row-allow td { background: var(--allow-bg); }
+.row-deny td { background: var(--deny-bg); }
+
+/* Archetype block */
+.archetype-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.archetype-header {
+  padding: 1.5rem 1.75rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.archetype-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.archetype-pct {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+}
+.archetype-body { padding: 1.75rem; }
+.archetype-body p { margin-bottom: 0.75rem; }
+
+/* Bar chart */
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+.bar-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  min-width: 80px;
+  color: var(--text);
+}
+.bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+.bar-fill.muted { background: var(--accent-2); opacity: 0.4; }
+.bar-pct {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-2);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Journey phase */
+.phase-card {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  transition: border-color var(--transition);
+}
+.phase-card:hover { border-color: var(--border-md); }
+.phase-number {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--surface-3);
+  line-height: 1;
+  padding-top: 0.25rem;
+}
+.phase-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 0.25rem;
+}
+.phase-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.phase-quote {
+  font-size: 0.88rem;
+  color: var(--text-3);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+/* Values grid */
+.value-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color var(--transition), background var(--transition);
+}
+.value-card:hover {
+  border-color: rgba(99,102,241,0.2);
+  background: var(--surface-2);
+}
+.value-number {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.value-name {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Tagline display */
+.tagline-hero {
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.tagline-hero .dot {
+  color: var(--accent);
+}
+.tagline-context {
+  font-size: 0.85rem;
+  color: var(--text-3);
+  max-width: 480px;
+}
+
+/* Vocabulary table colors */
+.vocab-power { color: var(--text); font-weight: 500; }
+.vocab-forbidden { color: var(--deny-text); text-decoration: line-through; opacity: 0.7; }
+
+/* Code-style quote */
+.inline-quote {
+  font-size: 0.9rem;
+  color: var(--accent-2);
+  background: var(--accent-dim);
+  border: 1px solid rgba(99,102,241,0.15);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  font-style: italic;
+}
+
+/* Manifesto text */
+.manifesto-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-2);
+  max-width: 720px;
+}
+.manifesto-text p { margin-bottom: 1.5rem; }
+.manifesto-text strong { color: var(--text); }
+.manifesto-closing {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Golden circle */
+.gc-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 2rem;
+}
+.gc-cell {
+  background: var(--surface);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.gc-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+.gc-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* BrandScript table */
+.bs-table { width: 100%; border-collapse: collapse; }
+.bs-table tr { border-bottom: 1px solid var(--border); }
+.bs-table tr:last-child { border-bottom: none; }
+.bs-table td { padding: 1.25rem 1rem; vertical-align: top; }
+.bs-act {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  white-space: nowrap;
+  padding-right: 1.5rem;
+}
+.bs-elem {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  padding-right: 1.5rem;
+  min-width: 120px;
+}
+.bs-desc {
+  font-size: 0.88rem;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+
+/* Enemy block */
+.enemy-block {
+  background: rgba(239,68,68,0.04);
+  border: 1px solid rgba(239,68,68,0.12);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin: 1.5rem 0;
+}
+.enemy-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #F87171;
+  margin-bottom: 0.75rem;
+}
+.enemy-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+/* Yes/No comparison */
+.voice-table { width: 100%; border-collapse: collapse; }
+.voice-table th {
+  padding: 0.75rem 1rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+}
+.voice-table th.col-yes { color: var(--allow-text); }
+.voice-table th.col-no { color: var(--deny-text); }
+.voice-table td {
+  padding: 0.9rem 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.voice-table .cell-yes {
+  color: var(--allow-text);
+  background: rgba(99,102,241,0.04);
+}
+.voice-table .cell-no {
+  color: var(--deny-text);
+  background: rgba(239,68,68,0.04);
+  border-left: 1px solid var(--border);
+}
+
+/* Contract */
+.promise-card {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+  transition: border-color var(--transition);
+}
+.promise-card:hover { border-color: rgba(99,102,241,0.2); }
+.promise-num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  padding-top: 0.1rem;
+}
+.promise-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+/* Positioning statement */
+.pos-statement {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-2);
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+}
+.pos-statement strong { color: var(--text); }
+
+/* =============================================
+   DESIGN SYSTEM SPECIFIC
+   ============================================= */
+.ds-swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+.ds-swatch {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-md);
+}
+.ds-swatch-color {
+  height: 60px;
+}
+.ds-swatch-info {
+  padding: 0.65rem 0.75rem;
+  background: var(--surface-2);
+}
+.ds-swatch-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+.ds-swatch-value {
+  font-size: 0.66rem;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  font-family: 'Courier New', monospace;
+}
+.ds-type-row {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.ds-type-row:last-child { border-bottom: none; }
+.ds-type-meta {
+  min-width: 180px;
+  flex-shrink: 0;
+}
+.ds-type-tag {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.3rem;
+}
+.ds-type-spec {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  font-family: 'Courier New', monospace;
+}
+.ds-space-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.ds-space-bar {
+  background: var(--accent-dim);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 3px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.ds-space-label {
+  font-size: 0.72rem;
+  color: var(--text-2);
+  font-family: 'Courier New', monospace;
+  min-width: 90px;
+}
+.ds-comp-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.ds-comp-row:last-child { border-bottom: none; }
+.ds-comp-label {
+  min-width: 120px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 768px) {
+  .container { padding: 0 1.25rem; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .gc-block { grid-template-columns: 1fr; }
+  .phase-card { grid-template-columns: 1fr; gap: 0.75rem; }
+  .phase-number { font-size: 1.5rem; }
+  .stat-divider { display: none; }
+  /* Header: two rows on mobile */
+  .header-inner {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    padding: 0;
+  }
+  .logo {
+    padding: 0 1.25rem;
+    height: 52px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-nav {
+    height: 46px;
+    padding: 0 0.25rem;
+  }
+  .tab-btn {
+    height: 46px;
+    min-height: 46px;
+    padding: 0 14px;
+    font-size: 0.68rem;
+  }
+  .tab-panel {
+    padding-top: 102px; /* 52px logo + 46px tabs + 4px breathing */
+  }
+  .ds-type-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ds-type-meta { min-width: unset; }
+  .ds-comp-label { min-width: unset; width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      [NOME]
+      <span class="logo-tag">Brandbook Estratégico · v2.0</span>
+    </div>
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="showTab('manifesto',this)">Manifesto</button>
+      <button class="tab-btn" onclick="showTab('essencia',this)">Essência</button>
+      <button class="tab-btn" onclick="showTab('arquetipos',this)">Arquétipos</button>
+      <button class="tab-btn" onclick="showTab('posicionamento',this)">Posicionamento</button>
+      <button class="tab-btn" onclick="showTab('voz',this)">Tom de Voz</button>
+      <button class="tab-btn" onclick="showTab('vocabulario',this)">Vocabulário</button>
+      <button class="tab-btn" onclick="showTab('jornada',this)">Jornada</button>
+      <button class="tab-btn" onclick="showTab('contrato',this)">Contrato</button>
+      <button class="tab-btn" onclick="showTab('design-system',this)">Design System</button>
+    </nav>
+  </div>
+</header>
+
+<!-- =============================================
+     TAB 1: MANIFESTO
+     ============================================= -->
+<div id="manifesto" class="tab-panel active">
+  <div class="container">
+
+    <div class="hero-block">
+      <div class="hero-eyebrow">01 — Manifesto da Marca</div>
+      <h1 class="hero-headline">O mercado normalizou o <span class="accent">"quase-pronto"</span>.</h1>
+      <p class="hero-sub">E esse foi o maior problema que ninguém nomeou — até agora.</p>
+    </div>
+
+    <div class="section">
+      <div class="manifesto-text">
+        <p>Normalizou a ferramenta que gera um rascunho e chama de entrega. Normalizou a IA que escreve um parágrafo e diz que fez copy. Normalizou a plataforma que monta um esqueleto de funil e espera que você passe as próximas 14 horas dando carne, pele e sangue para aquilo virar algo publicável. O mercado normalizou a promessa de automação que, no fim das contas, ainda depende inteiramente de você para funcionar. E o mais perverso: normalizou a culpa que você sente quando o resultado fica aquém — como se o problema fosse seu, e não da ferramenta que parou no meio do caminho.</p>
+
+        <p>Você conhece esse ciclo. Você é o gestor de lançamento que acorda às 5h com 47 tarefas abertas e a certeza silenciosa de que a campanha não vai sair no nível que a oferta merece. Não porque você não sabe o que fazer — você sabe exatamente. O problema nunca foi estratégia. O problema é que entre saber o que precisa ser feito e ter tudo pronto para publicar existe um abismo de produção que exige 12 pessoas, 3 semanas e um orçamento que você não tem. Então você improvisa. Adapta. Corta. E lança sabendo que poderia ter sido melhor.</p>
+
+        <p>[NOME] existe porque essa equação está quebrada. Não deveria ser necessário escolher entre qualidade e velocidade, entre profundidade criativa e tamanho de equipe, entre a campanha que você imaginou e a campanha que você conseguiu produzir. O nível de execução não deveria ser o fator que determina se uma grande ideia chega ao mercado como uma grande campanha — ou como uma versão diminuída dela mesma.</p>
+
+        <p>O que acontece dentro da plataforma não é sugestão. Não é rascunho. Não é "ponto de partida para você desenvolver". Treze agentes especializados trabalham em paralelo, cada um dominando uma função específica do marketing de lançamento, e nenhum deles para até que o output esteja pronto para publicação. Copy final. Criativo finalizado. Funil configurado. Sequência de emails escrita. Página montada. Não 80% pronto. <strong>Pronto.</strong></p>
+
+        <p>A diferença entre o que você tinha antes e o que você tem agora não é incremental — é categórica.</p>
+      </div>
+
+      <div style="margin-top: 2.5rem;">
+        <div class="quote-block">
+          <p class="quote-text manifesto-closing">A diferença entre montar uma campanha e receber uma campanha.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="stat-strip">
+        <div class="stat-item">
+          <span class="stat-value">13</span>
+          <span class="stat-label">Agentes Especializados</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">100%</span>
+          <span class="stat-label">Pronto para publicar</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">0</span>
+          <span class="stat-label">Rascunhos entregues</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">1</span>
+          <span class="stat-label">Briefing necessário</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- =============================================
+     TAB 2: ESSÊNCIA
+     ============================================= -->
+<div id="essencia" class="tab-panel">
+  <div class="container">
+
+    <div class="hero-block">
+      <div class="hero-eyebrow">02 — Essência, Missão e Visão</div>
+      <h1 class="hero-headline">O que somos.<br>Por que existimos.</h1>
+    </div>
+
+    <!-- Essência -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Essência</div>
+        <h2>O núcleo</h2>
+      </div>
+      <div class="quote-block">
+        <p class="quote-text" style="font-size:1.5rem; font-weight:600; letter-spacing:-0.02em;">Briefing entra, campanha sai.</p>
+      </div>
+      <p style="margin-top:1.5rem; max-width:580px; color:var(--text-2);">Seis palavras. Duas frases. Um gap implícito entre elas onde toda a magia, inteligência e produção acontecem. A essência não promete — descreve. E a descrição é tão desproporcional que funciona como promessa.</p>
+    </div>
+
+    <!-- Missão -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Missão</div>
+        <h2>Para que existimos</h2>
+      </div>
+      <div class="card card-accent" style="max-width:720px;">
+        <p style="color:var(--text); line-height:1.75; margin:0;">Transformar briefings de lançamento em campanhas completas e prontas para publicação — do copy ao criativo, do funil ao asset — para agências de qualquer tamanho que recusam aceitar que equipe pequena signifique resultado pequeno.</p>
+      </div>
+    </div>
+
+    <!-- Visão -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Visão</div>
+        <h2>Para onde vamos</h2>
+      </div>
+      <div class="card" style="max-width:720px;">
+        <p style="color:var(--text-2); margin:0; line-height:1.75;">Um mercado onde a qualidade de uma campanha de lançamento é determinada pela qualidade da ideia e da estratégia — nunca pelo tamanho da equipe ou do orçamento de produção. Onde uma agência de 2 pessoas entrega com o volume, a coerência e o acabamento de uma operação de 20. Onde "quase-pronto" deixou de ser um padrão aceitável e virou um problema do passado.</p>
+      </div>
+    </div>
+
+    <!-- Os 6 Valores -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Os 6 Valores</div>
+        <h2>O que não negociamos</h2>
+      </div>
+      <div class="grid-3" style="margin-top:1.5rem;">
+
+        <div class="value-card">
+          <div class="value-number">Valor 01</div>
+          <div class="value-name">Até o fim</div>
+          <p style="font-size:0.85rem; margin:0;">Entregar não é começar. Entregar é terminar. Cada output sai pronto para publicação, não pronto para revisão. A linha de chegada não é o rascunho — é o asset publicável.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-number">Valor 02</div>
+          <div class="value-name">Padrão, não palpite</div>
+          <p style="font-size:0.85rem; margin:0;">Toda decisão criativa é fundamentada em padrões reais extraídos de milhares de lançamentos. Não é intuição. Não é tendência. É evidência processada e aplicada com método.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-number">Valor 03</div>
+          <div class="value-name">Autoria é de quem publica</div>
+          <p style="font-size:0.85rem; margin:0;">O output é da agência. A campanha leva o nome dela. A plataforma é invisível no resultado final, e isso é uma decisão de design, não uma limitação.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-number">Valor 04</div>
+          <div class="value-name">Criação real</div>
+          <p style="font-size:0.85rem; margin:0;">Existe uma diferença entre gerar texto e criar copy. Os outputs não são variantes de um molde genérico — são criações com voz, ritmo, lógica criativa e coerência de campanha.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-number">Valor 05</div>
+          <div class="value-name">Desproporção como padrão</div>
+          <p style="font-size:0.85rem; margin:0;">O resultado que sai não deveria ser possível com a equipe que entrou. Esse descompasso entre input e output não é um bug — é a proposta.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-number">Valor 06</div>
+          <div class="value-name">Confiança silenciosa</div>
+          <p style="font-size:0.85rem; margin:0;">A plataforma não precisa explicar o truque. Quando você abre a campanha pronta e pensa "isso não deveria ser possível", a confiança já se instalou.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Golden Circle -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Golden Circle</div>
+        <h2>Por quê. Como. O quê.</h2>
+      </div>
+      <div class="gc-block">
+        <div class="gc-cell">
+          <div class="gc-label">Por que</div>
+          <div class="gc-title">A equação está quebrada</div>
+          <p style="font-size:0.88rem; margin:0;">Acreditamos que o nível de execução não deveria ser o fator que separa uma grande ideia de uma grande campanha. Uma grande ideia merece uma grande campanha — independente de quantas pessoas estão por trás dela.</p>
+        </div>
+        <div class="gc-cell">
+          <div class="gc-label">Como</div>
+          <div class="gc-title">13 agentes, um briefing</div>
+          <p style="font-size:0.88rem; margin:0;">Treze agentes de IA especializados trabalham em paralelo — copy, criativo, funil, email, página — com inteligência alimentada por padrões de milhares de lançamentos reais. Nenhum para antes do output estar em estado de publicação.</p>
+        </div>
+        <div class="gc-cell">
+          <div class="gc-label">O que</div>
+          <div class="gc-title">Campanhas completas</div>
+          <p style="font-size:0.88rem; margin:0;">A plataforma que transforma briefings em campanhas completas de lançamento. Do copy ao criativo, do funil ao asset. Tudo produzido, finalizado e entregue pronto para publicar. Não somos uma ferramenta de sugestão.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BrandScript -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">BrandScript</div>
+        <h2>Os 7 atos da narrativa</h2>
+      </div>
+      <div class="card" style="padding:0; overflow:hidden;">
+        <table class="bs-table">
+          <tr>
+            <td class="bs-act">Ato 1</td>
+            <td class="bs-elem">Herói</td>
+            <td class="bs-desc">O gestor de lançamento que opera com equipe enxuta e carrega a responsabilidade de entregar campanhas com qualidade de grande operação. Sabe exatamente o que precisa ser feito. O gap não é de conhecimento — é de capacidade de produção.</td>
+          </tr>
+          <tr>
+            <td class="bs-act">Ato 2</td>
+            <td class="bs-elem">Guia</td>
+            <td class="bs-desc">[NOME] — a plataforma que já processou padrões de milhares de lançamentos. Não ensina o herói a fazer marketing — reconhece que ele já sabe. Oferece capacidade de produção com inteligência embutida.</td>
+          </tr>
+          <tr>
+            <td class="bs-act">Ato 3</td>
+            <td class="bs-elem">Problema Externo</td>
+            <td class="bs-desc">Produzir todos os elementos de uma campanha exige equipe grande, tempo longo e orçamento alto. As ferramentas existentes ajudam em partes isoladas mas nenhuma entrega a campanha completa.</td>
+          </tr>
+          <tr>
+            <td class="bs-act">Ato 4</td>
+            <td class="bs-elem">Problema Interno</td>
+            <td class="bs-desc">A frustração de saber que existe um nível acima. A sensação constante de que a qualidade do output não reflete a qualidade da estratégia. A tensão entre o que a oferta merece e o que a equipe consegue produzir no prazo.</td>
+          </tr>
+          <tr>
+            <td class="bs-act">Ato 5</td>
+            <td class="bs-elem">Problema Filosófico</td>
+            <td class="bs-desc">Tamanho não deveria determinar qualidade. O tamanho da equipe não deveria ser o fator que limita a qualidade do que chega ao mercado. A tecnologia para mudar isso já existe.</td>
+          </tr>
+          <tr>
+            <td class="bs-act">Ato 6</td>
+            <td class="bs-elem">O Plano</td>
+            <td class="bs-desc"><strong style="color:var(--accent-2);">1.</strong> Briefing estratégico. <strong style="color:var(--accent-2);">2.</strong> 13 agentes produzem em paralelo. <strong style="color:var(--accent-2);">3.</strong> Você revisa e aplica julgamento criativo. <strong style="color:var(--accent-2);">4.</strong> Publica. Tudo pronto, tudo formatado, tudo no nível que a oferta merece.</td>
+          </tr>
+          <tr>
+            <td class="bs-act">Ato 7a</td>
+            <td class="bs-elem">Sucesso</td>
+            <td class="bs-desc">Uma campanha completa com a profundidade de uma operação de 20 pessoas — entregue por uma equipe de 2. O gestor abre o material e reconhece: isso é o nível que eu sempre quis entregar.</td>
+          </tr>
+          <tr>
+            <td class="bs-act">Ato 7b</td>
+            <td class="bs-elem">Fracasso Evitado</td>
+            <td class="bs-desc">Lançar com campanha incompleta. Emails não escritos. Criativos genéricos. Funil pela metade. O resultado que ficou abaixo do potencial não porque a estratégia era ruim, mas porque a produção não acompanhou.</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- =============================================
+     TAB 3: ARQUÉTIPOS
+     ============================================= -->
+<div id="arquetipos" class="tab-panel">
+  <div class="container">
+
+    <div class="hero-block">
+      <div class="hero-eyebrow">03 — Arquétipos da Marca</div>
+      <h1 class="hero-headline">Quem somos, em essência.</h1>
+      <p class="hero-sub">Três arquétipos em equilíbrio estratégico — não por acidente, mas por precisão.</p>
+    </div>
+
+    <div class="section">
+      <div style="margin-bottom:2rem;">
+        <div class="bar-row">
+          <span class="bar-label">Mago</span>
+          <div class="bar-track"><div class="bar-fill" style="width:55%"></div></div>
+          <span class="bar-pct">55%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Sábio</span>
+          <div class="bar-track"><div class="bar-fill" style="width:25%"></div></div>
+          <span class="bar-pct">25%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Criador</span>
+          <div class="bar-track"><div class="bar-fill muted" style="width:20%"></div></div>
+          <span class="bar-pct">20%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mago -->
+    <div class="section">
+      <div class="archetype-card">
+        <div class="archetype-header">
+          <div>
+            <h4>Arquétipo Primário</h4>
+            <div class="archetype-name">O Mago</div>
+          </div>
+          <div class="archetype-pct">55%</div>
+        </div>
+        <div class="archetype-body">
+          <p><strong>Justificativa estratégica:</strong> O Mago é o arquétipo dominante porque a experiência central do produto é transformação que parece impossível. Um briefing entra, uma campanha completa sai. O usuário não acompanha o processo intermediário — vê o input e o output, e a distância entre os dois é grande demais para parecer convencional. Essa é a essência do Mago: a transformação acontece, o resultado é real, e o "como" permanece elegantemente opaco.</p>
+
+          <div class="divider"></div>
+
+          <div class="grid-2" style="margin-bottom:1.5rem;">
+            <div class="grid-2-cell">
+              <h4>Motivação Central</h4>
+              <p style="margin:0;">Tornar real o que parecia impossível. Transformar a realidade — não descrevendo um futuro melhor, mas entregando-o agora.</p>
+            </div>
+            <div class="grid-2-cell">
+              <h4>Medo Central</h4>
+              <p style="margin:0;">Ser banal. Que a transformação perca o impacto, que o resultado se torne esperado a ponto de virar commodity.</p>
+            </div>
+            <div class="grid-2-cell">
+              <h4>Promessa ao Cliente</h4>
+              <p style="margin:0;">O que você vai receber não deveria ser possível com o que você colocou. Mas é. E está pronto.</p>
+            </div>
+            <div class="grid-2-cell">
+              <h4>Referência de Mercado</h4>
+              <p style="margin:0;">Apple sob Steve Jobs. O produto chegava pronto, integrado, funcionando. "It just works" é puro Mago.</p>
+            </div>
+          </div>
+
+          <div class="inline-quote">
+            No tom: nunca explica demais. Mostra o antes e o depois e deixa o gap falar por si. A confiança vem da desproporção entre input e output.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sábio -->
+    <div class="section">
+      <div class="archetype-card">
+        <div class="archetype-header">
+          <div>
+            <h4>Arquétipo Secundário</h4>
+            <div class="archetype-name">O Sábio</div>
+          </div>
+          <div class="archetype-pct" style="color:var(--accent-2);">25%</div>
+        </div>
+        <div class="archetype-body">
+          <p><strong>Justificativa estratégica:</strong> O Sábio é o segundo arquétipo porque a plataforma não opera por acaso. A "magia" do Mago sem o Sábio seria percebida como truque, sorte ou caixa-preta perigosa. O Sábio garante que a transformação tem fundamento: são padrões reais de milhares de lançamentos processados. A inteligência é verificável. O resultado não é aleatório — é consequência de método.</p>
+
+          <div class="divider"></div>
+
+          <div class="grid-2" style="margin-bottom:1.5rem;">
+            <div class="grid-2-cell">
+              <h4>Motivação Central</h4>
+              <p style="margin:0;">Compreender os padrões que governam o sucesso e aplicá-los com precisão. Substituir achismo por evidência.</p>
+            </div>
+            <div class="grid-2-cell">
+              <h4>Medo Central</h4>
+              <p style="margin:0;">Ser impreciso. Que o output não reflita os padrões reais. Que a confiança do usuário seja quebrada por um resultado que não se sustenta.</p>
+            </div>
+            <div class="grid-2-cell">
+              <h4>Promessa ao Cliente</h4>
+              <p style="margin:0;">Não é sorte. São padrões. Cada decisão criativa dentro da campanha tem fundamento em dados reais de lançamentos que funcionaram.</p>
+            </div>
+            <div class="grid-2-cell">
+              <h4>Referência de Mercado</h4>
+              <p style="margin:0;">Google. Você não pergunta como ele encontrou o resultado. Você confia porque ele sempre encontra.</p>
+            </div>
+          </div>
+
+          <div class="inline-quote">
+            No tom: autoridade que não precisa ser barulhenta. Quando fundamenta algo, faz com densidade, não com volume.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Criador -->
+    <div class="section">
+      <div class="archetype-card">
+        <div class="archetype-header">
+          <div>
+            <h4>Arquétipo Terciário</h4>
+            <div class="archetype-name">O Criador</div>
+          </div>
+          <div class="archetype-pct" style="color:var(--text-2); font-size:1.5rem;">20%</div>
+        </div>
+        <div class="archetype-body">
+          <p><strong>Justificativa estratégica:</strong> O Criador é o terceiro arquétipo porque o output precisa ser criativo de verdade — não genérico, não template, não "cara de IA". Se o Mago transforma e o Sábio fundamenta, o Criador garante que o resultado final tem voz, autoria e qualidade criativa perceptível. Sem o Criador, a plataforma seria eficiente mas seria. Com ele, os outputs são algo que a agência tem orgulho de publicar com seu nome.</p>
+
+          <div class="divider"></div>
+
+          <div class="grid-2" style="margin-bottom:1.5rem;">
+            <div class="grid-2-cell">
+              <h4>Motivação Central</h4>
+              <p style="margin:0;">Produzir algo que tenha voz própria. Que o output não seja preenchimento de template, mas criação com lógica criativa, ritmo e personalidade.</p>
+            </div>
+            <div class="grid-2-cell">
+              <h4>Medo Central</h4>
+              <p style="margin:0;">Ser genérico. Que os outputs sejam reconhecíveis como "feitos por IA" — sem textura, sem surpresa, sem a irregularidade intencional que faz o trabalho criativo parecer humano.</p>
+            </div>
+            <div class="grid-2-cell">
+              <h4>Promessa ao Cliente</h4>
+              <p style="margin:0;">O que sai da plataforma não tem cara de IA. Tem cara de equipe boa com tempo de sobra. A autoria percebida é sua — e você vai querer que seja.</p>
+            </div>
+            <div class="grid-2-cell">
+              <h4>Referência de Mercado</h4>
+              <p style="margin:0;">Figma. Permitiu que equipes menores produzissem trabalho de design no nível de estúdios grandes — sem que o output tivesse "cara de template".</p>
+            </div>
+          </div>
+
+          <div class="inline-quote">
+            No produto: os outputs passam no "teste do orgulho" — a agência publica sem ressalvas.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- =============================================
+     TAB 4: POSICIONAMENTO
+     ============================================= -->
+<div id="posicionamento" class="tab-panel">
+  <div class="container">
+
+    <div class="hero-block">
+      <div class="hero-eyebrow">04 — Posicionamento Estratégico</div>
+      <h1 class="hero-headline">Onde estamos.<br>Por que importa.</h1>
+    </div>
+
+    <!-- Declaração -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Declaração de Posicionamento</div>
+        <h2>Em uma frase</h2>
+      </div>
+      <div class="pos-statement">
+        <strong>[NOME]</strong> é a única plataforma de produção de campanhas de lançamento com IA que entrega todos os assets prontos para publicação — do copy ao criativo, do funil ao email — para agências de lançamento com equipes enxutas que precisam produzir no nível de grandes operações sem ampliar headcount, ao contrário de ferramentas de IA generativas que param no rascunho, na sugestão ou no template semi-pronto e ainda exigem horas de trabalho humano para transformar o output em algo publicável.
+      </div>
+    </div>
+
+    <!-- Inimigo da Marca -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Inimigo da Marca</div>
+        <h2>O que combatemos</h2>
+      </div>
+
+      <div class="enemy-block">
+        <div class="enemy-label">O inimigo não é uma empresa — é um padrão</div>
+        <div class="enemy-name">O "Quase-Pronto"</div>
+        <p style="color:var(--text-2); margin:0;">A ferramenta que gera rascunho e chama de entrega. A plataforma que monta estrutura de funil e diz que "automatizou seu funil". O assistente que sugere 5 headlines e apresenta como "otimização de campanha". Em todos esses casos, o trabalho real ainda recai inteiramente sobre o operador humano.</p>
+      </div>
+
+      <div class="grid-2" style="margin-top:1.5rem;">
+        <div class="grid-2-cell">
+          <h4>O padrão do mercado</h4>
+          <p style="margin:0; font-size:0.88rem;">A ferramenta fez 30% e vendeu como se tivesse feito 90%. Esse padrão é insidioso porque cria a ilusão de produtividade. A agência compra 4 ferramentas, assina 6 plataformas, e no fim do dia o gestor ainda está acordado às 23h revisando, ajustando, completando, formatando manualmente cada peça.</p>
+        </div>
+        <div class="grid-2-cell">
+          <h4>Nossa resposta</h4>
+          <p style="margin:0; font-size:0.88rem;">[NOME] existe para eliminar o "quase-pronto" como padrão aceitável. A única entrega que conta é a que está pronta para publicar. Todo o resto é trabalho em progresso — e chamar trabalho em progresso de entrega é o problema que estamos resolvendo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Positioning Tone -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Positioning Tone · Chris Do</div>
+        <h2>A justaposição que define a marca</h2>
+      </div>
+      <div class="quote-block">
+        <p class="quote-text" style="font-size:1.4rem; font-weight:600; letter-spacing:-0.02em;">Precisão Impossível</p>
+        <p style="margin-top:1rem; margin-bottom:0; font-size:0.9rem;">"Precisão" evoca o Sábio — método, padrão, fundamento. "Impossível" evoca o Mago — a transformação que desafia expectativas. Juntos, definem uma marca que entrega algo que não deveria existir — mas existe, e funciona, e está pronto.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- =============================================
+     TAB 5: TOM DE VOZ
+     ============================================= -->
+<div id="voz" class="tab-panel">
+  <div class="container">
+
+    <div class="hero-block">
+      <div class="hero-eyebrow">05 — Tom de Voz</div>
+      <h1 class="hero-headline">Como falamos.</h1>
+      <p class="hero-sub">Três adjetivos consistentes — não adaptáveis. A voz é o que torna a marca reconhecível antes do nome aparecer.</p>
+    </div>
+
+    <!-- 3 Adjetivos -->
+    <div class="section">
+      <div class="grid-3">
+        <div class="card card-elevated">
+          <h4>Adjetivo 01</h4>
+          <h3>Tranquila</h3>
+          <p style="font-size:0.88rem; margin:0;">A marca fala como quem não precisa convencer. Sem urgência artificial, sem superlativos, sem exclamações. A confiança está na cadência, não no volume. Quando você já sabe que o resultado fala por si, você não precisa gritar.</p>
+        </div>
+        <div class="card card-elevated">
+          <h4>Adjetivo 02</h4>
+          <h3>Densa</h3>
+          <p style="font-size:0.88rem; margin:0;">Cada frase carrega peso. Não há preenchimento, não há floreio, não há frase que existe só para ocupar espaço. Não é minimalismo estético — é precisão comunicativa. Menos palavras, mais impacto por palavra.</p>
+        </div>
+        <div class="card card-elevated">
+          <h4>Adjetivo 03</h4>
+          <h3>Reveladora</h3>
+          <p style="font-size:0.88rem; margin:0;">O tom não é de pitch — é de revelação. Como se a marca estivesse mostrando algo que sempre esteve ali mas ninguém tinha nomeado. O "quase-pronto" que você aceitava sem questionar. A marca nomeia o que você sentia mas não articulava.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Touchpoints -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Manifestação por Touchpoint</div>
+        <h2>A voz em contexto</h2>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div class="card">
+          <h4>Headline de Produto</h4>
+          <p style="font-size:1rem; font-weight:500; color:var(--text); margin:0;">"Briefing entra. Campanha sai. Pronta."</p>
+        </div>
+        <div class="card">
+          <h4>Descrição de Feature</h4>
+          <p style="font-size:0.9rem; color:var(--text-2); margin:0;">"O agente de copy não gera rascunhos para você revisar. Ele escreve a versão final — com ritmo, CTA e tom calibrado para o estágio do funil. Se precisar de ajuste, ajuste. Mas o ponto de partida já é o ponto de chegada."</p>
+        </div>
+        <div class="card">
+          <h4>CTA Principal</h4>
+          <p style="font-size:1rem; font-weight:500; color:var(--text); margin:0;">"Envie seu primeiro briefing."</p>
+        </div>
+        <div class="card">
+          <h4>Email de Onboarding · Dia 1</h4>
+          <p style="font-size:0.9rem; color:var(--text-2); margin:0;">"Você tem acesso. Agora escolha: comece com um briefing real ou explore com um lançamento fictício. Nos dois casos, o resultado vai ser uma campanha completa. Não um tutorial. Não uma demo. A campanha inteira, pronta para publicar. É assim que você vai entender o que isso faz."</p>
+        </div>
+        <div class="card">
+          <h4>Mensagem de Erro</h4>
+          <p style="font-size:0.9rem; color:var(--text-2); margin:0;">"Algo não funcionou como deveria. Estamos corrigindo. Você será notificado quando o output estiver pronto — e ele vai estar pronto."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sim vs Não -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">5 Exemplos</div>
+        <h2>Assim Sim · Assim Não</h2>
+      </div>
+      <div class="card" style="padding:0; overflow:hidden;">
+        <table class="voice-table" style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr>
+              <th class="col-yes" style="width:50%; padding:1rem 1.25rem;">Assim SIM</th>
+              <th class="col-no" style="width:50%; padding:1rem 1.25rem; border-left:1px solid var(--border);">Assim NÃO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cell-yes">"13 agentes. Um briefing. Campanha completa."</td>
+              <td class="cell-no">"Nossa revolucionária plataforma de IA utiliza 13 agentes inteligentes para potencializar seus lançamentos!"</td>
+            </tr>
+            <tr>
+              <td class="cell-yes">"O output está pronto para publicar. Não pronto para revisar."</td>
+              <td class="cell-no">"Gere conteúdo incrível em segundos com o poder da inteligência artificial!"</td>
+            </tr>
+            <tr>
+              <td class="cell-yes">"A agência de 2 que entrega como a de 20."</td>
+              <td class="cell-no">"Escale sua agência com automação de ponta a ponta e maximize resultados!"</td>
+            </tr>
+            <tr>
+              <td class="cell-yes">"Não é sorte. São padrões de milhares de lançamentos."</td>
+              <td class="cell-no">"Nosso algoritmo proprietário com machine learning analisa milhões de data points para garantir resultados superiores."</td>
+            </tr>
+            <tr>
+              <td class="cell-yes">"Você não precisa entender como. Só precisa abrir e verificar que está pronto."</td>
+              <td class="cell-no">"Descubra como nossa tecnologia disruptiva está transformando o futuro do marketing digital!"</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- =============================================
+     TAB 6: VOCABULÁRIO
+     ============================================= -->
+<div id="vocabulario" class="tab-panel">
+  <div class="container">
+
+    <div class="hero-block">
+      <div class="hero-eyebrow">06 — Vocabulário da Marca</div>
+      <h1 class="hero-headline">O que dizemos.<br>O que nunca dizemos.</h1>
+    </div>
+
+    <!-- Taglines -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">Truelines & Taglines</div>
+        <h2>As frases que nos definem</h2>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:1.25rem;">
+
+        <div class="card card-elevated">
+          <h4>Tagline Principal · Assinatura</h4>
+          <div class="tagline-hero">Briefing entra<span class="dot">.</span> Campanha sai<span class="dot">.</span></div>
+          <p class="tagline-context">Seis palavras. Duas frases. Um gap implícito entre elas onde toda a magia, inteligência e produção acontecem. Não promete. Descreve.</p>
+        </div>
+
+        <div class="card">
+          <h4>Hero Statement · Homepage</h4>
+          <p style="font-size:1.05rem; font-weight:500; color:var(--text); margin-bottom:0.5rem;">"A única plataforma que não para até a campanha estar pronta para publicar."</p>
+          <p class="tagline-context">Direto. Diferenciador. Implica que todas as outras param antes. A comparação é estrutural — não precisa nomear concorrentes.</p>
+        </div>
+
+        <div class="card">
+          <h4>Posicionamento Direto · Proposta Comercial</h4>
+          <p style="font-size:1rem; font-weight:500; color:var(--text); margin-bottom:0.5rem;">"13 agentes de IA especializados produzem sua campanha de lançamento completa — do briefing ao asset final. Pronto para publicar, não para revisar."</p>
+          <p class="tagline-context">Para contextos onde clareza operacional importa mais que impacto emocional.</p>
+        </div>
+
+        <div class="card">
+          <h4>Brand Essence · Bio de Redes Sociais</h4>
+          <p style="font-size:1rem; font-weight:500; color:var(--text); margin-bottom:0.5rem;">"Campanhas de lançamento completas. Do briefing à publicação."</p>
+          <p class="tagline-context">Funcional, claro, pesquisável. Para contextos onde o espaço é limitado.</p>
+        </div>
+
+        <div class="card">
+          <h4>Tom Inspiracional · Palcos e Eventos</h4>
+          <p style="font-size:1.1rem; font-weight:600; color:var(--text); margin-bottom:0.5rem; letter-spacing:-0.015em;">"O tamanho da equipe nunca mais vai determinar o tamanho da campanha."</p>
+          <p class="tagline-context">Para keynotes e palestras. O "por quê" comprimido em uma única sentença.</p>
+        </div>
+
+        <div class="card" style="border-color:rgba(239,68,68,0.15); background:rgba(239,68,68,0.03);">
+          <h4 style="color:var(--deny-text);">Anti-Tagline · Uso Interno</h4>
+          <p style="font-size:1rem; font-weight:600; color:var(--text); margin-bottom:0.5rem;">"Nós não fazemos rascunhos."</p>
+          <p class="tagline-context">Uso interno como filtro para toda decisão de produto, comunicação e experiência. Se algo que a plataforma entrega pudesse ser descrito como "rascunho", não está no nível.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 12 palavras de poder -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">12 Palavras de Poder</div>
+        <h2>Usar sempre</h2>
+      </div>
+      <div class="card" style="padding:0; overflow:hidden;">
+        <table class="brand-table">
+          <thead>
+            <tr>
+              <th>Palavra</th>
+              <th>Por que usar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-key vocab-power">Pronto</td>
+              <td>A palavra que mais diferencia a marca. Não "quase", não "rascunho" — pronto.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Campanha</td>
+              <td>Reforça que a entrega é completa e integrada, não peças soltas.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Publicar</td>
+              <td>O verbo que define a linha de chegada real — o asset no ar.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Briefing</td>
+              <td>O único input que o usuário precisa dar. Simplifica a experiência.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Padrões</td>
+              <td>O fundamento do Sábio. Substitui "algoritmo" e "dados" com mais substância.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Completo</td>
+              <td>Antídoto direto ao "quase-pronto". Sem margem para interpretação.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Output</td>
+              <td>Técnico o suficiente para ser preciso, acessível o suficiente para ser claro.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Agentes</td>
+              <td>Evoca especialização e autonomia. Cada um faz uma coisa e faz até o fim.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Paralelo</td>
+              <td>Comunica velocidade sem prometer velocidade. A estrutura é que é rápida.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Coerência</td>
+              <td>O diferencial entre peças soltas e campanha integrada.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Entrega</td>
+              <td>Redefinida pela marca: entrega = pronto para publicar. Nada menos.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-power">Nível</td>
+              <td>"Entregar no nível" — eleva sem ser arrogante. É sobre padrão de qualidade.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 12 palavras proibidas -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">12 Palavras Proibidas</div>
+        <h2>Nunca usar</h2>
+      </div>
+      <div class="card" style="padding:0; overflow:hidden; border-color:rgba(239,68,68,0.12);">
+        <table class="brand-table">
+          <thead>
+            <tr>
+              <th>Palavra</th>
+              <th>Por que evitar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-key vocab-forbidden">Revolucionário</td>
+              <td>Clichê de startup. Todo mundo é "revolucionário". Ninguém acredita mais.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Disruptivo</td>
+              <td>Mesmo problema. Virou white noise de pitch deck.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Incrível</td>
+              <td>Superlativo vazio. A marca mostra, não adjetiva.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Potencializar</td>
+              <td>Jargão corporativo que não diz nada concreto.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Escalar</td>
+              <td>Linguagem de growth hacking que não pertence ao tom da marca.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Automatizar</td>
+              <td>Reduz a plataforma a uma ferramenta de automação. Ela cria, não automatiza.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Hack / Growth</td>
+              <td>Cultura de atalho. A marca é sobre qualidade de output, não truques.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Mágico</td>
+              <td>A ironia: sendo arquétipo Mago, nunca se auto-rotule. O Mago não diz que é mágico.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Garantido</td>
+              <td>Promessa que gera desconfiança. A marca gera confiança por evidência, não promessa.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Simples</td>
+              <td>Reduz a sofisticação do que acontece por dentro. A experiência é simples; o sistema, não.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Ilimitado</td>
+              <td>Promessa impossível. A marca é precisa, não hiperbólica.</td>
+            </tr>
+            <tr>
+              <td class="col-key vocab-forbidden">Futuro</td>
+              <td>A marca entrega no presente. "Futuro do marketing" é clichê sem substância.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- =============================================
+     TAB 7: JORNADA
+     ============================================= -->
+<div id="jornada" class="tab-panel">
+  <div class="container">
+
+    <div class="hero-block">
+      <div class="hero-eyebrow">07 — Jornada do Cliente</div>
+      <h1 class="hero-headline">Como o ceticismo<br>vira dependência estrutural.</h1>
+      <p class="hero-sub">4 fases. Cada uma com seu estado emocional, comportamento e o que acontece dentro do cliente.</p>
+    </div>
+
+    <div class="section">
+      <div class="phase-card">
+        <div class="phase-number">01</div>
+        <div>
+          <div class="phase-label">Fase 1</div>
+          <div class="phase-title">Ceticismo Curioso</div>
+          <div class="phase-quote">"Isso não pode ser real."</div>
+          <p style="font-size:0.9rem; margin-bottom:0.75rem;">O gestor de lançamento descobre [NOME] — provavelmente via indicação de outro profissional ou por um exemplo de output que viu e não acreditou que foi feito por IA. Ele visita o site, lê a promessa, e a reação imediata é desconfiança produtiva. Já viu ferramentas de IA prometerem demais. Mas algo é diferente aqui: a comunicação não é empolgada. É precisa. E a precisão gera uma curiosidade que a empolgação não geraria.</p>
+          <div class="inline-quote">
+            "Vou testar com algo pequeno. Se o output for rascunho genérico como tudo que já testei, pelo menos confirmo rápido e sigo."
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-number">02</div>
+        <div>
+          <div class="phase-label">Fase 2</div>
+          <div class="phase-title">Verificação Silenciosa</div>
+          <div class="phase-quote">"Espera. Isso está... pronto?"</div>
+          <p style="font-size:0.9rem; margin-bottom:0.75rem;">O gestor envia o primeiro briefing. A campanha volta. Completa. Copy final. Criativos finalizados. Funil estruturado. Emails escritos. Ele abre cada peça esperando encontrar o momento em que a qualidade cai — o ponto onde a IA "para de entregar". Esse ponto não vem. Ele revisa. Ajusta um tom aqui, uma referência ali. Mas o trabalho pesado já está feito. E está bom.</p>
+          <div class="inline-quote">
+            "Eu gastaria 3 semanas e 4 pessoas para produzir isso. Saiu em... quanto tempo? E está no nível. Preciso testar de novo para ter certeza."
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-number">03</div>
+        <div>
+          <div class="phase-label">Fase 3</div>
+          <div class="phase-title">Integração Silenciosa</div>
+          <div class="phase-quote">"Agora eu começo pelo briefing."</div>
+          <p style="font-size:0.9rem; margin-bottom:0.75rem;">O gestor muda o workflow. Antes, o lançamento começava com "o que a gente consegue produzir com a equipe que tem". Agora começa com "qual é a melhor campanha possível para essa oferta" — porque a produção não é mais o gargalo. Ele investe mais tempo no briefing, na estratégia, no posicionamento. As decisões criativas de alto nível voltaram a ser dele.</p>
+          <div class="inline-quote">
+            "Eu não sei como funciona por dentro e honestamente não preciso saber. Funciona. E meu papel voltou a ser estratégia, não produção."
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-number">04</div>
+        <div>
+          <div class="phase-label">Fase 4</div>
+          <div class="phase-title">Dependência Estrutural</div>
+          <div class="phase-quote">"Eu não consigo imaginar lançar sem isso."</div>
+          <p style="font-size:0.9rem; margin-bottom:0.75rem;">A plataforma não é mais uma ferramenta que a agência usa. É a infraestrutura sobre a qual a agência opera. O modelo de negócio mudou: a agência aceita mais projetos, entrega em prazos menores, cobra por estratégia (não por hora de produção), e a reputação cresce porque a qualidade do output é consistente. Voltar ao modelo anterior é impensável — não por fidelidade à marca, mas porque a equação não fecha mais sem ela.</p>
+          <div class="inline-quote">
+            "Minha agência de 3 pessoas entrega como se fossem 15. E ninguém pergunta como. Só percebem que o resultado está num nível que não esperavam."
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- =============================================
+     TAB 8: CONTRATO
+     ============================================= -->
+<div id="contrato" class="tab-panel">
+  <div class="container">
+
+    <div class="hero-block">
+      <div class="hero-eyebrow">08 — Contrato da Marca</div>
+      <h1 class="hero-headline">O que prometemos.<br>O que pedimos.</h1>
+    </div>
+
+    <!-- Promessas -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">5 Promessas da Marca ao Cliente</div>
+        <h2>O que não se negocia</h2>
+      </div>
+
+      <div class="promise-card">
+        <div class="promise-num">01</div>
+        <div>
+          <div class="promise-title">O output vai estar pronto para publicar</div>
+          <p style="font-size:0.88rem; margin:0;">Não pronto para revisar. Não pronto para "dar uma ajustada". Pronto para ir ao ar. Esse é o padrão mínimo e inegociável. Se precisar de ajuste fino de tom ou preferência pessoal, o ajuste é sobre voz — não sobre completude. A peça está completa antes de você tocar nela.</p>
+        </div>
+      </div>
+
+      <div class="promise-card">
+        <div class="promise-num">02</div>
+        <div>
+          <div class="promise-title">A campanha vai ter coerência interna</div>
+          <p style="font-size:0.88rem; margin:0;">Os 13 agentes não produzem peças isoladas. Produzem uma campanha. O tom do email conversa com o tom da página. O criativo reforça o argumento do copy. A sequência do funil tem lógica narrativa. Você recebe uma campanha, não uma coleção de arquivos.</p>
+        </div>
+      </div>
+
+      <div class="promise-card">
+        <div class="promise-num">03</div>
+        <div>
+          <div class="promise-title">A autoria percebida é sua</div>
+          <p style="font-size:0.88rem; margin:0;">O output final não tem marca d'água da plataforma — literal ou figurativa. Não tem "cara de IA", não tem padrão genérico reconhecível, não tem assinatura que não seja a da sua agência. O que sai daqui, você assina com orgulho.</p>
+        </div>
+      </div>
+
+      <div class="promise-card">
+        <div class="promise-num">04</div>
+        <div>
+          <div class="promise-title">O fundamento é real</div>
+          <p style="font-size:0.88rem; margin:0;">Cada decisão criativa dentro da campanha é baseada em padrões extraídos de lançamentos reais. Não é geração aleatória, não é template requentado, não é "o que a IA inventou". Você não precisa ver o fundamento para que ele esteja lá.</p>
+        </div>
+      </div>
+
+      <div class="promise-card">
+        <div class="promise-num">05</div>
+        <div>
+          <div class="promise-title">O padrão se mantém</div>
+          <p style="font-size:0.88rem; margin:0;">O primeiro lançamento que você produzir com a plataforma não vai ser melhor que o décimo. Vai ser igual. Consistência não é bônus — é arquitetura. O sistema foi construído para entregar no mesmo nível toda vez, independente do tipo de oferta, do tamanho da campanha ou da pressão do prazo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expectativas -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">4 Expectativas da Marca do Cliente</div>
+        <h2>O que pedimos em troca</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="grid-2-cell">
+          <h4>Expectativa 01</h4>
+          <h3 style="font-size:1rem; margin-bottom:0.5rem;">Invista no briefing</h3>
+          <p style="font-size:0.88rem; margin:0;">A qualidade do output é diretamente proporcional à qualidade do input. A plataforma transforma briefings em campanhas — não transforma descuido em resultado. O briefing é a única coisa que pedimos de você. Faça dele o melhor trabalho do processo.</p>
+        </div>
+        <div class="grid-2-cell">
+          <h4>Expectativa 02</h4>
+          <h3 style="font-size:1rem; margin-bottom:0.5rem;">Revise com julgamento, não com desconfiança</h3>
+          <p style="font-size:0.88rem; margin:0;">O output vai estar pronto. Sua função na revisão não é "verificar se a IA errou" — é aplicar seu julgamento estratégico e sua sensibilidade criativa ao material. Faça o que um diretor criativo faz: eleve, não reconstrua.</p>
+        </div>
+        <div class="grid-2-cell">
+          <h4>Expectativa 03</h4>
+          <h3 style="font-size:1rem; margin-bottom:0.5rem;">Não explique como foi feito</h3>
+          <p style="font-size:0.88rem; margin:0;">A autoria é sua. A plataforma foi desenhada para que o output final seja indistinguível de trabalho humano de alto nível. A decisão de contar ao seu cliente que usou IA é sua. Mas a plataforma foi construída para que você não precise.</p>
+        </div>
+        <div class="grid-2-cell">
+          <h4>Expectativa 04</h4>
+          <h3 style="font-size:1rem; margin-bottom:0.5rem;">Use para o que importa</h3>
+          <p style="font-size:0.88rem; margin:0;">A plataforma foi construída para campanhas de lançamento. Use para o que ela foi feita: transformar um briefing estratégico em uma campanha completa e publicável. É aí que você vê o que acontece.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="section" style="border-bottom:none;">
+      <div class="card" style="text-align:center; padding:3rem 2rem;">
+        <div style="font-size:0.68rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-3); margin-bottom:1.5rem;">Status do Documento</div>
+        <div style="font-size:1.2rem; font-weight:600; color:var(--text); margin-bottom:1rem; letter-spacing:-0.015em;">Fundação aprovada. Naming pendente.</div>
+        <p style="color:var(--text-3); font-size:0.85rem; max-width:480px; margin:0 auto;">Documento estratégico de posicionamento v2.0. [NOME] será substituído pelo nome aprovado em todas as instâncias após conclusão do processo de naming.</p>
+        <div class="pill-row" style="justify-content:center; margin-top:1.5rem;">
+          <span class="tag">Manifesto ✓</span>
+          <span class="tag">Arquétipos ✓</span>
+          <span class="tag">Tom de Voz ✓</span>
+          <span class="tag">Vocabulário ✓</span>
+          <span class="tag">Jornada ✓</span>
+          <span class="tag" style="background:var(--deny-bg); color:var(--deny-text); border-color:rgba(239,68,68,0.2);">Naming pendente</span>
+          <span class="tag" style="background:var(--deny-bg); color:var(--deny-text); border-color:rgba(239,68,68,0.2);">ID Visual pendente</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- =============================================
+     TAB 9: DESIGN SYSTEM
+     ============================================= -->
+<div id="design-system" class="tab-panel">
+  <div class="container">
+
+    <div class="hero-block">
+      <div class="hero-eyebrow">09 — Design System</div>
+      <h1 class="hero-headline">Tokens, tipografia<br>e componentes.</h1>
+      <p class="hero-sub">As unidades atômicas que garantem consistência visual em todos os pontos de contato da marca.</p>
+    </div>
+
+    <!-- COLOR TOKENS -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <h2>Color Tokens</h2>
+      </div>
+
+      <h4 style="margin-bottom:1rem;">Camadas de Background</h4>
+      <div class="ds-swatch-grid" style="margin-bottom:2rem;">
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#08080D;"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--bg</div>
+            <div class="ds-swatch-value">#08080D · Base</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#0F0F16;"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--surface</div>
+            <div class="ds-swatch-value">#0F0F16 · Card L1</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#16161F;"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--surface-2</div>
+            <div class="ds-swatch-value">#16161F · Card L2</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#1C1C28;"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--surface-3</div>
+            <div class="ds-swatch-value">#1C1C28 · Card L3</div>
+          </div>
+        </div>
+      </div>
+
+      <h4 style="margin-bottom:1rem;">Accent — Indigo Elétrico</h4>
+      <div class="ds-swatch-grid" style="margin-bottom:2rem;">
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#6366F1;"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--accent</div>
+            <div class="ds-swatch-value">#6366F1 · Primary</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#818CF8;"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--accent-2</div>
+            <div class="ds-swatch-value">#818CF8 · Light</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:rgba(99,102,241,0.10);"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--accent-dim</div>
+            <div class="ds-swatch-value">rgba(99,102,241,0.10)</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:rgba(99,102,241,0.20);"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--accent-glow</div>
+            <div class="ds-swatch-value">rgba(99,102,241,0.20)</div>
+          </div>
+        </div>
+      </div>
+
+      <h4 style="margin-bottom:1rem;">Hierarquia de Texto</h4>
+      <div class="ds-swatch-grid" style="margin-bottom:2rem;">
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#F4F4F5;"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--text</div>
+            <div class="ds-swatch-value">#F4F4F5 · Primário</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:rgba(244,244,245,0.55);"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--text-2</div>
+            <div class="ds-swatch-value">rgba(244,244,245,0.55)</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:rgba(244,244,245,0.30);"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--text-3</div>
+            <div class="ds-swatch-value">rgba(244,244,245,0.30)</div>
+          </div>
+        </div>
+      </div>
+
+      <h4 style="margin-bottom:1rem;">Semânticas — Estado</h4>
+      <div class="ds-swatch-grid">
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:rgba(99,102,241,0.08);"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--allow-bg</div>
+            <div class="ds-swatch-value">rgba(99,102,241,0.08)</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#818CF8; height:30px;"></div>
+          <div class="ds-swatch-color" style="background:rgba(239,68,68,0.08); height:30px;"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--allow-text / --deny-bg</div>
+            <div class="ds-swatch-value">#818CF8 · rgba(239,68,68,0.08)</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:#F87171;"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--deny-text</div>
+            <div class="ds-swatch-value">#F87171 · Red Light</div>
+          </div>
+        </div>
+        <div class="ds-swatch">
+          <div class="ds-swatch-color" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15);"></div>
+          <div class="ds-swatch-info">
+            <div class="ds-swatch-name">--border</div>
+            <div class="ds-swatch-value">rgba(255,255,255,0.06)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <h2>Tipografia</h2>
+      </div>
+      <div class="card" style="padding:0; overflow:hidden; margin-bottom:1.5rem;">
+        <div style="padding:1.25rem 1.75rem; border-bottom:1px solid var(--border); display:flex; gap:1rem; align-items:center;">
+          <span class="tag">Inter</span>
+          <span style="font-size:0.82rem; color:var(--text-3);">Google Fonts — weights 300, 400, 500, 600, 700</span>
+        </div>
+        <div style="padding:1.25rem 1.75rem;">
+          <div class="ds-type-row">
+            <div class="ds-type-meta">
+              <div class="ds-type-tag">Display / H1</div>
+              <div class="ds-type-spec">clamp(2rem,5vw,3rem) · 600 · -0.025em</div>
+            </div>
+            <div style="font-size:clamp(1.8rem,4vw,2.6rem); font-weight:600; letter-spacing:-0.025em; line-height:1.15; color:var(--text);">O mercado mudou.</div>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta">
+              <div class="ds-type-tag">Heading / H2</div>
+              <div class="ds-type-spec">clamp(1.4rem,3vw,2rem) · 600 · -0.02em</div>
+            </div>
+            <div style="font-size:clamp(1.2rem,2.5vw,1.75rem); font-weight:600; letter-spacing:-0.02em; line-height:1.2; color:var(--text);">Briefing entra, campanha sai.</div>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta">
+              <div class="ds-type-tag">Subheading / H3</div>
+              <div class="ds-type-spec">clamp(1rem,2vw,1.25rem) · 600 · -0.015em</div>
+            </div>
+            <div style="font-size:1.1rem; font-weight:600; letter-spacing:-0.015em; line-height:1.3; color:var(--text);">Até o fim</div>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta">
+              <div class="ds-type-tag">Label / H4</div>
+              <div class="ds-type-spec">0.7rem · 500 · 0.12em · uppercase</div>
+            </div>
+            <div style="font-size:0.7rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-2);">Seção do documento</div>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta">
+              <div class="ds-type-tag">Body</div>
+              <div class="ds-type-spec">0.95rem · 400 · 1.75 line-height</div>
+            </div>
+            <p style="font-size:0.95rem; color:var(--text-2); line-height:1.75; margin:0;">O output é da agência. A campanha leva o nome dela. A plataforma é invisível no resultado final, e isso é uma decisão de design, não uma limitação.</p>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta">
+              <div class="ds-type-tag">Caption / Micro</div>
+              <div class="ds-type-spec">0.72rem · 500 · 0.06em</div>
+            </div>
+            <div style="font-size:0.72rem; font-weight:500; letter-spacing:0.06em; color:var(--text-3);">Documento estratégico · v2.0 · Confidencial</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPACING -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <h2>Espaçamento</h2>
+      </div>
+      <p style="max-width:500px; margin-bottom:2rem;">Sistema baseado em múltiplos de 4px. Todos os espaçamentos internos, gaps e paddings derivam desta escala.</p>
+      <div class="card" style="padding:2rem;">
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:4px;"></div><div class="ds-space-label">4px — 0.25rem</div><div style="font-size:0.78rem; color:var(--text-3);">Micro gap entre ícone e texto</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:8px;"></div><div class="ds-space-label">8px — 0.5rem</div><div style="font-size:0.78rem; color:var(--text-3);">Padding interno de tag/badge</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:12px;"></div><div class="ds-space-label">12px — 0.75rem</div><div style="font-size:0.78rem; color:var(--text-3);">Gap entre elementos próximos</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:16px;"></div><div class="ds-space-label">16px — 1rem</div><div style="font-size:0.78rem; color:var(--text-3);">Padding padrão de item de tabela</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:24px;"></div><div class="ds-space-label">24px — 1.5rem</div><div style="font-size:0.78rem; color:var(--text-3);">Gap de grid de cards</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:28px;"></div><div class="ds-space-label">28px — 1.75rem</div><div style="font-size:0.78rem; color:var(--text-3);">Padding padrão de card</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:40px;"></div><div class="ds-space-label">40px — 2.5rem</div><div style="font-size:0.78rem; color:var(--text-3);">Espaço entre seções internas</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:56px;"></div><div class="ds-space-label">56px — 3.5rem</div><div style="font-size:0.78rem; color:var(--text-3);">Padding de seção principal</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:80px;"></div><div class="ds-space-label">80px — 5rem</div><div style="font-size:0.78rem; color:var(--text-3);">Padding hero block</div></div>
+      </div>
+    </div>
+
+    <!-- COMPONENTS -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <h2>Componentes</h2>
+      </div>
+
+      <!-- Cards -->
+      <div class="ds-comp-row">
+        <div class="ds-comp-label">Cards</div>
+        <div style="flex:1; display:flex; flex-wrap:wrap; gap:1rem; align-items:stretch;">
+          <div class="card" style="flex:1; min-width:180px; max-width:260px;">
+            <h4>Card Base</h4>
+            <p style="font-size:0.85rem; margin:0;">Surface L1 · border 1px · radius 12px · hover eleva para L2.</p>
+          </div>
+          <div class="card card-accent" style="flex:1; min-width:180px; max-width:260px;">
+            <h4>Card Accent</h4>
+            <p style="font-size:0.85rem; margin:0;">Border-left 2px indigo. Usado para destacar itens únicos ou citações de destaque.</p>
+          </div>
+          <div class="card card-elevated" style="flex:1; min-width:180px; max-width:260px;">
+            <h4>Card Elevated</h4>
+            <p style="font-size:0.85rem; margin:0;">Surface L2 + border-md. Maior contraste visual, usado em blocos de destaque.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tags / Badges -->
+      <div class="ds-comp-row">
+        <div class="ds-comp-label">Tags / Badges</div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
+          <span class="tag">Padrão</span>
+          <span class="tag" style="background:var(--deny-bg); color:var(--deny-text); border-color:rgba(239,68,68,0.2);">Negativo</span>
+          <span class="tag" style="background:rgba(16,185,129,0.08); color:#34D399; border-color:rgba(16,185,129,0.2);">Positivo</span>
+          <span class="tag" style="background:var(--surface-2); color:var(--text-3); border-color:var(--border-md);">Neutro</span>
+        </div>
+      </div>
+
+      <!-- Quote blocks -->
+      <div class="ds-comp-row">
+        <div class="ds-comp-label">Quote Block</div>
+        <div style="flex:1;">
+          <div class="quote-block">
+            <p class="quote-text">A diferença entre montar uma campanha e receber uma campanha.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inline quote -->
+      <div class="ds-comp-row">
+        <div class="ds-comp-label">Inline Quote</div>
+        <div style="flex:1;">
+          <div class="inline-quote">"Briefing entra, campanha sai."</div>
+        </div>
+      </div>
+
+      <!-- Stat strip -->
+      <div class="ds-comp-row">
+        <div class="ds-comp-label">Stat Strip</div>
+        <div style="flex:1;">
+          <div class="stat-strip">
+            <div class="stat-item">
+              <span class="stat-value">13</span>
+              <span class="stat-label">Agentes</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-value">100%</span>
+              <span class="stat-label">Pronto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bar chart -->
+      <div class="ds-comp-row">
+        <div class="ds-comp-label">Bar Chart</div>
+        <div style="flex:1; max-width:440px;">
+          <div class="bar-row">
+            <div class="bar-label">Mago</div>
+            <div class="bar-track"><div class="bar-fill" style="width:55%;"></div></div>
+            <div class="bar-pct">55%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">Sábio</div>
+            <div class="bar-track"><div class="bar-fill muted" style="width:25%;"></div></div>
+            <div class="bar-pct">25%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">Criador</div>
+            <div class="bar-track"><div class="bar-fill muted" style="width:20%;"></div></div>
+            <div class="bar-pct">20%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dividers -->
+      <div class="ds-comp-row">
+        <div class="ds-comp-label">Dividers</div>
+        <div style="flex:1; display:flex; flex-direction:column; gap:1.25rem;">
+          <div>
+            <div style="font-size:0.72rem; color:var(--text-3); margin-bottom:0.5rem;">Default (border opacity 0.06)</div>
+            <div class="divider" style="margin:0;"></div>
+          </div>
+          <div>
+            <div style="font-size:0.72rem; color:var(--text-3); margin-bottom:0.5rem;">Strong (border opacity 0.10)</div>
+            <div class="divider divider-strong" style="margin:0;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Border radius -->
+      <div class="ds-comp-row">
+        <div class="ds-comp-label">Border Radius</div>
+        <div style="display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem;">
+            <div style="width:48px; height:48px; background:var(--accent-dim); border:1px solid rgba(99,102,241,0.2); border-radius:4px;"></div>
+            <span style="font-size:0.68rem; color:var(--text-3);">4px</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem;">
+            <div style="width:48px; height:48px; background:var(--accent-dim); border:1px solid rgba(99,102,241,0.2); border-radius:8px;"></div>
+            <span style="font-size:0.68rem; color:var(--text-3);">8px · sm</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem;">
+            <div style="width:48px; height:48px; background:var(--accent-dim); border:1px solid rgba(99,102,241,0.2); border-radius:12px;"></div>
+            <span style="font-size:0.68rem; color:var(--text-3);">12px · md</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem;">
+            <div style="width:48px; height:48px; background:var(--accent-dim); border:1px solid rgba(99,102,241,0.2); border-radius:9999px;"></div>
+            <span style="font-size:0.68rem; color:var(--text-3);">full</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- USAGE NOTES -->
+    <div class="section" style="border-bottom:none;">
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <h2>Princípios de Uso</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h4>Hierarquia de superfície</h4>
+          <p style="font-size:0.88rem; margin:0;">Nunca pule camadas. Cards sobre --bg usam --surface. Cards dentro de cards usam --surface-2. Modais ou popovers usam --surface-3.</p>
+        </div>
+        <div class="card">
+          <h4>Accent com parcimônia</h4>
+          <p style="font-size:0.88rem; margin:0;">O indigo elétrico (#6366F1) é usado para 1 ponto focal por seção. Múltiplos elementos accent na mesma view diluem o impacto. Prefira --accent-2 para texto decorativo.</p>
+        </div>
+        <div class="card">
+          <h4>Texto com intenção</h4>
+          <p style="font-size:0.88rem; margin:0;">--text é para headings e valores de destaque. --text-2 é o padrão de corpo. --text-3 é para labels, metadados e elementos secundários. Nunca inverta a hierarquia.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOWNLOAD BUTTON -->
+    <div class="section" style="text-align:center; border-bottom:none;">
+      <button onclick="downloadDS()" style="display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.5rem;background:var(--accent-dim, rgba(99,102,241,0.10));border:1px solid rgba(99,102,241,0.2);border-radius:8px;color:var(--accent-2, #818CF8);font-family:inherit;font-size:.78rem;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s,border-color .2s;">↓ Download Design System (.md)</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- =============================================
+     SCRIPT
+     ============================================= -->
+<script>
+function downloadDS() {
+  const md = `# Design System — Naming Finalistas
+
+## Paleta de Cores
+
+### Backgrounds
+| Token | Hex | Uso |
+|---|---|---|
+| --bg | #08080D | Background principal |
+| --surface | #0F0F16 | Cards, elementos elevados |
+| --surface-2 | #16161F | Cards hover, inputs |
+| --surface-3 | #1C1C28 | Blocos semânticos |
+
+### Accent (Indigo)
+| Token | Valor | Uso |
+|---|---|---|
+| --accent | #6366F1 | Cor primária, CTAs, highlights |
+| --accent-2 | #818CF8 | Labels, scores, eyebrows |
+| --accent-dim | rgba(99,102,241,0.10) | Background de pills/badges |
+| --accent-glow | rgba(99,102,241,0.15) | Inner glow em cards |
+
+### Texto
+| Token | Valor | Uso |
+|---|---|---|
+| --text | #F4F4F5 | Texto principal (100%) |
+| --text-2 | rgba(244,244,245,0.55) | Corpo, descrições |
+| --text-3 | rgba(244,244,245,0.30) | Labels, captions, nomes esmaecidos |
+
+### Bordas
+| Token | Valor | Uso |
+|---|---|---|
+| --border | rgba(255,255,255,0.06) | Separadores sutis |
+| --border-md | rgba(255,255,255,0.10) | Hover, destaque |
+| --border-card | rgba(255,255,255,0.07) | Borda padrão de cards |
+
+### Status
+| Token | Background | Texto |
+|---|---|---|
+| OK/Verde | rgba(52,211,153,0.08) | #34D399 |
+| Warning | rgba(251,191,36,0.08) | #FCD34D |
+| Erro | rgba(239,68,68,0.08) | #F87171 |
+
+---
+
+## Tipografia
+
+| Elemento | Font Family | Size | Weight | Spacing |
+|---|---|---|---|---|
+| h1 (display) | Instrument Sans | clamp(2.4rem,8vw,4rem) | 700 | -0.03em |
+| h2 (section) | Instrument Sans | clamp(1.2rem,3vw,1.6rem) | 600 | -0.02em |
+| h3 (card title) | Instrument Sans | 1rem | 600 | -0.01em |
+| h4 (eyebrow/label) | Inter | 0.65rem, uppercase | 500 | 0.12em |
+| Body | Inter | 0.9rem | 400 | normal |
+| Small/caption | Inter | 0.72rem | 500 | 0.06em |
+| Numeros/scores | Manrope | varia | 700 | -0.02em |
+| Card name | Instrument Sans | clamp(2rem,3.5vw,2.8rem) | 700 | -0.03em |
+
+**Line heights:** Headings 1.05-1.2 | Body 1.75 | Cards 1.6
+
+---
+
+## Espacamento
+
+| Token | Valor | Uso |
+|---|---|---|
+| Section padding | 2.5rem 0 | Entre secoes |
+| Card padding | 1.5rem | Interno dos cards |
+| Grid gap | 1rem | Entre cards em grid |
+| Pill padding | 0.3rem 0.65rem | Tags/pills |
+| Metric card padding | 1rem 0.75rem | Cards de metricas |
+| Container max-width | 960px | Largura maxima do conteudo |
+| Container padding | 0 1.5rem | Padding lateral |
+
+---
+
+## Bordas e Radius
+
+| Token | Valor | Uso |
+|---|---|---|
+| --radius | 12px | Cards grandes, blocos |
+| --radius-sm | 8px | Cards pequenos, inputs |
+| Pill radius | 4px | Tags, pills |
+| Card border | 1px solid var(--border-card) | Padrao |
+| Card hover border | 1px solid var(--border-md) | Ao passar mouse |
+
+---
+
+## Sombras e Efeitos
+
+| Efeito | CSS | Uso |
+|---|---|---|
+| Inner glow | box-shadow: inset 0 10px 5px -1px var(--accent-glow) | Cards featured |
+| Highlight line | background: linear-gradient(90deg, transparent, var(--accent) 50%, transparent) | Topo de cards (width 170px, height 1px) |
+| Gradient separator | background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.02)) | Divisores entre secoes |
+| Header blur | backdrop-filter: blur(24px); background: rgba(8,8,13,0.88) | Header fixo |
+| Conic overlay | background: conic-gradient(from 0deg, rgba(255,255,255,0.15) 0deg, transparent 72deg, var(--accent-glow) 172deg, transparent 270deg, rgba(255,255,255,0.15) 360deg) | Overlay decorativo em cards premium |
+
+---
+
+## Componentes
+
+### Card padrao
+\\\`\\\`\\\`css
+background: var(--surface);
+border: 1px solid var(--border-card);
+border-radius: var(--radius);
+padding: 1.5rem;
+\\\`\\\`\\\`
+
+### Card com highlight (featured)
+\\\`\\\`\\\`css
+position: relative; overflow: hidden;
+::before {
+  content:''; position:absolute; top:0; left:50%;
+  transform:translateX(-50%); width:170px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+\\\`\\\`\\\`
+
+### Pill/Tag
+\\\`\\\`\\\`css
+font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em;
+padding: 0.3rem 0.65rem; border-radius: 4px;
+background: var(--accent-dim); color: var(--accent-2);
+border: 1px solid rgba(99,102,241,0.15);
+\\\`\\\`\\\`
+
+### Domain tag (OK)
+\\\`\\\`\\\`css
+background: rgba(52,211,153,0.08); color: #34D399;
+border: 1px solid rgba(52,211,153,0.15);
+font-size: 0.72rem; border-radius: 4px;
+\\\`\\\`\\\`
+
+### Stat number
+\\\`\\\`\\\`css
+font-family: 'Manrope'; font-weight: 700; letter-spacing: -0.02em;
+\\\`\\\`\\\`
+
+### Gradient separator
+\\\`\\\`\\\`css
+height: 1px; margin: 2rem 0;
+background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.02));
+\\\`\\\`\\\`
+`;
+  const blob = new Blob([md], {type: 'text/markdown'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'design-system-naming.md';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) {
+    btn.classList.add('active');
+    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+}
+</script>
+
+</body>
+</html>
