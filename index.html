@@ -1729,35 +1729,85 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
     if(!el.closest('.reveal')) revealObserver.observe(el.classList.contains('reveal') ? el : (el.parentElement.classList.contains('reveal') ? el.parentElement : el));
   });
 
-  // ---- Wheel ----
-  // For inner scroll containers (.dom-wrap or .section--scrollable):
-  // consume deltaY vertically until reaching top/bottom, only then bleed
-  // through to horizontal deck scroll. Same pattern as the 86 domains block.
+  // ---- Wheel (global unified routing) ----
+  // Decision is based on the CURRENTLY VISIBLE section, NOT mouse position.
+  // Order: vertical-internal first → then horizontal deck → then next section.
+  let isTransitioning = false;
+  function getActiveSection(){
+    // Reuse the visibility tracking — pick the section occupying the largest
+    // horizontal area in the viewport. Falls back to nearest by center.
+    const viewLeft = deck.scrollLeft;
+    const viewRight = viewLeft + deck.clientWidth;
+    let best = sections[activeIdx] || sections[0];
+    let bestArea = -1;
+    sections.forEach(s=>{
+      const left = s.offsetLeft;
+      const right = left + s.offsetWidth;
+      const overlap = Math.max(0, Math.min(right, viewRight) - Math.max(left, viewLeft));
+      if(overlap > bestArea){ bestArea = overlap; best = s; }
+    });
+    return best;
+  }
+  function getInnerScrollTarget(section){
+    // A section is the vertical scroller itself if it's .section--scrollable.
+    // Some sections also nest a .dom-wrap as the actual scroller. Prefer the
+    // outermost one that actually has overflow.
+    if(section.classList.contains('section--scrollable') &&
+       section.scrollHeight > section.clientHeight + 1){
+      return section;
+    }
+    const dom = section.querySelector('.dom-wrap');
+    if(dom && dom.scrollHeight > dom.clientHeight + 1) return dom;
+    return null;
+  }
   deck.addEventListener('wheel', (e)=>{
-    if(Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-
-    // 1) Inner .dom-wrap takes precedence (existing behavior)
-    const dom = e.target.closest('.dom-wrap');
-    if(dom && dom.scrollHeight > dom.clientHeight){
-      const atTop = dom.scrollTop===0 && e.deltaY<0;
-      const atBottom = (dom.scrollTop+dom.clientHeight) >= dom.scrollHeight-1 && e.deltaY>0;
-      if(!atTop && !atBottom) return; // let inner consume vertically
-    }
-
-    // 2) .section--scrollable — section itself scrolls vertically
-    const scrollSection = e.target.closest('.section--scrollable');
-    if(scrollSection && scrollSection.scrollHeight > scrollSection.clientHeight + 1){
-      const atTop = scrollSection.scrollTop <= 0 && e.deltaY<0;
-      const atBottom = (scrollSection.scrollTop + scrollSection.clientHeight) >= scrollSection.scrollHeight-1 && e.deltaY>0;
-      if(!atTop && !atBottom){
-        // consume the wheel vertically inside the section — do not touch deck
-        return;
-      }
-    }
+    // Horizontal-dominant wheel (trackpad swipe) — let it scroll deck natively
+    if(Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
 
     e.preventDefault();
+    if(isTransitioning) return;
+
+    const section = getActiveSection();
+    const inner = section ? getInnerScrollTarget(section) : null;
+    const dy = e.deltaY;
+
+    if(inner){
+      const maxTop = inner.scrollHeight - inner.clientHeight;
+      const atBottom = inner.scrollTop >= maxTop - 1;
+      const atTop = inner.scrollTop <= 0;
+      if(dy > 0 && !atBottom){
+        inner.scrollTop = Math.min(maxTop, inner.scrollTop + dy);
+        return;
+      }
+      if(dy < 0 && !atTop){
+        inner.scrollTop = Math.max(0, inner.scrollTop + dy);
+        return;
+      }
+      // Reached an edge → spill into horizontal & lock briefly so a single
+      // big wheel event doesn't fly past the next/prev section.
+      if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
+      const idx = sections.indexOf(section);
+      const targetIdx = dy > 0 ? Math.min(total-1, idx+1) : Math.max(0, idx-1);
+      const targetSection = sections[targetIdx];
+      if(targetSection && targetSection !== section){
+        isTransitioning = true;
+        // UX: when going BACK to previous section, start it at the BOTTOM
+        // (simulates "leaving from the end of it, scrolling up"). Forward
+        // → next section starts at TOP (natural).
+        const targetInner = getInnerScrollTarget(targetSection);
+        if(targetInner){
+          if(dy > 0) targetInner.scrollTop = 0;
+          else targetInner.scrollTop = targetInner.scrollHeight - targetInner.clientHeight;
+        }
+        smoothScrollTo(targetSection.offsetLeft, 500);
+        setTimeout(()=>{ isTransitioning = false; }, 220);
+      }
+      return;
+    }
+
+    // No vertical-scrollable section visible → wheel goes straight to deck
     if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
-    deck.scrollLeft += e.deltaY;
+    deck.scrollLeft += dy;
   }, {passive:false});
 
   // ---- Arrows ----
