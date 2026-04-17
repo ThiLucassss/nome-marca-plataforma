@@ -559,12 +559,8 @@
   .dom-wrap{
     display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem 1.5rem;
     font-family:var(--font-mono);font-size:0.78rem;color:var(--text-2);
-    max-height:62vh;overflow-y:auto;padding-right:.875rem;padding-bottom:1rem;
-    overscroll-behavior:contain;
+    padding-bottom:1rem;
   }
-  .dom-wrap::-webkit-scrollbar{width:6px}
-  .dom-wrap::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
-  .dom-wrap::-webkit-scrollbar-track{background:var(--surface)}
   .dom-wrap .d{
     padding:.3rem 0;border-bottom:1px dotted var(--border);
     transition:color .2s, padding .2s;
@@ -622,9 +618,9 @@
   /* =============================================
      MATRIX TABLE
      ============================================= */
-  .mtx-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  .mtx-wrap{width:100%;
     border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
-  .mtx{width:100%;border-collapse:collapse;font-size:0.85rem;min-width:48rem}
+  .mtx{width:100%;border-collapse:collapse;font-size:0.85rem;table-layout:auto}
   .mtx th,.mtx td{text-align:left;padding:.85rem .9rem;border-bottom:1px solid var(--border)}
   .mtx th{
     font-family:var(--font);font-size:0.65rem;
@@ -859,7 +855,7 @@
       margin-top:2rem;flex-wrap:wrap;gap:.5rem;
     }
     .footer-meta::before{display:none}
-    .dom-wrap{grid-template-columns:1fr 1fr;max-height:55vh}
+    .dom-wrap{grid-template-columns:1fr 1fr}
     .arrow{display:none}
     .bg-numeral{font-size:clamp(8rem, 30vw, 14rem)}
     .navdots{
@@ -1770,15 +1766,12 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
     return null;
   }
   function getInnerScrollTarget(section){
-    // A section is the vertical scroller itself if it's .section--scrollable.
-    // Some sections also nest a .dom-wrap as the actual scroller. Prefer the
-    // outermost one that actually has overflow.
+    // The only inner vertical scroller is the section itself (.section--scrollable).
+    // All previously-nested scrollers (.dom-wrap, table wraps) now flow naturally.
     if(section.classList.contains('section--scrollable') &&
        section.scrollHeight > section.clientHeight + 1){
       return section;
     }
-    const dom = section.querySelector('.dom-wrap');
-    if(dom && dom.scrollHeight > dom.clientHeight + 1) return dom;
     return null;
   }
   // Shared routing — used by both the wheel handler (desktop) and the
@@ -1936,7 +1929,7 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
     }
 
     // Desktop / tablet wide: legacy behaviour (horizontal pan, native vertical)
-    const inner = e.target.closest('.dom-wrap, .section--scrollable');
+    const inner = e.target.closest('.section--scrollable');
     if(inner && Math.abs(dy) > Math.abs(dx)) return;
     if(Math.abs(dx) > Math.abs(dy)){
       deck.scrollLeft = touchScrollLeft + dx;
