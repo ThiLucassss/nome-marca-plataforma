@@ -1787,6 +1787,26 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
     const section = getFullyAlignedSection();
     const inner = section ? getInnerScrollTarget(section) : null;
 
+    // Helper — does this aligned section have lateral overflow (w-lg / w-xl)?
+    // sectionEndX = right edge of section in deck coords.
+    // sectionStartX = left edge of section in deck coords.
+    // The deck viewport is at [deck.scrollLeft, deck.scrollLeft+deck.clientWidth].
+    // For w-md (100vw) the viewport already covers the whole section when aligned,
+    // so atLateralEnd / atLateralStart are both true → behaviour identical to before.
+    function lateralState(s){
+      const startX = s.offsetLeft;
+      const endX   = s.offsetLeft + s.offsetWidth;
+      const viewL  = deck.scrollLeft;
+      const viewR  = viewL + deck.clientWidth;
+      return {
+        startX, endX,
+        atLateralEnd:   viewR >= endX - 4,
+        atLateralStart: viewL <= startX + 4,
+        maxScrollLeft:  endX - deck.clientWidth, // clamp upper bound when advancing
+        minScrollLeft:  startX                   // clamp lower bound when reversing
+      };
+    }
+
     if(inner){
       const maxTop = inner.scrollHeight - inner.clientHeight;
       const atBottom = inner.scrollTop >= maxTop - 1;
@@ -1799,8 +1819,19 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
         inner.scrollTop = Math.max(0, inner.scrollTop + dy);
         return true;
       }
-      // Reached an edge → spill into horizontal & lock briefly so a single
-      // big wheel event doesn't fly past the next/prev section.
+      // Vertical exhausted — try lateral inside the section first.
+      const lat = lateralState(section);
+      if(dy > 0 && !lat.atLateralEnd){
+        if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
+        deck.scrollLeft = Math.min(lat.maxScrollLeft, deck.scrollLeft + dy);
+        return true;
+      }
+      if(dy < 0 && !lat.atLateralStart){
+        if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
+        deck.scrollLeft = Math.max(lat.minScrollLeft, deck.scrollLeft + dy);
+        return true;
+      }
+      // Vertical AND lateral both exhausted → spill into next/prev section.
       if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
       const idx = sections.indexOf(section);
       const targetIdx = dy > 0 ? Math.min(total-1, idx+1) : Math.max(0, idx-1);
@@ -1812,13 +1843,67 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
           if(dy > 0) targetInner.scrollTop = 0;
           else targetInner.scrollTop = targetInner.scrollHeight - targetInner.clientHeight;
         }
-        smoothScrollTo(targetSection.offsetLeft, 500);
+        // When reversing into a previous section, land on its RIGHT edge so the
+        // user keeps the visual continuity of "just came back from the right".
+        // When advancing into a next section, land on its LEFT edge as usual.
+        let targetLeft;
+        if(dy > 0){
+          targetLeft = targetSection.offsetLeft;
+        } else {
+          targetLeft = targetSection.offsetLeft + targetSection.offsetWidth - deck.clientWidth;
+        }
+        // Clamp to deck bounds.
+        const maxDeck = deck.scrollWidth - deck.clientWidth;
+        targetLeft = Math.max(0, Math.min(maxDeck, targetLeft));
+        smoothScrollTo(targetLeft, 500);
         setTimeout(()=>{ isTransitioning = false; }, 220);
       }
       return true;
     }
 
-    // No fully-aligned vertically-scrollable section → route to deck horizontal.
+    // Section without internal vertical scroll, but possibly with lateral overflow
+    // (e.g. w-lg / w-xl that is NOT .section--scrollable). Route dy to lateral
+    // inside the section first, then spill to next/prev once lateral is exhausted.
+    if(section){
+      const lat = lateralState(section);
+      if(dy > 0 && !lat.atLateralEnd){
+        if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
+        deck.scrollLeft = Math.min(lat.maxScrollLeft, deck.scrollLeft + dy);
+        return false;
+      }
+      if(dy < 0 && !lat.atLateralStart){
+        if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
+        deck.scrollLeft = Math.max(lat.minScrollLeft, deck.scrollLeft + dy);
+        return false;
+      }
+      // Lateral exhausted → transition to next/prev with the same right-edge
+      // landing rule when reversing.
+      if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
+      const idx = sections.indexOf(section);
+      const targetIdx = dy > 0 ? Math.min(total-1, idx+1) : Math.max(0, idx-1);
+      const targetSection = sections[targetIdx];
+      if(targetSection && targetSection !== section){
+        isTransitioning = true;
+        const targetInner = getInnerScrollTarget(targetSection);
+        if(targetInner){
+          if(dy > 0) targetInner.scrollTop = 0;
+          else targetInner.scrollTop = targetInner.scrollHeight - targetInner.clientHeight;
+        }
+        let targetLeft;
+        if(dy > 0){
+          targetLeft = targetSection.offsetLeft;
+        } else {
+          targetLeft = targetSection.offsetLeft + targetSection.offsetWidth - deck.clientWidth;
+        }
+        const maxDeck = deck.scrollWidth - deck.clientWidth;
+        targetLeft = Math.max(0, Math.min(maxDeck, targetLeft));
+        smoothScrollTo(targetLeft, 500);
+        setTimeout(()=>{ isTransitioning = false; }, 220);
+      }
+      return false;
+    }
+
+    // No fully-aligned section (split transition state) → route to deck horizontal.
     if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
     deck.scrollLeft += dy;
     return false;
