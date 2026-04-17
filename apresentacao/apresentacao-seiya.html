@@ -144,6 +144,23 @@
   .section.dark{
     background:linear-gradient(135deg, #0A0A14 0%, #06060B 100%);
   }
+
+  /* =============================================
+     SCROLLABLE SECTIONS — vertical inner scroll for dense content
+     ============================================= */
+  .section--scrollable{
+    overflow-y:auto;
+    overflow-x:hidden;
+    justify-content:flex-start;
+    padding-top:5.5rem;padding-bottom:6rem;
+    overscroll-behavior:contain;
+    scrollbar-width:thin;
+    scrollbar-color:var(--accent) transparent;
+  }
+  .section--scrollable::-webkit-scrollbar{width:6px}
+  .section--scrollable::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+  .section--scrollable::-webkit-scrollbar-track{background:transparent}
+  .section--scrollable .footer-meta{position:relative;left:auto;right:auto;bottom:auto;margin-top:2rem}
   /* Vertical accent gutter (brandbook editorial cue) */
   .section::before{
     content:"";position:absolute;top:0;bottom:0;left:0;
@@ -790,21 +807,91 @@
   }
 
   /* =============================================
+     MOBILE NAV ARROWS (≤768px) — integrated near the dots
+     ============================================= */
+  .mnav{
+    display:none;
+    position:fixed;bottom:1rem;left:0;right:0;
+    z-index:41;pointer-events:none;
+    justify-content:space-between;align-items:center;
+    padding:0 .75rem;
+  }
+  .mnav .mbtn{
+    pointer-events:auto;
+    width:44px;height:44px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(15,15,22,.85);
+    border:1px solid var(--border-md);
+    border-radius:999px;
+    color:var(--text);
+    font-family:var(--font-display);font-weight:600;font-size:1.1rem;
+    line-height:1;cursor:pointer;
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+    transition:transform .2s var(--ease-out), background .2s, border-color .2s, opacity .2s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mnav .mbtn:active{
+    transform:scale(.92);
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+  .mnav .mbtn[disabled]{opacity:.3;pointer-events:none}
+  .mnav .mbtn svg{width:18px;height:18px;display:block}
+
+  /* =============================================
      RESPONSIVE
      ============================================= */
   @media (max-width:768px){
-    .section{padding:5rem 1.5rem 4rem}
+    .section{
+      padding:4.5rem 1.25rem 5rem;
+      height:auto;min-height:100vh;min-height:100dvh;
+      overflow-y:auto;overflow-x:hidden;
+      justify-content:flex-start;
+      overscroll-behavior:contain;
+    }
+    .section::-webkit-scrollbar{width:0}
     .w-sm,.w-md,.w-lg,.w-xl{width:100vw;min-width:auto}
     .grid-2,.grid-3,.grid-4,.triple,.scen,.finalists,.name-grid,.hyp-grid,.phon,.ai-grid{grid-template-columns:1fr;gap:1rem}
-    .topbar{padding:.875rem 1.25rem}
-    .footer-meta{left:1.5rem;right:1.5rem}
-    .dom-wrap{grid-template-columns:1fr 1fr}
+    .topbar{padding:.75rem 1rem;font-size:.62rem}
+    .footer-meta{
+      position:relative;left:auto;right:auto;bottom:auto;
+      margin-top:2rem;flex-wrap:wrap;gap:.5rem;
+    }
+    .footer-meta::before{display:none}
+    .dom-wrap{grid-template-columns:1fr 1fr;max-height:55vh}
     .arrow{display:none}
-    .bg-numeral{font-size:14rem}
+    .bg-numeral{font-size:clamp(8rem, 30vw, 14rem)}
+    .navdots{
+      bottom:.6rem;
+      max-width:calc(100vw - 8rem);
+      overflow-x:auto;scrollbar-width:none;
+      padding:.5rem .7rem;gap:.35rem;
+    }
+    .navdots::-webkit-scrollbar{display:none}
+    .navdots .nd{flex:0 0 auto}
+    .mnav{display:flex}
+    .kbd{display:none}
+    /* Anything that could push past viewport horizontally inside a section */
+    .section > *{max-width:100%}
+    h1.title{font-size:clamp(1.875rem,8vw,2.75rem)}
+    h2.title{font-size:clamp(1.625rem,6.5vw,2.5rem)}
+    .cover h1{font-size:clamp(3.25rem,16vw,5.5rem)}
+    .cover .stat{margin-top:2.5rem;flex-wrap:wrap}
+    .cover .stat .n{font-size:clamp(2.75rem,14vw,4.5rem)}
+    .cover .meta-line{margin-bottom:2.25rem;font-size:.6rem}
+    .megnum{font-size:clamp(4.5rem,20vw,7rem)}
+    .quote{font-size:clamp(1.125rem,5vw,1.625rem)}
+    .triple,.scen{margin-top:1.5rem}
+    .nlist .row{grid-template-columns:2.25rem 1fr;gap:.75rem;padding:.85rem 0}
+    .mtx{min-width:0;font-size:.78rem}
+    .mtx th,.mtx td{padding:.55rem .55rem}
   }
   @media (max-width:390px){
-    .section{padding:4.5rem 1rem 3.5rem}
+    .section{padding:4rem 1rem 5rem}
     .dom-wrap{grid-template-columns:1fr}
+    .navdots{max-width:calc(100vw - 7rem);padding:.45rem .55rem}
+    .mnav{padding:0 .5rem}
   }
 </style>
 </head>
@@ -872,7 +959,7 @@
   </section>
 
   <!-- 03 — O DESAFIO -->
-  <section class="section w-lg" data-name="O Desafio">
+  <section class="section section--scrollable w-lg" data-name="O Desafio">
     <span class="bg-numeral" data-parallax="0.35">03</span>
     <div class="reveal"><span class="num"><span class="big">03</span> · O Desafio</span></div>
     <div class="reveal" style="margin-top:2.25rem">
@@ -889,7 +976,7 @@
   </section>
 
   <!-- 04 — MATRIZ DE DECISÃO -->
-  <section class="section alt w-xl" data-name="Matriz de Decisão">
+  <section class="section section--scrollable alt w-xl" data-name="Matriz de Decisão">
     <span class="bg-numeral" data-parallax="0.4">04</span>
     <div class="reveal"><span class="num"><span class="big">04</span> · Matriz de decisão</span></div>
     <div class="reveal" style="margin-top:1.125rem">
@@ -1025,7 +1112,7 @@
   </section>
 
   <!-- 09 — 8 HIPÓTESES -->
-  <section class="section alt w-xl" data-name="8 Hipóteses">
+  <section class="section section--scrollable alt w-xl" data-name="8 Hipóteses">
     <span class="bg-numeral" data-parallax="0.35">09</span>
     <div class="reveal"><span class="num"><span class="big">09</span> · Arquitetura — 8 hipóteses</span></div>
     <div class="reveal" style="margin-top:1.125rem">
@@ -1045,7 +1132,7 @@
   </section>
 
   <!-- 10 — REFERÊNCIAS -->
-  <section class="section w-lg" data-name="Referências">
+  <section class="section section--scrollable w-lg" data-name="Referências">
     <span class="bg-numeral" data-parallax="0.4">10</span>
     <div class="reveal"><span class="num"><span class="big">10</span> · Pilares Acadêmicos</span></div>
     <div class="reveal" style="margin-top:1.875rem">
@@ -1065,7 +1152,7 @@
   </section>
 
   <!-- 11 — CENÁRIO IA -->
-  <section class="section alt w-lg" data-name="Cenário IA">
+  <section class="section section--scrollable alt w-lg" data-name="Cenário IA">
     <span class="bg-numeral" data-parallax="0.45">11</span>
     <div class="reveal"><span class="num"><span class="big">11</span> · Cenário · Marcas de IA hoje</span></div>
     <div class="reveal" style="margin-top:1.5rem">
@@ -1095,7 +1182,7 @@
   </section>
 
   <!-- 12 — BURACOS -->
-  <section class="section dark w-lg" data-name="Buracos do mercado">
+  <section class="section section--scrollable dark w-lg" data-name="Buracos do mercado">
     <span class="bg-numeral" data-parallax="0.4" style="color:var(--accent-2);opacity:.05">12</span>
     <div class="reveal"><span class="num"><span class="big">12</span> · Onde estão os buracos</span></div>
     <div class="reveal" style="margin-top:1.5rem">
@@ -1165,7 +1252,7 @@
   </section>
 
   <!-- 15 — TOP FINALISTAS -->
-  <section class="section w-xl" data-name="Top Finalistas">
+  <section class="section section--scrollable w-xl" data-name="Top Finalistas">
     <span class="bg-numeral" data-parallax="0.4">15</span>
     <div class="reveal"><span class="num"><span class="big">15</span> · Top finalistas consolidados</span></div>
     <div class="reveal" style="margin-top:1.5rem">
@@ -1190,7 +1277,7 @@
   </section>
 
   <!-- 16 — CENÁRIOS -->
-  <section class="section alt w-lg" data-name="Cenários A B C D">
+  <section class="section section--scrollable alt w-lg" data-name="Cenários A B C D">
     <span class="bg-numeral" data-parallax="0.4">16</span>
     <div class="reveal"><span class="num"><span class="big">16</span> · 4 cenários de decisão</span></div>
     <div class="reveal" style="margin-top:1.125rem">
@@ -1222,7 +1309,7 @@
   </section>
 
   <!-- 17 — RECOMENDAÇÃO -->
-  <section class="section dark w-lg" data-name="Recomendação Tripla">
+  <section class="section section--scrollable dark w-lg" data-name="Recomendação Tripla">
     <span class="bg-numeral" data-parallax="0.4" style="color:var(--accent-2);opacity:.05">17</span>
     <div class="reveal"><span class="num"><span class="big">17</span> · Recomendação final</span></div>
     <div class="reveal" style="margin-top:1.5rem">
@@ -1272,7 +1359,7 @@
   </section>
 
   <!-- 19 — TOP 20 MUST-SECURE -->
-  <section class="section alt w-lg" data-name="Top 20 must-secure">
+  <section class="section section--scrollable alt w-lg" data-name="Top 20 must-secure">
     <span class="bg-numeral" data-parallax="0.4">19</span>
     <div class="reveal"><span class="num"><span class="big">19</span> · Top 20 must-secure</span></div>
     <div class="reveal" style="margin-top:1.5rem">
@@ -1314,7 +1401,7 @@
   </section>
 
   <!-- 20 — PRÓXIMOS PASSOS -->
-  <section class="section alt w-lg" data-name="Próximos Passos">
+  <section class="section section--scrollable alt w-lg" data-name="Próximos Passos">
     <span class="bg-numeral" data-parallax="0.4">20</span>
     <div class="reveal"><span class="num"><span class="big">20</span> · Próximos passos</span></div>
     <div class="reveal" style="margin-top:1.5rem">
@@ -1332,7 +1419,7 @@
   </section>
 
   <!-- 21 — TESTE -->
-  <section class="section w-md" data-name="Teste de Qualidade">
+  <section class="section section--scrollable w-md" data-name="Teste de Qualidade">
     <span class="bg-numeral" data-parallax="0.4">21</span>
     <div class="reveal"><span class="num"><span class="big">21</span> · O teste dos 30 segundos</span></div>
     <div class="reveal" style="margin-top:1.5rem">
@@ -1371,6 +1458,15 @@
 </div>
 
 <nav class="navdots" id="navdots" aria-label="Navegação de seções"></nav>
+
+<div class="mnav" aria-hidden="false">
+  <button class="mbtn" id="mprev" aria-label="Seção anterior">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="mbtn" id="mnext" aria-label="Próxima seção">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+</div>
 
 <script>
   // ---- DOMAINS DATA (86) ----
@@ -1521,6 +1617,13 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
     activeIdx = i;
     dotEls.forEach((d,idx)=>d.classList.toggle('active', idx===i));
     counter.textContent = `${pad(i+1)} / ${pad(total)}`;
+    // Auto-scroll the dots strip on mobile to keep active in view
+    const activeDot = dotEls[i];
+    if(activeDot && navdotsEl.scrollWidth > navdotsEl.clientWidth){
+      const dotLeft = activeDot.offsetLeft - navdotsEl.clientWidth/2 + activeDot.offsetWidth/2;
+      navdotsEl.scrollTo({left:dotLeft, behavior:'smooth'});
+    }
+    if(typeof refreshMNav === 'function') refreshMNav();
   }
 
   // Smooth scroll to a section anchor
@@ -1627,14 +1730,31 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
   });
 
   // ---- Wheel ----
+  // For inner scroll containers (.dom-wrap or .section--scrollable):
+  // consume deltaY vertically until reaching top/bottom, only then bleed
+  // through to horizontal deck scroll. Same pattern as the 86 domains block.
   deck.addEventListener('wheel', (e)=>{
     if(Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-    const inner = e.target.closest('.dom-wrap');
-    if(inner && inner.scrollHeight > inner.clientHeight){
-      const atTop = inner.scrollTop===0 && e.deltaY<0;
-      const atBottom = (inner.scrollTop+inner.clientHeight) >= inner.scrollHeight-1 && e.deltaY>0;
-      if(!atTop && !atBottom) return;
+
+    // 1) Inner .dom-wrap takes precedence (existing behavior)
+    const dom = e.target.closest('.dom-wrap');
+    if(dom && dom.scrollHeight > dom.clientHeight){
+      const atTop = dom.scrollTop===0 && e.deltaY<0;
+      const atBottom = (dom.scrollTop+dom.clientHeight) >= dom.scrollHeight-1 && e.deltaY>0;
+      if(!atTop && !atBottom) return; // let inner consume vertically
     }
+
+    // 2) .section--scrollable — section itself scrolls vertically
+    const scrollSection = e.target.closest('.section--scrollable');
+    if(scrollSection && scrollSection.scrollHeight > scrollSection.clientHeight + 1){
+      const atTop = scrollSection.scrollTop <= 0 && e.deltaY<0;
+      const atBottom = (scrollSection.scrollTop + scrollSection.clientHeight) >= scrollSection.scrollHeight-1 && e.deltaY>0;
+      if(!atTop && !atBottom){
+        // consume the wheel vertically inside the section — do not touch deck
+        return;
+      }
+    }
+
     e.preventDefault();
     if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
     deck.scrollLeft += e.deltaY;
@@ -1653,6 +1773,17 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
   }
   document.getElementById('prev').addEventListener('click',()=>scrollToSection(nearestSectionIdx()-1));
   document.getElementById('next').addEventListener('click',()=>scrollToSection(nearestSectionIdx()+1));
+
+  // ---- Mobile arrows (≤768px) ----
+  const mprev = document.getElementById('mprev');
+  const mnext = document.getElementById('mnext');
+  mprev.addEventListener('click',()=>scrollToSection(activeIdx-1));
+  mnext.addEventListener('click',()=>scrollToSection(activeIdx+1));
+  function refreshMNav(){
+    mprev.disabled = activeIdx<=0;
+    mnext.disabled = activeIdx>=total-1;
+  }
+  refreshMNav();
 
   // ---- Keyboard ----
   const ARROW_SCROLL = 240;
@@ -1681,7 +1812,9 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
     if(touchStartX===null) return;
     const dx = touchStartX - e.touches[0].clientX;
     const dy = touchStartY - e.touches[0].clientY;
-    const inner = e.target.closest('.dom-wrap');
+    const inner = e.target.closest('.dom-wrap, .section--scrollable');
+    // Vertical-dominant gesture inside any vertically-scrollable container —
+    // let the browser scroll it natively (we're passive, so don't fight it).
     if(inner && Math.abs(dy) > Math.abs(dx)) return;
     if(Math.abs(dx) > Math.abs(dy)){
       deck.scrollLeft = touchScrollLeft + dx;
