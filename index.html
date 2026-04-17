@@ -1748,6 +1748,27 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
     });
     return best;
   }
+  // Stricter version — only returns a section if it occupies ≥ 92% of the
+  // visible deck viewport (i.e. it is essentially fully aligned to the screen).
+  // Used by the wheel/touch handlers to decide whether to deliver vertical
+  // scroll INSIDE the section, or instead route deltaY to horizontal deck
+  // movement (so a transition in progress completes naturally instead of
+  // splitting the viewport into two scroll states).
+  const FULL_ALIGN_THRESHOLD = 0.92;
+  function getFullyAlignedSection(){
+    const viewLeft = deck.scrollLeft;
+    const viewRight = viewLeft + deck.clientWidth;
+    const viewWidth = deck.clientWidth;
+    if(viewWidth <= 0) return null;
+    for(let i=0;i<sections.length;i++){
+      const s = sections[i];
+      const left = s.offsetLeft;
+      const right = left + s.offsetWidth;
+      const overlap = Math.max(0, Math.min(right, viewRight) - Math.max(left, viewLeft));
+      if(overlap / viewWidth >= FULL_ALIGN_THRESHOLD) return s;
+    }
+    return null;
+  }
   function getInnerScrollTarget(section){
     // A section is the vertical scroller itself if it's .section--scrollable.
     // Some sections also nest a .dom-wrap as the actual scroller. Prefer the
@@ -1760,16 +1781,18 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
     if(dom && dom.scrollHeight > dom.clientHeight + 1) return dom;
     return null;
   }
-  deck.addEventListener('wheel', (e)=>{
-    // Horizontal-dominant wheel (trackpad swipe) — let it scroll deck natively
-    if(Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-
-    e.preventDefault();
-    if(isTransitioning) return;
-
-    const section = getActiveSection();
+  // Shared routing — used by both the wheel handler (desktop) and the
+  // synthesised touch wheel (mobile). Returns true if the delta was consumed
+  // as vertical-internal scroll; false if it was routed to horizontal deck.
+  function routeVerticalDelta(dy){
+    if(isTransitioning) return true;
+    // CRITICAL: only treat a section as "active for internal vertical scroll"
+    // if it is essentially fully aligned with the viewport. During the split
+    // transition state (two sections half-visible), getFullyAlignedSection
+    // returns null and we route the delta straight to horizontal deck so the
+    // in-progress transition completes instead of half-scrolling one side.
+    const section = getFullyAlignedSection();
     const inner = section ? getInnerScrollTarget(section) : null;
-    const dy = e.deltaY;
 
     if(inner){
       const maxTop = inner.scrollHeight - inner.clientHeight;
@@ -1777,11 +1800,11 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
       const atTop = inner.scrollTop <= 0;
       if(dy > 0 && !atBottom){
         inner.scrollTop = Math.min(maxTop, inner.scrollTop + dy);
-        return;
+        return true;
       }
       if(dy < 0 && !atTop){
         inner.scrollTop = Math.max(0, inner.scrollTop + dy);
-        return;
+        return true;
       }
       // Reached an edge → spill into horizontal & lock briefly so a single
       // big wheel event doesn't fly past the next/prev section.
@@ -1791,9 +1814,6 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
       const targetSection = sections[targetIdx];
       if(targetSection && targetSection !== section){
         isTransitioning = true;
-        // UX: when going BACK to previous section, start it at the BOTTOM
-        // (simulates "leaving from the end of it, scrolling up"). Forward
-        // → next section starts at TOP (natural).
         const targetInner = getInnerScrollTarget(targetSection);
         if(targetInner){
           if(dy > 0) targetInner.scrollTop = 0;
@@ -1802,12 +1822,20 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
         smoothScrollTo(targetSection.offsetLeft, 500);
         setTimeout(()=>{ isTransitioning = false; }, 220);
       }
-      return;
+      return true;
     }
 
-    // No vertical-scrollable section visible → wheel goes straight to deck
+    // No fully-aligned vertically-scrollable section → route to deck horizontal.
     if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
     deck.scrollLeft += dy;
+    return false;
+  }
+
+  deck.addEventListener('wheel', (e)=>{
+    // Horizontal-dominant wheel (trackpad swipe) — let it scroll deck natively
+    if(Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    routeVerticalDelta(e.deltaY);
   }, {passive:false});
 
   // ---- Arrows ----
@@ -1850,27 +1878,81 @@ ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
     else if(e.key==='End'){ e.preventDefault(); scrollToSection(total-1); }
   });
 
-  // ---- Touch ----
-  let touchStartX=null, touchStartY=null, touchScrollLeft=0;
+  // ---- Touch (mobile-first gesture model) ----
+  // On mobile (≤768px) the page never moves vertically. The user navigates
+  // exclusively via VERTICAL finger gestures which are translated into a
+  // synthesised wheel deltaY that flows through routeVerticalDelta — i.e. the
+  // exact same logic as desktop. This makes the mobile UX a 1:1 mirror of
+  // desktop but driven by swipe-up = forward / swipe-down = back.
+  // Sensitivity multiplier — finger pixels are slower than wheel ticks; 1.5x
+  // matches the brief and feels natural without overshooting.
+  const TOUCH_SENSITIVITY = 1.5;
+  const isMobileViewport = ()=> window.matchMedia('(max-width: 768px)').matches;
+
+  let touchStartX=null, touchStartY=null, touchLastY=null, touchScrollLeft=0;
+  let touchMode=null; // 'vertical-as-wheel' (mobile) | 'horizontal-pan' | null
+
   deck.addEventListener('touchstart',(e)=>{
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
+    touchLastY = touchStartY;
     touchScrollLeft = deck.scrollLeft;
+    touchMode = null;
     if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim=null; }
   },{passive:true});
+
   deck.addEventListener('touchmove',(e)=>{
     if(touchStartX===null) return;
-    const dx = touchStartX - e.touches[0].clientX;
-    const dy = touchStartY - e.touches[0].clientY;
+    const cx = e.touches[0].clientX;
+    const cy = e.touches[0].clientY;
+    const dx = touchStartX - cx;
+    const dy = touchStartY - cy;
+
+    if(isMobileViewport()){
+      // Lock the gesture mode on first meaningful movement.
+      if(!touchMode){
+        if(Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)*1.4){
+          touchMode = 'horizontal-pan'; // native horizontal swipe fallback
+        } else if(Math.abs(dy) > 6){
+          touchMode = 'vertical-as-wheel';
+        }
+      }
+      if(touchMode === 'vertical-as-wheel'){
+        // Block native scroll entirely on mobile.
+        if(e.cancelable) e.preventDefault();
+        // Incremental delta from previous frame — finger going UP (cy < lastY)
+        // produces positive deltaY → page advances horizontally.
+        const stepDy = (touchLastY - cy) * TOUCH_SENSITIVITY;
+        touchLastY = cy;
+        if(Math.abs(stepDy) > 0.5) routeVerticalDelta(stepDy);
+        return;
+      }
+      if(touchMode === 'horizontal-pan'){
+        if(e.cancelable) e.preventDefault();
+        deck.scrollLeft = touchScrollLeft + dx;
+        return;
+      }
+      return;
+    }
+
+    // Desktop / tablet wide: legacy behaviour (horizontal pan, native vertical)
     const inner = e.target.closest('.dom-wrap, .section--scrollable');
-    // Vertical-dominant gesture inside any vertically-scrollable container —
-    // let the browser scroll it natively (we're passive, so don't fight it).
     if(inner && Math.abs(dy) > Math.abs(dx)) return;
     if(Math.abs(dx) > Math.abs(dy)){
       deck.scrollLeft = touchScrollLeft + dx;
     }
+  },{passive:false});
+
+  deck.addEventListener('touchend',()=>{
+    // Snap to the nearest section if we ended in a split state on mobile.
+    if(isMobileViewport() && !isTransitioning){
+      const aligned = getFullyAlignedSection();
+      if(!aligned){
+        scrollToSection(nearestSectionIdx());
+      }
+    }
+    touchStartX=null; touchStartY=null; touchLastY=null; touchMode=null;
   },{passive:true});
-  deck.addEventListener('touchend',()=>{ touchStartX=null; touchStartY=null; },{passive:true});
 
   // Init
   counter.textContent = `${pad(1)} / ${pad(total)}`;
