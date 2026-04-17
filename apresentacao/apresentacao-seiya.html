@@ -1,0 +1,1066 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SEIYA — Mapa de Naming & Arquitetura de Marca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F1EA;
+    --bg-2:#EFEBE2;
+    --ink:#0E0E10;
+    --ink-2:#2A2A2E;
+    --muted:#7A756B;
+    --line:#1B1B1F;
+    --rule:rgba(14,14,16,.14);
+    --accent:#5B3A8A;     /* roxo profundo "cosmo" */
+    --accent-2:#B8924A;   /* dourado discreto */
+    --paper:#FBF9F4;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;overflow:hidden;height:100%;width:100%}
+  body{font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:var(--accent);color:#fff}
+
+  /* Progress bar */
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:50;transition:width .25s ease}
+
+  /* Top label */
+  .topbar{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:18px 28px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);z-index:30;pointer-events:none}
+  .topbar .left{display:flex;gap:18px}
+  .topbar .dot{width:5px;height:5px;background:var(--accent);border-radius:50%;display:inline-block;vertical-align:middle;margin-right:8px}
+
+  /* Deck container */
+  .deck{display:flex;height:100vh;width:100vw;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
+  .deck::-webkit-scrollbar{display:none}
+
+  .slide{flex:0 0 100vw;height:100vh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;display:flex;flex-direction:column;justify-content:center;padding:90px 8vw 80px;overflow:hidden;background:var(--bg)}
+  .slide.alt{background:var(--bg-2)}
+  .slide.dark{background:var(--ink);color:#F4F1EA}
+  .slide.dark .num,.slide.dark .eyebrow,.slide.dark .footer-meta{color:rgba(244,241,234,.55)}
+  .slide.dark .rule{background:rgba(244,241,234,.18)}
+
+  /* Slide-level animation */
+  .slide .reveal{opacity:0;transform:translateY(14px);transition:opacity .9s ease,transform .9s ease}
+  .slide.active .reveal{opacity:1;transform:none}
+  .slide.active .reveal.d1{transition-delay:.08s}
+  .slide.active .reveal.d2{transition-delay:.18s}
+  .slide.active .reveal.d3{transition-delay:.28s}
+  .slide.active .reveal.d4{transition-delay:.38s}
+  .slide.active .reveal.d5{transition-delay:.48s}
+
+  /* Type system */
+  .num{font-family:'Fraunces',serif;font-weight:300;font-size:11px;letter-spacing:.35em;color:var(--muted);text-transform:uppercase}
+  .num .big{font-size:13px;color:var(--ink);letter-spacing:.2em}
+  .eyebrow{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
+  h1.title,h2.title{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-.02em;line-height:1.02;margin:0;color:var(--ink)}
+  h1.title{font-size:clamp(48px,7.4vw,108px)}
+  h2.title{font-size:clamp(38px,5.4vw,80px)}
+  h3.subtitle{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.4vw,32px);line-height:1.25;color:var(--ink-2);margin:0}
+  p.lead{font-size:clamp(16px,1.25vw,18px);line-height:1.6;color:var(--ink-2);max-width:720px;margin:0}
+  p.body{font-size:15px;line-height:1.65;color:var(--ink-2);max-width:680px;margin:0}
+  .rule{height:1px;background:var(--rule);width:100%;margin:28px 0}
+  .rule.short{width:64px;background:var(--accent);height:1px;margin:18px 0}
+  .accent{color:var(--accent)}
+  .gold{color:var(--accent-2)}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.02em}
+  .uppercase{text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--muted)}
+
+  /* Footer slide marker */
+  .footer-meta{position:absolute;bottom:30px;left:8vw;right:8vw;display:flex;justify-content:space-between;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .footer-meta .right{font-family:'Fraunces',serif;letter-spacing:.18em}
+
+  /* Navigation dots */
+  .navdots{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:6px;padding:8px 14px;background:rgba(244,241,234,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:999px;z-index:40;border:1px solid rgba(14,14,16,.06)}
+  .navdots .nd{width:6px;height:6px;border-radius:50%;background:rgba(14,14,16,.18);cursor:pointer;transition:all .25s ease;position:relative}
+  .navdots .nd:hover{background:var(--accent);transform:scale(1.4)}
+  .navdots .nd.active{background:var(--accent);width:18px;border-radius:6px}
+  .navdots .nd .tip{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#F4F1EA;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:6px 10px;border-radius:4px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+  .navdots .nd:hover .tip{opacity:1}
+
+  /* Side arrows */
+  .arrow{position:fixed;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.55);border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:40;color:var(--ink);font-size:14px;opacity:0;transition:opacity .3s}
+  body:hover .arrow{opacity:.5}
+  .arrow:hover{opacity:1!important}
+  .arrow.left{left:16px}
+  .arrow.right{right:16px}
+
+  /* Cover */
+  .cover{display:grid;grid-template-columns:1fr;gap:0;align-content:center}
+  .cover .meta-line{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-bottom:80px}
+  .cover h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(64px,11vw,180px);line-height:.95;letter-spacing:-.04em;margin:0}
+  .cover h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+  .cover .sub{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(20px,2vw,28px);color:var(--ink-2);max-width:720px;margin-top:28px;line-height:1.35}
+  .cover .stat{display:flex;align-items:baseline;gap:18px;margin-top:80px}
+  .cover .stat .n{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(60px,9vw,140px);line-height:1;color:var(--accent);letter-spacing:-.04em}
+  .cover .stat .lbl{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);max-width:200px;line-height:1.5}
+
+  /* Two-column generic */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+  .grid-2.tight{gap:48px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+
+  /* Cards / blocks */
+  .block{padding:0}
+  .block .k{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .block .v{font-family:'Fraunces',serif;font-size:22px;line-height:1.2;color:var(--ink);font-weight:400}
+  .block p{font-size:14px;color:var(--ink-2);line-height:1.6;margin:8px 0 0}
+
+  /* Stat-style numbered list */
+  .nlist{display:grid;gap:14px}
+  .nlist .row{display:grid;grid-template-columns:46px 1fr;gap:18px;padding:14px 0;border-top:1px solid var(--rule);align-items:baseline}
+  .nlist .row .n{font-family:'Fraunces',serif;font-size:18px;color:var(--accent);font-weight:400}
+  .nlist .row .ttl{font-family:'Fraunces',serif;font-size:18px;color:var(--ink);margin-bottom:4px}
+  .nlist .row .desc{font-size:13px;color:var(--muted);line-height:1.55}
+
+  /* Pill / chip */
+  .chip{display:inline-block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:5px 10px;border-radius:999px}
+  .chip.muted{color:var(--muted);border-color:var(--rule)}
+  .chip.gold{color:var(--accent-2);border-color:var(--accent-2)}
+
+  /* Naming grid */
+  .name-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .name-grid .nm{padding:14px 12px;border:1px solid var(--rule);background:var(--paper);border-radius:6px;text-align:center;transition:transform .2s,border-color .2s}
+  .name-grid .nm:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .name-grid .nm .n{font-family:'Fraunces',serif;font-size:18px;color:var(--ink);letter-spacing:-.01em}
+  .name-grid .nm .p{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+  /* Hypotheses */
+  .hyp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .hyp-grid .h{padding:18px;border:1px solid var(--rule);background:var(--paper);border-radius:8px;display:flex;flex-direction:column;gap:8px;min-height:170px}
+  .hyp-grid .h .n{font-family:'Fraunces',serif;color:var(--accent);font-size:14px}
+  .hyp-grid .h .t{font-family:'Fraunces',serif;font-size:18px;line-height:1.2}
+  .hyp-grid .h .ex{font-size:11px;color:var(--muted);letter-spacing:.04em}
+  .hyp-grid .h .score{margin-top:auto;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+  .hyp-grid .h.hi{border-color:var(--accent);background:#fff}
+  .hyp-grid .h.hi .score{color:var(--accent)}
+
+  /* Quote */
+  .quote{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:clamp(28px,3.4vw,48px);line-height:1.25;color:var(--ink);max-width:1100px;letter-spacing:-.01em}
+  .quote .open{color:var(--accent);font-style:normal}
+
+  /* Domains list */
+  .dom-wrap{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px 28px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-2);max-height:62vh;overflow-y:auto;padding-right:14px}
+  .dom-wrap::-webkit-scrollbar{width:6px}
+  .dom-wrap::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+  .dom-wrap .d{padding:4px 0;border-bottom:1px dotted var(--rule);transition:color .2s}
+  .dom-wrap .d:hover{color:var(--accent)}
+  .dom-group{margin-bottom:18px}
+  .dom-group h4{font-family:'Fraunces',serif;font-weight:400;font-size:13px;color:var(--accent);margin:0 0 8px;letter-spacing:.04em;text-transform:uppercase}
+
+  /* Phonetic / IPA */
+  .phon{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:32px}
+  .phon .p{padding:24px;background:var(--paper);border-left:2px solid var(--accent)}
+  .phon .p .lbl{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .phon .p .val{font-family:'Fraunces',serif;font-size:28px;margin-top:8px;color:var(--ink)}
+  .phon .p .desc{font-size:13px;color:var(--ink-2);margin-top:8px;line-height:1.55}
+
+  /* Closing */
+  .close-wrap{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px}
+  .close-wrap .mark{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(80px,12vw,180px);line-height:1;letter-spacing:-.04em}
+  .close-wrap .mark em{font-style:italic;color:var(--accent);font-weight:400}
+  .close-wrap .sig{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted)}
+
+  /* Matrix table */
+  .mtx{width:100%;border-collapse:collapse;font-size:13px}
+  .mtx th,.mtx td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--rule)}
+  .mtx th{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .mtx td.nm{font-family:'Fraunces',serif;font-size:16px;color:var(--ink)}
+  .mtx td.good{color:var(--accent);font-weight:600}
+  .mtx tr.hi td{background:rgba(91,58,138,.05)}
+
+  /* Architecture diagram */
+  .arch{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:24px}
+  .arch .a{padding:24px;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+  .arch .a h4{font-family:'Fraunces',serif;font-weight:500;font-size:18px;color:var(--accent);margin:0 0 8px}
+  .arch .a .d{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.18em;margin-bottom:14px}
+  .arch .a .body{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+  .arch .a.primary{background:var(--ink);color:#F4F1EA}
+  .arch .a.primary h4{color:#F4F1EA}
+  .arch .a.primary .d{color:rgba(244,241,234,.5)}
+  .arch .a.primary .body{color:rgba(244,241,234,.78)}
+
+  /* Recommendation triple */
+  .triple{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
+  .triple .layer{padding:28px 26px;background:var(--paper);border:1px solid var(--rule);border-radius:10px;position:relative}
+  .triple .layer .badge{position:absolute;top:-12px;left:24px;background:var(--accent);color:#fff;font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:5px 10px;border-radius:3px}
+  .triple .layer h4{font-family:'Fraunces',serif;font-weight:400;font-size:22px;margin:6px 0 8px;color:var(--ink)}
+  .triple .layer .lbl{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .triple .layer p{font-size:13.5px;color:var(--ink-2);line-height:1.6;margin:0}
+
+  /* Bullet list */
+  ul.b{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+  ul.b li{padding-left:18px;position:relative;font-size:14px;line-height:1.6;color:var(--ink-2);max-width:680px}
+  ul.b li::before{content:"";position:absolute;left:0;top:.7em;width:6px;height:1px;background:var(--accent)}
+
+  /* big quote-number */
+  .megnum{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(120px,18vw,260px);line-height:.85;letter-spacing:-.05em;color:var(--accent)}
+  .megnum.dim{color:rgba(91,58,138,.18)}
+
+  /* AI ecosystem */
+  .ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;font-size:12.5px}
+  .ai-grid .ai{padding:12px 14px;border:1px solid var(--rule);background:var(--paper);border-radius:6px}
+  .ai-grid .ai .nm{font-family:'Fraunces',serif;font-size:15px;color:var(--ink)}
+  .ai-grid .ai .pat{color:var(--muted);font-size:11.5px;margin-top:3px;line-height:1.5}
+
+  /* keyboard hint */
+  .kbd{position:fixed;bottom:16px;right:20px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);z-index:30;display:flex;gap:8px;align-items:center;opacity:.7}
+  .kbd .key{border:1px solid var(--rule);padding:3px 6px;border-radius:3px;background:rgba(255,255,255,.5);font-family:'JetBrains Mono',monospace}
+
+  /* Section divider slide variants */
+  .section-mark{display:flex;flex-direction:column;gap:24px}
+  .section-mark .pill{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent)}
+
+  /* Top finalists */
+  .finalists{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+  .finalists .f{padding:20px 16px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;text-align:center}
+  .finalists .f .nm{font-family:'Fraunces',serif;font-size:24px;color:var(--ink)}
+  .finalists .f .or{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .finalists .f .risk{font-size:11px;color:var(--accent);margin-top:10px;letter-spacing:.12em;text-transform:uppercase}
+
+  /* Scenarios */
+  .scen{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .scen .s{padding:22px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;display:flex;flex-direction:column;gap:10px}
+  .scen .s.win{border-color:var(--accent);background:#fff;position:relative}
+  .scen .s.win::after{content:"RECOMENDADO";position:absolute;top:-10px;right:14px;background:var(--accent);color:#fff;font-size:9px;letter-spacing:.22em;padding:4px 8px;border-radius:3px}
+  .scen .s .lbl{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .scen .s .nm{font-family:'Fraunces',serif;font-size:22px;line-height:1.15}
+  .scen .s p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.55}
+
+  /* Mobile */
+  @media (max-width:760px){
+    .slide{padding:80px 24px 80px}
+    .grid-2,.grid-3,.grid-4,.triple,.arch,.scen,.finalists,.name-grid,.hyp-grid,.phon,.ai-grid{grid-template-columns:1fr;gap:16px}
+    .dom-wrap{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <div class="left"><span><span class="dot"></span>SEIYA · NAMING & ARQUITETURA</span></div>
+  <div class="right" id="counter">01 / 22</div>
+</div>
+
+<div class="arrow left" id="prev">&larr;</div>
+<div class="arrow right" id="next">&rarr;</div>
+
+<div class="kbd"><span class="key">&larr;</span><span class="key">&rarr;</span><span>navegar</span></div>
+
+<div class="deck" id="deck">
+
+  <!-- 01 — CAPA -->
+  <section class="slide cover" data-name="Capa">
+    <div class="reveal">
+      <div class="meta-line">
+        <span>Marty · Brand Strategy Memo</span>
+        <span>Documento Interno · Confidencial</span>
+        <span>17 · 04 · 2026</span>
+      </div>
+    </div>
+    <div class="reveal d1">
+      <h1>SEIYA<em>.</em></h1>
+    </div>
+    <div class="reveal d2">
+      <p class="sub">Mapa de naming e arquitetura de marca para uma plataforma de IA agêntica de marketing digital. Da hipótese fonética à decisão final.</p>
+    </div>
+    <div class="reveal d3">
+      <div class="stat">
+        <span class="n">150</span>
+        <span class="lbl">Domínios disponíveis · 8 hipóteses · 4 cenários · 1 recomendação tripla</span>
+      </div>
+    </div>
+    <div class="footer-meta"><span>01 — Capa</span><span class="right">SEIYA · 2026</span></div>
+  </section>
+
+  <!-- 02 — O PRODUTO -->
+  <section class="slide alt" data-name="O Produto">
+    <div class="reveal"><span class="num"><span class="big">02</span> · O Produto</span></div>
+    <div class="reveal d1" style="margin-top:36px">
+      <h2 class="title">Uma plataforma de IA<br>que <em style="font-style:italic;color:var(--accent)">produz todo o marketing</em><br>do seu negócio.</h2>
+    </div>
+    <div class="reveal d2 rule short"></div>
+    <div class="reveal d3 grid-2 tight" style="margin-top:18px">
+      <div>
+        <p class="lead">Você conversa com o sistema. Ele entende seu negócio, seu público e seu produto. E entrega tudo pronto: páginas, anúncios, emails, WhatsApp, VSLs, conteúdo orgânico. Não rascunho — pronto pra usar.</p>
+      </div>
+      <div>
+        <div class="block">
+          <div class="k">O diferencial estrutural</div>
+          <div class="v">13 agentes coordenados<br>operando como <span class="accent">um sistema único</span>.</div>
+          <p>Não é marketplace. Não é "escolha um agente". É uma orquestra que conhece seu negócio do início ao fim e entrega cada peça com a mesma estratégia, tom e qualidade.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-meta"><span>02 — O Produto</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 03 — O DESAFIO -->
+  <section class="slide" data-name="O Desafio">
+    <div class="reveal"><span class="num"><span class="big">03</span> · O Desafio</span></div>
+    <div class="reveal d1" style="margin-top:36px">
+      <h2 class="title">Encontrar o nome<br>que <em style="font-style:italic;color:var(--accent)">carrega o pitch</em><br>e sobrevive ao IP.</h2>
+    </div>
+    <div class="reveal d2 rule short"></div>
+    <div class="reveal d3 nlist" style="margin-top:30px;max-width:880px">
+      <div class="row"><span class="n">01</span><div><div class="ttl">Pronúncia trava em "SEI-a / CEIA"</div><div class="desc">Boca brasileira tem que ler igual em qualquer contexto. Sem "sei-YAR", sem "ZEI-a". Duas sílabas abertas, fricativa suave, vogal final aberta.</div></div></div>
+      <div class="row"><span class="n">02</span><div><div class="ttl">Distância segura do universo Saint Seiya</div><div class="desc">Toei / Shueisha / Kurumada. "Seiya" isolado em SaaS é defensável; combinações com Pegasus, Athena, Saint, Cosmo ou Zodiac são proibidas.</div></div></div>
+      <div class="row"><span class="n">03</span><div><div class="ttl">Posicionamento coordenado</div><div class="desc">O nome não pode evocar coleção, marketplace ou "biblioteca de agentes". A marca tem que dizer sistema único.</div></div></div>
+      <div class="row"><span class="n">04</span><div><div class="ttl">Vertical beta: lançamento de infoproduto</div><div class="desc">Mas a arquitetura precisa escalar para Brand, Funnel, Ads, Copy, Page sem refazer marca.</div></div></div>
+    </div>
+    <div class="footer-meta"><span>03 — O Desafio</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 04 — ORIGEM -->
+  <section class="slide alt" data-name="Origem">
+    <div class="reveal"><span class="num"><span class="big">04</span> · Origem</span></div>
+    <div class="reveal d1" style="margin-top:30px">
+      <h2 class="title">Saint Seiya<br><span class="mono" style="font-size:14px;letter-spacing:.04em;color:var(--muted)">聖闘士星矢 · Kurumada, 1986</span></h2>
+    </div>
+    <div class="reveal d2 grid-2" style="margin-top:46px">
+      <div>
+        <p class="lead">A inspiração estrutural é exata: cavaleiros nomeados, arquetípicos, agindo em coordenação <em>simultânea</em> sob uma causa única — não em sequência, não como elenco rotativo.</p>
+        <div class="rule"></div>
+        <p class="body">"Seiya" (星矢) significa <em>estrela</em> + <em>flecha</em>. Som que funciona em qualquer idioma: 3 fonemas, ritmo trocaico, vogal final aberta. É o ponto de partida fonético — não o destino.</p>
+      </div>
+      <div>
+        <div class="block">
+          <div class="k">O cuidado</div>
+          <div class="v">A marca herda a arquitetura simbólica.<br>Não herda a IP.</div>
+          <p>Toda a exploração que segue mantém a energia sonora "SEI-a / CEIA" e o conceito de coordenação coletiva, mas constrói distância suficiente — ortográfica ou conceitual — para registrabilidade global limpa.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-meta"><span>04 — Origem</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 05 — FONÉTICA -->
+  <section class="slide" data-name="Fonética">
+    <div class="reveal"><span class="num"><span class="big">05</span> · Análise Fonética</span></div>
+    <div class="reveal d1" style="margin-top:30px">
+      <h2 class="title">Por que <em style="color:var(--accent);font-style:italic">"ceia"</em><br>funciona.</h2>
+    </div>
+    <div class="reveal d2 phon">
+      <div class="p">
+        <div class="lbl">Estrutura</div>
+        <div class="val">SE · I · A</div>
+        <div class="desc">Três fonemas fluidos. Zero clusters consonantais. Pronunciável em qualquer idioma — passa no teste "ouvi uma vez, lembro amanhã".</div>
+      </div>
+      <div class="p">
+        <div class="lbl">Ritmo</div>
+        <div class="val">trocaico</div>
+        <div class="desc">Forte-fraco. Mesmo padrão de Apple, Google, Nike, Tesla. Marca enxuta absorve memória rápido.</div>
+      </div>
+      <div class="p">
+        <div class="lbl">Abertura</div>
+        <div class="val">S → A</div>
+        <div class="desc">Abre com fricativa suave, fecha com vogal aberta. Entrada elegante, som expansivo, global.</div>
+      </div>
+    </div>
+    <div class="reveal d3 quote" style="margin-top:60px;font-size:clamp(22px,2.2vw,32px);max-width:880px">
+      <span class="open">"</span>Ceia<span class="open">."</span> <span style="color:var(--muted);font-style:normal;font-family:'Inter';font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin-left:14px">refeição que reúne — metáfora central do produto</span>
+    </div>
+    <div class="footer-meta"><span>05 — Fonética</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 06 — DERIVADOS -->
+  <section class="slide alt" data-name="Derivados">
+    <div class="reveal"><span class="num"><span class="big">06</span> · Direção 1 — 90 derivados de Seiya</span></div>
+    <div class="reveal d1" style="margin-top:24px;display:flex;gap:36px;align-items:baseline">
+      <h2 class="title">Mesma boca,<br><em style="color:var(--accent);font-style:italic">grafia diferente.</em></h2>
+      <span class="megnum dim" style="font-size:120px;line-height:1">90</span>
+    </div>
+    <div class="reveal d2" style="margin-top:30px">
+      <p class="body">Modificações ortográficas que preservam o som "SEI-a" mas criam distância visual suficiente para registrabilidade. Seleção dos mais fortes:</p>
+    </div>
+    <div class="reveal d3 name-grid" style="margin-top:24px">
+      <div class="nm"><div class="n">Seya</div><div class="p">SEI-a · 4L</div></div>
+      <div class="nm"><div class="n">Seyah</div><div class="p">SEI-a</div></div>
+      <div class="nm"><div class="n">Seyan</div><div class="p">SEI-an</div></div>
+      <div class="nm"><div class="n">Seyra</div><div class="p">SEI-ra</div></div>
+      <div class="nm"><div class="n">Seion</div><div class="p">SEI-on</div></div>
+      <div class="nm"><div class="n">Seyo</div><div class="p">SEI-o</div></div>
+      <div class="nm"><div class="n">Seya One</div><div class="p">composto</div></div>
+      <div class="nm"><div class="n">Seya Labs</div><div class="p">composto</div></div>
+      <div class="nm"><div class="n">Seya OS</div><div class="p">composto</div></div>
+      <div class="nm"><div class="n">Seya Stack</div><div class="p">composto</div></div>
+    </div>
+    <div class="footer-meta"><span>06 — Direção 1</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 07 — CEIA -->
+  <section class="slide" data-name="Pronúncia ceia">
+    <div class="reveal"><span class="num"><span class="big">07</span> · Direção 2 — 67 nomes "ceia"</span></div>
+    <div class="reveal d1" style="margin-top:24px;display:flex;gap:36px;align-items:baseline">
+      <h2 class="title">A grafia muda.<br><em style="color:var(--accent);font-style:italic">A boca não.</em></h2>
+      <span class="megnum dim" style="font-size:120px;line-height:1">67</span>
+    </div>
+    <div class="reveal d2" style="margin-top:30px">
+      <p class="body">Variantes ortográficas que entregam <em>"CEIA"</em> de qualquer boca brasileira. Algumas carregam metáfora narrativa embutida — a refeição que reúne todos numa mesa só.</p>
+    </div>
+    <div class="reveal d3 name-grid" style="margin-top:24px">
+      <div class="nm"><div class="n">Ceia</div><div class="p">PT puro</div></div>
+      <div class="nm"><div class="n">Sceia</div><div class="p">grafia italiana</div></div>
+      <div class="nm"><div class="n">Sceya</div><div class="p">híbrido</div></div>
+      <div class="nm"><div class="n">Çeia</div><div class="p">brasileira</div></div>
+      <div class="nm"><div class="n">Sseia</div><div class="p">sussurro</div></div>
+      <div class="nm"><div class="n">Cceia</div><div class="p">visual moda</div></div>
+      <div class="nm"><div class="n">Çeya</div><div class="p">Ç + EYA</div></div>
+      <div class="nm"><div class="n">Seïa</div><div class="p">trema editorial</div></div>
+      <div class="nm"><div class="n">Sayah</div><div class="p">visual árabe</div></div>
+      <div class="nm"><div class="n">Seah</div><div class="p">compressão</div></div>
+    </div>
+    <div class="footer-meta"><span>07 — Direção 2</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 08 — 8 HIPÓTESES -->
+  <section class="slide alt" data-name="8 Hipóteses">
+    <div class="reveal"><span class="num"><span class="big">08</span> · Arquitetura — 8 hipóteses</span></div>
+    <div class="reveal d1" style="margin-top:18px">
+      <h2 class="title">As 8 formas<br>de organizar uma marca.</h2>
+    </div>
+    <div class="reveal d2 hyp-grid" style="margin-top:36px">
+      <div class="h hi"><div class="n">01</div><div class="t">Branded House Puro</div><div class="ex">Proton, Notion, Linear, Apple</div><div class="score">Encaixe · 5/5</div></div>
+      <div class="h"><div class="n">02</div><div class="t">House of Brands</div><div class="ex">P&amp;G, Unilever</div><div class="score" style="color:var(--muted)">Encaixe · 1/5</div></div>
+      <div class="h"><div class="n">03</div><div class="t">Endorsed Brands</div><div class="ex">Marriott, Nest by Google</div><div class="score" style="color:var(--muted)">Encaixe · 2/5</div></div>
+      <div class="h"><div class="n">04</div><div class="t">Sub-Brands</div><div class="ex">Surface, Xbox, PlayStation</div><div class="score" style="color:var(--muted)">Encaixe · 2/5</div></div>
+      <div class="h"><div class="n">05</div><div class="t">Master + Tiers</div><div class="ex">Claude, GPT, Gemini, Mistral</div><div class="score" style="color:var(--muted)">Encaixe · 2/5</div></div>
+      <div class="h"><div class="n">06</div><div class="t">Ingredient Brand</div><div class="ex">Intel Inside, Powered by OpenAI</div><div class="score" style="color:var(--muted)">Encaixe · 2/5 hoje</div></div>
+      <div class="h"><div class="n">07</div><div class="t">Pantheon / Cast</div><div class="ex">CrewAI, Agentforce, Einstein</div><div class="score" style="color:var(--muted)">2/5 visível · 4/5 interno</div></div>
+      <div class="h hi"><div class="n">08</div><div class="t">Verb-as-Brand</div><div class="ex">Stripe, Zapier, Zoom</div><div class="score">Encaixe · 4/5</div></div>
+    </div>
+    <div class="footer-meta"><span>08 — 8 Hipóteses</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 09 — REFERÊNCIAS ACADÊMICAS -->
+  <section class="slide" data-name="Referências">
+    <div class="reveal"><span class="num"><span class="big">09</span> · Pilares Acadêmicos</span></div>
+    <div class="reveal d1" style="margin-top:30px">
+      <h2 class="title">A decisão tem <em style="color:var(--accent);font-style:italic">25 anos</em><br>de teoria por trás.</h2>
+    </div>
+    <div class="reveal d2 grid-4" style="margin-top:50px">
+      <div class="block"><div class="k">Pilar 01</div><div class="v">David Aaker</div><p><em>Brand Portfolio Strategy</em> (2004). Brand Relationship Spectrum: Branded House → Sub-Brands → Endorsed → House of Brands. A espinha dorsal do campo.</p></div>
+      <div class="block"><div class="k">Pilar 02</div><div class="v">Jean-Noël Kapferer</div><p><em>The New Strategic Brand Management</em> (1992). Brand Identity Prism + 6 modelos de arquitetura. Granularidade europeia.</p></div>
+      <div class="block"><div class="k">Pilar 03</div><div class="v">Wally Olins</div><p><em>Corporate Identity</em> (1989). Tipologia tripartite original: monolithic / endorsed / branded. Onde o campo nasceu.</p></div>
+      <div class="block"><div class="k">Pilar 04</div><div class="v">Pós-Plataforma</div><p>Tandfonline 2023, Vivaldi, Springer 2021. Layered brand architecture para ecossistemas digitais. Onde a teoria clássica fica curta.</p></div>
+    </div>
+    <div class="reveal d3 rule"></div>
+    <div class="reveal d4">
+      <p class="body" style="font-style:italic;color:var(--muted)">Sobre IA generativa especificamente, não existe ainda corpo acadêmico consolidado. O campo é jovem demais. SEIYA está em território onde inventar precedente é possível.</p>
+    </div>
+    <div class="footer-meta"><span>09 — Referências</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 10 — CENÁRIO IA -->
+  <section class="slide alt" data-name="Cenário IA">
+    <div class="reveal"><span class="num"><span class="big">10</span> · Cenário · Marcas de IA hoje</span></div>
+    <div class="reveal d1" style="margin-top:24px">
+      <h2 class="title">O setor convergiu<br>em <em style="color:var(--accent);font-style:italic">dois padrões.</em></h2>
+    </div>
+    <div class="reveal d2 grid-2" style="margin-top:36px;gap:48px">
+      <div>
+        <span class="chip">Padrão 01</span>
+        <h3 class="subtitle" style="margin-top:14px">Branded House Proton-style<br>com descritor funcional curto.</h3>
+        <p class="body" style="margin-top:12px">Hugging Face Hub · Perplexity Pages · Replit Agent · ElevenLabs Voice · Cursor Composer · Sierra Agent OS. Default architecture do setor SaaS-IA.</p>
+      </div>
+      <div>
+        <span class="chip gold">Padrão 02</span>
+        <h3 class="subtitle" style="margin-top:14px">Master + Tiers<br>para players de modelo cru.</h3>
+        <p class="body" style="margin-top:12px">OpenAI / GPT-4 · Anthropic / Claude Sonnet · Google / Gemini Pro · xAI / Grok · Mistral Large. O cliente B2B-dev espera essa estrutura.</p>
+      </div>
+    </div>
+    <div class="reveal d3 ai-grid" style="margin-top:42px">
+      <div class="ai"><div class="nm">OpenAI</div><div class="pat">Sub-Brands + Tiers · ChatGPT, Sora, DALL·E</div></div>
+      <div class="ai"><div class="nm">Anthropic</div><div class="pat">Master + Tiers puro · Opus / Sonnet / Haiku</div></div>
+      <div class="ai"><div class="nm">CrewAI</div><div class="pat">Pantheon · crews / agents / tasks</div></div>
+      <div class="ai"><div class="nm">Salesforce Agentforce</div><div class="pat">Sub-Brand + Branded House interno</div></div>
+      <div class="ai"><div class="nm">Cognition / Devin</div><div class="pat">Master + Hero · corp some, produto vence</div></div>
+      <div class="ai"><div class="nm">Perplexity</div><div class="pat">Branded House Proton-style</div></div>
+    </div>
+    <div class="footer-meta"><span>10 — Cenário IA</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 11 — BURACOS -->
+  <section class="slide dark" data-name="Buracos do mercado">
+    <div class="reveal"><span class="num"><span class="big">11</span> · <span style="color:rgba(244,241,234,.55)">Onde estão os buracos</span></span></div>
+    <div class="reveal d1" style="margin-top:24px">
+      <h2 class="title" style="color:#F4F1EA">5 territórios que<br><em style="color:var(--accent-2);font-style:italic">ninguém ocupou</em> em IA agêntica.</h2>
+    </div>
+    <div class="reveal d2 nlist" style="margin-top:40px;max-width:1000px">
+      <div class="row" style="border-color:rgba(244,241,234,.18)"><span class="n" style="color:var(--accent-2)">01</span><div><div class="ttl" style="color:#F4F1EA">Verbo-Mãe para multi-agente</div><div class="desc" style="color:rgba(244,241,234,.6)">Ninguém em IA virou verbo cultural ainda. Toda IA hoje é substantivo. O primeiro a virar verbo cria categoria.</div></div></div>
+      <div class="row" style="border-color:rgba(244,241,234,.18)"><span class="n" style="color:var(--accent-2)">02</span><div><div class="ttl" style="color:#F4F1EA">Branded House com descritor em PT</div><div class="desc" style="color:rgba(244,241,234,.6)">Toda IA usa descritores em inglês. Mercado lusófono pede ponte.</div></div></div>
+      <div class="row" style="border-color:rgba(244,241,234,.18)"><span class="n" style="color:var(--accent-2)">03</span><div><div class="ttl" style="color:#F4F1EA">Plataforma que esconde os agentes</div><div class="desc" style="color:rgba(244,241,234,.6)">CrewAI, Agentforce, Adept — todos expõem o cast. Ninguém entrega "pedi o resultado, recebi o resultado".</div></div></div>
+      <div class="row" style="border-color:rgba(244,241,234,.18)"><span class="n" style="color:var(--accent-2)">04</span><div><div class="ttl" style="color:#F4F1EA">Nome curto, sonoro, não-mitológico-batido</div><div class="desc" style="color:rgba(244,241,234,.6)">Players hoje se dividem em 3 cestos: mitologia gasta, tech-jargon, nome humano. Seya/Sceia abre um quarto território.</div></div></div>
+      <div class="row" style="border-color:rgba(244,241,234,.18)"><span class="n" style="color:var(--accent-2)">05</span><div><div class="ttl" style="color:#F4F1EA">Brasileira de IA agêntica com ambição global</div><div class="desc" style="color:rgba(244,241,234,.6)">Não há player brasileiro visível no mapa global. Território literalmente vazio.</div></div></div>
+    </div>
+    <div class="footer-meta"><span>11 — Buracos</span><span class="right" style="color:var(--accent-2)">SEIYA</span></div>
+  </section>
+
+  <!-- 12 — SeyAI -->
+  <section class="slide" data-name="SeyAI · A virada">
+    <div class="reveal"><span class="num"><span class="big">12</span> · A grande virada</span></div>
+    <div class="reveal d1" style="margin-top:24px">
+      <h2 class="title">Hipótese <em style="color:var(--accent);font-style:italic">SeyAI</em>.<br>Modelo OpenAI · Anthropic.</h2>
+    </div>
+    <div class="reveal d2 grid-2" style="margin-top:42px;gap:56px">
+      <div>
+        <p class="lead">Inspirada na fluidez de "OpenAI" (que se lê <em>oupenei</em>, não <em>open-A-I</em>): uma marca corporativa que sobe SEIYA para a liga das empresas de IA — não das plataformas de marketing — e nomeia o produto-herói separadamente.</p>
+        <div class="rule"></div>
+        <ul class="b">
+          <li><strong>Corporate brand</strong> = SeyAI. Categoria, manifesto, talento, funding.</li>
+          <li><strong>Produto-herói</strong> = Sceia (ou Theia, Kairo). Uso, afeto, verbo cultural.</li>
+          <li><strong>Roadmap</strong> = SeyAI lança N produtos-herói para N verticais.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block">
+          <div class="k">Por que isso muda tudo</div>
+          <div class="v">"Vendemos uma plataforma SaaS"<br><span style="color:var(--muted)">vs.</span><br>"Vendemos uma <span class="accent">empresa de IA</span>."</div>
+          <p>Diferença de avaliação enorme. Sceia sozinha entra na categoria "produto de marketing". SeyAI entra na categoria OpenAI/Anthropic/xAI — onde o capital, a imprensa e o talento estão hoje.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-meta"><span>12 — SeyAI</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 13 — FONÉTICA SeyAI -->
+  <section class="slide alt" data-name="Fonética SeyAI">
+    <div class="reveal"><span class="num"><span class="big">13</span> · SeyAI · análise fonética</span></div>
+    <div class="reveal d1" style="margin-top:24px">
+      <h2 class="title"><em style="color:var(--accent);font-style:italic">Ambiguidade</em><br>como ativo, não bug.</h2>
+    </div>
+    <div class="reveal d2 grid-2" style="margin-top:40px;gap:60px">
+      <div>
+        <span class="chip">Português</span>
+        <h3 class="subtitle" style="margin-top:14px">SEI-ai → <em>"ceia"</em></h3>
+        <p class="body" style="margin-top:10px">O "i" do AI é absorvido pelo ditongo "ei". A boca brasileira lê uma palavra única: <strong>ceia</strong>. A continuidade fonética com Sceia é total. O "I" desaparece da boca mas permanece no logo — vira glifo de "isso é IA" sem custar uma sílaba.</p>
+      </div>
+      <div>
+        <span class="chip gold">Inglês</span>
+        <h3 class="subtitle" style="margin-top:14px">"say-A-I" / "say-eye"</h3>
+        <p class="body" style="margin-top:10px">Duas leituras válidas — exatamente como OpenAI ("open-A-I" pela imprensa, "open-eye" pelo público). A leitura colada vira verbo natural. A soletrada acontece sozinha por padrão de setor. Ambiguidade que ganha terreno em duas comunidades simultâneas.</p>
+      </div>
+    </div>
+    <div class="reveal d3 quote" style="margin-top:60px;font-size:clamp(20px,1.9vw,28px);max-width:1000px;color:var(--muted)">
+      <span class="open">"</span>Quando uma marca tem duas leituras válidas, ela ganha terreno em duas comunidades simultaneamente.<span class="open">"</span>
+    </div>
+    <div class="footer-meta"><span>13 — Fonética SeyAI</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 14 — TOP FINALISTAS -->
+  <section class="slide" data-name="Top Finalistas">
+    <div class="reveal"><span class="num"><span class="big">14</span> · Top finalistas consolidados</span></div>
+    <div class="reveal d1" style="margin-top:24px">
+      <h2 class="title">10 nomes<br>que sobreviveram a tudo.</h2>
+    </div>
+    <div class="reveal d2 finalists" style="margin-top:42px">
+      <div class="f"><div class="nm">Sceia</div><div class="or">Grafia italianizada</div><div class="risk">IP zero</div></div>
+      <div class="f"><div class="nm">Seya</div><div class="or">Derivado · 4L</div><div class="risk">IP baixo</div></div>
+      <div class="f"><div class="nm">Theia</div><div class="or">Titânide grega</div><div class="risk">IP zero</div></div>
+      <div class="f"><div class="nm">Orcha</div><div class="or">Orquestra</div><div class="risk">IP zero</div></div>
+      <div class="f"><div class="nm">Sephira</div><div class="or">Cabala · 10 emanações</div><div class="risk">IP zero</div></div>
+      <div class="f"><div class="nm">Seimei</div><div class="or">Onmyōji · shikigami</div><div class="risk">IP zero</div></div>
+      <div class="f"><div class="nm">Seshat</div><div class="or">Egípcia · escriba</div><div class="risk">IP zero</div></div>
+      <div class="f"><div class="nm">Sincra</div><div class="or">Sincronia</div><div class="risk">IP zero</div></div>
+      <div class="f"><div class="nm">Ceia</div><div class="or">Português puro</div><div class="risk">IP zero</div></div>
+      <div class="f"><div class="nm">SeyAI</div><div class="or">Corporate · modelo OpenAI</div><div class="risk">IP baixo</div></div>
+    </div>
+    <div class="reveal d3" style="margin-top:30px">
+      <p class="body" style="color:var(--muted);font-style:italic">Eliminados de saída: Pegasus, Athena, Saint, Cosmo, Zodiac e qualquer combinação. Risco de IP alto.</p>
+    </div>
+    <div class="footer-meta"><span>14 — Finalistas</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 15 — CENÁRIOS A B C D -->
+  <section class="slide alt" data-name="Cenários A B C D">
+    <div class="reveal"><span class="num"><span class="big">15</span> · 4 cenários de decisão</span></div>
+    <div class="reveal d1" style="margin-top:18px">
+      <h2 class="title">Quatro caminhos.<br>Um ganha.</h2>
+    </div>
+    <div class="reveal d2 scen" style="margin-top:36px">
+      <div class="s">
+        <span class="lbl">Cenário A</span>
+        <span class="nm">Seiya / Seya puro</span>
+        <p>Continuidade máxima com o trabalho prévio. Aceita risco IP médio + estratégia de defesa legal. Plano de contingência se IP liberar verde.</p>
+      </div>
+      <div class="s">
+        <span class="lbl">Cenário B</span>
+        <span class="nm">Sceia (Branded House)</span>
+        <p>IP zero, fonética "ceia" preservada, metáfora da mesa que reúne. Branded House Proton-style — Sceia Launch / Brand / Funnel / Ads / Copy / Page.</p>
+      </div>
+      <div class="s win">
+        <span class="lbl">Cenário C-novo · Híbrido</span>
+        <span class="nm">SeyAI + Sceia</span>
+        <p>SeyAI corp captura categoria "empresa de IA". Sceia produto preserva todo o trabalho prévio. Roadmap escala em dois eixos.</p>
+      </div>
+      <div class="s">
+        <span class="lbl">Cenário D</span>
+        <span class="nm">SeyAI + Hero novo</span>
+        <p>Clean break narrativo. SeyAI lança produto-herói com nome curto tipo Claude/Pi (Theia, Kairo). Para quem quer recomeçar a história.</p>
+      </div>
+    </div>
+    <div class="footer-meta"><span>15 — Cenários</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 16 — RECOMENDAÇÃO TRIPLA -->
+  <section class="slide dark" data-name="Recomendação Tripla">
+    <div class="reveal"><span class="num"><span class="big">16</span> · <span style="color:rgba(244,241,234,.55)">Recomendação final</span></span></div>
+    <div class="reveal d1" style="margin-top:24px">
+      <h2 class="title" style="color:#F4F1EA">Três camadas.<br>Um <em style="color:var(--accent-2);font-style:italic">sistema único.</em></h2>
+    </div>
+    <div class="reveal d2 triple">
+      <div class="layer">
+        <span class="badge">Camada 01</span>
+        <div class="lbl">Visual & Produto</div>
+        <h4>Branded House Proton</h4>
+        <p>Sceia + descritor categórico curto em inglês. <em>Sceia Launch · Sceia Brand · Sceia Funnel · Sceia Ads · Sceia Copy · Sceia Page.</em> Identidade visual única. Sub-produtos são modos, não produtos separados.</p>
+      </div>
+      <div class="layer">
+        <span class="badge">Camada 02</span>
+        <div class="lbl">Comunicação & Cultura</div>
+        <h4>Verb-as-Brand</h4>
+        <p>Plantar o uso verbal desde o dia um. <em>"Seyar um lançamento" · "rodei o seya" · "tá no seya".</em> Marca a categoria via uso linguístico — como Stripe, Zoom e Google fizeram.</p>
+      </div>
+      <div class="layer">
+        <span class="badge">Camada 03</span>
+        <div class="lbl">Arquitetura interna</div>
+        <h4>Anti-Pantheon</h4>
+        <p>13 agentes mitológicos existem como arquitetura técnica interna. <strong>Nunca</strong> aparecem ao cliente como marcas. O cliente vê "Sceia trabalhando" — não vê 13 personagens. Diferencial estrutural impossível de copiar.</p>
+      </div>
+    </div>
+    <div class="reveal d3" style="margin-top:40px;max-width:1000px">
+      <p class="body" style="color:rgba(244,241,234,.7);font-style:italic">Sob esse tripé, opera o guarda-chuva corporativo SeyAI — a empresa de IA brasileira que carrega categoria de OpenAI/Anthropic e libera Sceia para ser, simplesmente, a plataforma onde o marketing acontece.</p>
+    </div>
+    <div class="footer-meta"><span>16 — Recomendação tripla</span><span class="right" style="color:var(--accent-2)">SEIYA</span></div>
+  </section>
+
+  <!-- 17 — DOMÍNIOS 150 -->
+  <section class="slide" data-name="150 Domínios">
+    <div class="reveal"><span class="num"><span class="big">17</span> · 150 domínios disponíveis</span></div>
+    <div class="reveal d1" style="margin-top:18px;display:flex;justify-content:space-between;align-items:baseline">
+      <h2 class="title">Inventário<br>verificado.</h2>
+      <span class="megnum dim">150</span>
+    </div>
+    <div class="reveal d2" style="margin-top:18px;display:flex;gap:14px;flex-wrap:wrap">
+      <span class="chip">.com</span><span class="chip">.ai</span><span class="chip">.io</span><span class="chip">.co</span><span class="chip">.com.br</span><span class="chip muted">agrupados por raiz</span>
+    </div>
+    <div class="reveal d3 dom-wrap" id="domains" style="margin-top:24px">
+      <!-- preenchido por JS -->
+    </div>
+    <div class="footer-meta"><span>17 — Inventário</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 18 — TOP 20 MUST-SECURE -->
+  <section class="slide alt" data-name="Top 20 must-secure">
+    <div class="reveal"><span class="num"><span class="big">18</span> · Top 20 must-secure</span></div>
+    <div class="reveal d1" style="margin-top:24px">
+      <h2 class="title">Os primeiros<br>a registrar.</h2>
+    </div>
+    <div class="reveal d2 grid-2" style="margin-top:36px;gap:64px">
+      <div>
+        <span class="chip">Tier 01 · Núcleo Sceia</span>
+        <ul class="b" style="margin-top:18px">
+          <li class="mono" style="font-size:13px">sceia.com</li>
+          <li class="mono" style="font-size:13px">sceia.ai</li>
+          <li class="mono" style="font-size:13px">sceia.io</li>
+          <li class="mono" style="font-size:13px">sceia.co</li>
+          <li class="mono" style="font-size:13px">sceiaos.com</li>
+          <li class="mono" style="font-size:13px">sceialaunch.com</li>
+          <li class="mono" style="font-size:13px">sceiabrand.com</li>
+          <li class="mono" style="font-size:13px">sceiafunnel.com</li>
+          <li class="mono" style="font-size:13px">sceiacopy.com</li>
+          <li class="mono" style="font-size:13px">sceiapage.com</li>
+        </ul>
+      </div>
+      <div>
+        <span class="chip gold">Tier 02 · SeyAI corp + Seya</span>
+        <ul class="b" style="margin-top:18px">
+          <li class="mono" style="font-size:13px">seyai.io</li>
+          <li class="mono" style="font-size:13px">seyai.ai</li>
+          <li class="mono" style="font-size:13px">seyai.co</li>
+          <li class="mono" style="font-size:13px">seyai.com.br</li>
+          <li class="mono" style="font-size:13px">seya.io</li>
+          <li class="mono" style="font-size:13px">seyalaunch.com</li>
+          <li class="mono" style="font-size:13px">seyabrand.com</li>
+          <li class="mono" style="font-size:13px">seyaos.com</li>
+          <li class="mono" style="font-size:13px">getseya.com</li>
+          <li class="mono" style="font-size:13px">getseyai.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-meta"><span>18 — Must-secure</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 19 — MATRIZ DE DECISÃO -->
+  <section class="slide" data-name="Matriz de Decisão">
+    <div class="reveal"><span class="num"><span class="big">19</span> · Matriz de decisão</span></div>
+    <div class="reveal d1" style="margin-top:18px">
+      <h2 class="title" style="font-size:clamp(34px,4.4vw,60px)">Cinco critérios.<br>Cinco linhas. <em style="color:var(--accent);font-style:italic">Uma linha vence.</em></h2>
+    </div>
+    <div class="reveal d2" style="margin-top:30px">
+      <table class="mtx">
+        <thead>
+          <tr><th>Nome</th><th>Pron. "ceia"</th><th>Risco IP</th><th>Posiciona multi-agente</th><th>Verbo cultural</th><th>Registrabilidade</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi"><td class="nm">Sceia</td><td>Sim</td><td class="good">Zero</td><td>Médio (metáfora ceia)</td><td>Médio</td><td class="good">5/5</td></tr>
+          <tr><td class="nm">Seya</td><td>Aproximada</td><td>Baixo</td><td>Neutro</td><td class="good">Sim — "seyar"</td><td>4/5</td></tr>
+          <tr><td class="nm">Theia</td><td>Aproximada</td><td class="good">Zero</td><td>Forte (mãe da luz)</td><td>Médio</td><td>4/5</td></tr>
+          <tr><td class="nm">Orcha</td><td>Não</td><td class="good">Zero</td><td class="good">Muito forte (orquestra)</td><td>Sim</td><td>4/5</td></tr>
+          <tr><td class="nm">Sephira</td><td>Não</td><td class="good">Zero</td><td class="good">Muito forte (10 emanações)</td><td>Não</td><td>5/5</td></tr>
+          <tr><td class="nm">Seimei</td><td>Aproximada</td><td class="good">Zero</td><td class="good">Muito forte (shikigami)</td><td>Não</td><td>5/5</td></tr>
+          <tr><td class="nm">Ceia</td><td>Sim</td><td class="good">Zero</td><td>Sim (reunião)</td><td>Sim</td><td>3/5</td></tr>
+          <tr class="hi"><td class="nm">SeyAI</td><td>Sim em PT</td><td>Baixo</td><td class="good">Muito forte (declara IA)</td><td>Sim</td><td>4/5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="footer-meta"><span>19 — Matriz</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 20 — PRÓXIMOS PASSOS -->
+  <section class="slide alt" data-name="Próximos Passos">
+    <div class="reveal"><span class="num"><span class="big">20</span> · Próximos passos</span></div>
+    <div class="reveal d1" style="margin-top:24px">
+      <h2 class="title">Da decisão<br>à <em style="color:var(--accent);font-style:italic">execução.</em></h2>
+    </div>
+    <div class="reveal d2 nlist" style="margin-top:30px;max-width:980px">
+      <div class="row"><span class="n">01</span><div><div class="ttl">Verificação jurídica formal</div><div class="desc">Busca de marca registrada nas classes Niça 9, 35, 38, 41, 42 — Brasil (INPI), EUA (USPTO), União Europeia (EUIPO), Japão (JPO). Parecerista de IP especializado em SaaS.</div></div></div>
+      <div class="row"><span class="n">02</span><div><div class="ttl">Registrar Tier 01 — núcleo Sceia + SeyAI corp</div><div class="desc">Bloqueio defensivo dos 20 domínios prioritários e variações óbvias. Reserva de @handles em Instagram, X, LinkedIn, GitHub, YouTube.</div></div></div>
+      <div class="row"><span class="n">03</span><div><div class="ttl">Validação oral em entrevistas</div><div class="desc">Testar pronúncia "Sceia" e "SeyAI" com 15 a 20 pessoas do ICP (donos de agência, infoprodutores). Pedir para ler em voz alta sem contexto.</div></div></div>
+      <div class="row"><span class="n">04</span><div><div class="ttl">Brief de identidade visual</div><div class="desc">Construção do logo, sistema tipográfico, paleta — sobre o nome confirmado. Lockup Sceia + lockup SeyAI corporate.</div></div></div>
+      <div class="row"><span class="n">05</span><div><div class="ttl">Documento de arquitetura interna</div><div class="desc">Formalizar quais 13 agentes mitológicos existem internamente e <em>como não são expostos</em>. Anti-Pantheon escrito.</div></div></div>
+      <div class="row"><span class="n">06</span><div><div class="ttl">Brief de tom de voz e copy de lançamento</div><div class="desc">Definir como o verbo cultural é plantado no marketing dia 1. "Seyar" como bandeira linguística desde o primeiro post.</div></div></div>
+    </div>
+    <div class="footer-meta"><span>20 — Próximos passos</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 21 — TESTE DE QUALIDADE -->
+  <section class="slide" data-name="Teste de Qualidade">
+    <div class="reveal"><span class="num"><span class="big">21</span> · O teste dos 30 segundos</span></div>
+    <div class="reveal d1" style="margin-top:24px">
+      <h2 class="title">A decisão estará<br>bem-tomada quando…</h2>
+    </div>
+    <div class="reveal d2" style="margin-top:46px">
+      <ul class="b" style="font-family:'Fraunces',serif;font-size:22px;line-height:1.45;max-width:920px;gap:18px">
+        <li>…o Thiago responder, sem hesitar, qual o nome da plataforma.</li>
+        <li>…disser como ela escala (Mãe + o quê) numa frase.</li>
+        <li>…explicar por que o nome carrega o pitch de multi-agente coordenado.</li>
+        <li>…demonstrar como ela vira verbo cultural.</li>
+        <li>…justificar por que zero risco de IP — ou risco gerenciável e por quê.</li>
+        <li>…garantir que esse nome dura 10 anos sem parecer cafona em 2030.</li>
+      </ul>
+    </div>
+    <div class="reveal d3 rule" style="margin-top:50px"></div>
+    <div class="reveal d4">
+      <p class="body" style="color:var(--muted);font-style:italic">Se as 6 respostas saem fluidas, decidiu certo.</p>
+    </div>
+    <div class="footer-meta"><span>21 — Teste</span><span class="right">SEIYA</span></div>
+  </section>
+
+  <!-- 22 — FECHAMENTO -->
+  <section class="slide dark" data-name="Fechamento">
+    <div class="reveal close-wrap" style="height:100%;justify-content:center">
+      <span class="sig" style="color:var(--accent-2)">17 · 04 · 2026 · Marty / Brand Strategy</span>
+      <div class="mark" style="color:#F4F1EA">Sceia<em>.</em></div>
+      <p class="lead" style="color:rgba(244,241,234,.7);text-align:center;max-width:740px">A mesa onde 13 agentes se sentam, conversam<br>e produzem o seu marketing — juntos, ao mesmo tempo,<br>sob uma única promessa coordenada.</p>
+      <div class="rule" style="background:rgba(244,241,234,.18);width:80px;margin:20px auto"></div>
+      <p class="mono" style="color:rgba(244,241,234,.5);font-size:11px;letter-spacing:.32em;text-transform:uppercase">SeyAI · Empresa de IA · Brasil → Mundo</p>
+    </div>
+    <div class="footer-meta"><span style="color:rgba(244,241,234,.5)">22 — Fim</span><span class="right" style="color:var(--accent-2)">SEIYA · 2026</span></div>
+  </section>
+
+</div>
+
+<nav class="navdots" id="navdots"></nav>
+
+<script>
+  // ---- DOMAINS DATA (150) ----
+  const ALL_DOMAINS = `seiyai.io
+seyalabs.ai
+sceiacloud.ai
+sceiai.ai
+sceiai.co
+sceiaos.com
+seyai.ai
+sceiaads.com
+seyapage.com
+seyaemail.ai
+seyalaunch.ai
+sceiavsl.ai
+seyaengine.com
+sceia.io
+sceiavsl.com
+sceiacopy.ai
+seyaos.com
+seyabrand.ai
+seyafunnel.com
+sceialaunch.com
+seyai.co
+sceialabs.com
+sceialaunch.ai
+sceiabrand.ai
+sceiaos.ai
+seyai.io
+sceiastudio.ai
+sayai.com.br
+seyalaunch.com
+sceiaengine.ai
+seyacloud.com
+seyabrand.com
+sceiafunnel.ai
+sceiacloud.com
+sceia.co
+sceia.ai
+sceia.com
+seyai.com.br
+sceiapage.com
+seyaads.com
+sceiaemail.ai
+sceiacopy.com
+seyapage.ai
+seyaengine.ai
+sceiaemail.com
+seyastudio.ai
+sceiai.com
+sceiaengine.com
+sceiastudio.com
+seyavsl.com
+sceiai.com.br
+seyaemail.com
+sceiafunnel.com
+seyafunnel.ai
+sceiabrand.com
+sceialabs.ai
+seyavsl.ai
+seyacopy.ai
+seiyai.com.br
+sceiaads.ai
+seyaads.ai
+seyaos.ai
+seiyai.ai
+seiyai.com
+seya.io
+seyacloud.ai
+sceiapage.ai
+seyacopy.com
+sceiai.io
+sayai.com
+seiyai.co
+getsayai.co
+ceiai.io
+tryseyai.io
+sceiaapp.com
+useseyai.io
+usesceiai.io
+usesceiai.ai
+getseyai.io
+sceiaapp.ai
+getseyai.co
+getsceiai.ai
+sceiahq.com
+useseyai.ai
+getsceiai.com
+getseya.ai
+getsayai.com
+usesceiai.co
+ceiai.com
+useseyai.co
+useseyai.com
+tryseyai.com
+getsayai.io
+getsceiai.io
+ceiai.co
+getseyai.ai
+getsayai.ai
+getseya.com
+tryseyai.co
+trysceiai.io
+tryseyai.ai
+getseyai.com
+getsceiai.co
+sceiahq.ai
+usesceiai.com
+getsceia.com
+getsceia.ai
+trysceiai.co
+ceiai.ai
+trysceiai.ai
+trysceiai.com
+runseya.ai
+sceya.ai
+runseya.com
+seiyaai.ai
+runsceia.com
+seyahq.com
+seyahq.ai
+goseya.ai
+tryseya.ai
+doseya.com
+seiyahq.ai
+gosceia.com
+seiyastudio.ai
+gosceia.ai
+dosceia.ai
+runsceia.ai
+doseya.ai
+seyaapp.com
+seiyaai.com
+usesceia.com
+ceya.com
+seiyastudio.com
+seiyahq.com
+seiyalabs.ai
+usesceia.ai
+trysceia.com
+goseya.com
+useseya.ai
+trysceia.ai
+ceya.io
+useseya.com
+seyaapp.ai
+seiyalabs.com
+ceya.ai
+dosceia.com
+getceia.com
+getceia.ai
+ceiaapp.ai
+ceiaapp.com`.split(/\n/).map(s=>s.trim()).filter(Boolean);
+
+  // group by root prefix
+  function groupBy(domains){
+    const groups = {
+      "Sceia · núcleo":[],
+      "Seya":[],
+      "SeyAI · corporate":[],
+      "Sceiai":[],
+      "Seiya · histórico":[],
+      "Ceia / Ceya / Sayai":[],
+      "Get / Use / Try / Run / Go / Do":[]
+    };
+    domains.forEach(d=>{
+      if(/^get|^use|^try|^run|^go|^do/.test(d)) groups["Get / Use / Try / Run / Go / Do"].push(d);
+      else if(/^sceiai|^ceiai/.test(d)) groups["Sceiai"].push(d);
+      else if(/^seyai/.test(d)) groups["SeyAI · corporate"].push(d);
+      else if(/^sceia/.test(d)) groups["Sceia · núcleo"].push(d);
+      else if(/^seiya/.test(d)) groups["Seiya · histórico"].push(d);
+      else if(/^seya/.test(d)) groups["Seya"].push(d);
+      else groups["Ceia / Ceya / Sayai"].push(d);
+    });
+    return groups;
+  }
+  const groups = groupBy(ALL_DOMAINS);
+  const wrap = document.getElementById('domains');
+  // Render as columns of grouped lists
+  Object.entries(groups).forEach(([name, list])=>{
+    if(!list.length) return;
+    const col = document.createElement('div');
+    col.className = 'dom-group';
+    col.innerHTML = `<h4>${name} <span style="color:var(--muted);font-family:'Inter';font-size:10px;letter-spacing:.18em;margin-left:6px">${list.length}</span></h4>` +
+      list.map(d=>`<div class="d">${d}</div>`).join('');
+    wrap.appendChild(col);
+  });
+
+  // ---- Deck navigation ----
+  const deck = document.getElementById('deck');
+  const slides = Array.from(deck.querySelectorAll('.slide'));
+  const total = slides.length;
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  const navdotsEl = document.getElementById('navdots');
+
+  // pad counter total
+  function pad(n){return String(n).padStart(2,'0')}
+
+  // build nav dots
+  slides.forEach((s,i)=>{
+    const d = document.createElement('span');
+    d.className = 'nd';
+    d.dataset.idx = i;
+    const tip = document.createElement('span');
+    tip.className = 'tip';
+    tip.textContent = `${pad(i+1)} · ${s.dataset.name||''}`;
+    d.appendChild(tip);
+    d.addEventListener('click',()=>goTo(i));
+    navdotsEl.appendChild(d);
+  });
+  const dotEls = Array.from(navdotsEl.querySelectorAll('.nd'));
+
+  function setActive(i){
+    slides.forEach((s,idx)=>s.classList.toggle('active', idx===i));
+    dotEls.forEach((d,idx)=>d.classList.toggle('active', idx===i));
+    counter.textContent = `${pad(i+1)} / ${pad(total)}`;
+    progress.style.width = ((i)/(total-1))*100 + '%';
+  }
+  function goTo(i){
+    i = Math.max(0, Math.min(total-1, i));
+    deck.scrollTo({left: i*window.innerWidth, behavior:'smooth'});
+  }
+
+  // current slide based on scroll position
+  let currentIdx = 0;
+  function updateFromScroll(){
+    const i = Math.round(deck.scrollLeft / window.innerWidth);
+    if(i!==currentIdx){
+      currentIdx = i;
+      setActive(i);
+    } else {
+      // ensure progress updates smoothly
+      const ratio = deck.scrollLeft / (window.innerWidth*(total-1));
+      progress.style.width = (ratio*100) + '%';
+    }
+  }
+  deck.addEventListener('scroll', updateFromScroll, {passive:true});
+
+  // wheel: vertical -> horizontal
+  let wheelLock = false;
+  deck.addEventListener('wheel', (e)=>{
+    if(Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return; // already horizontal
+    // allow internal vertical scroll on domains slide
+    const target = e.target.closest('.dom-wrap');
+    if(target && target.scrollHeight > target.clientHeight){
+      // if not at boundary, allow native
+      const atTop = target.scrollTop===0 && e.deltaY<0;
+      const atBottom = (target.scrollTop+target.clientHeight) >= target.scrollHeight-1 && e.deltaY>0;
+      if(!atTop && !atBottom) return;
+    }
+    e.preventDefault();
+    deck.scrollLeft += e.deltaY;
+  }, {passive:false});
+
+  // arrows
+  document.getElementById('prev').addEventListener('click',()=>goTo(currentIdx-1));
+  document.getElementById('next').addEventListener('click',()=>goTo(currentIdx+1));
+
+  // keyboard
+  window.addEventListener('keydown',(e)=>{
+    if(e.key==='ArrowRight' || e.key==='PageDown' || e.key===' '){ e.preventDefault(); goTo(currentIdx+1); }
+    else if(e.key==='ArrowLeft' || e.key==='PageUp'){ e.preventDefault(); goTo(currentIdx-1); }
+    else if(e.key==='Home'){ goTo(0); }
+    else if(e.key==='End'){ goTo(total-1); }
+  });
+
+  // touch swipe
+  let touchX=null;
+  deck.addEventListener('touchstart',(e)=>{ touchX = e.touches[0].clientX; },{passive:true});
+  deck.addEventListener('touchend',(e)=>{
+    if(touchX===null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if(Math.abs(dx)>60){ goTo(currentIdx + (dx<0?1:-1)); }
+    touchX=null;
+  },{passive:true});
+
+  // resize
+  window.addEventListener('resize',()=>{
+    deck.scrollTo({left: currentIdx*window.innerWidth, behavior:'instant'});
+  });
+
+  // init
+  setActive(0);
+</script>
+</body>
+</html>
