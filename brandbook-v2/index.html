@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SeyAI — Brandbook Estratégico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08080D; --bg-2:#0B0B12; --surface:#0F0F16; --surface-2:#16161F; --surface-3:#1C1C28;
+  --border:rgba(255,255,255,0.06); --border-md:rgba(255,255,255,0.10);
+  --accent:#6366F1; --accent-2:#818CF8; --accent-3:#A5B4FC;
+  --accent-dim:rgba(99,102,241,0.10); --accent-glow:rgba(99,102,241,0.20);
+  --gold-text:#FCD34D;
+  --text:#F4F4F5; --text-2:rgba(244,244,245,0.55); --text-3:rgba(244,244,245,0.30);
+  --deny-bg:rgba(239,68,68,0.08); --deny-text:#F87171;
+  --allow-bg:rgba(99,102,241,0.08); --allow-text:#818CF8;
+  --font:'Inter',system-ui,-apple-system,sans-serif;
+  --font-display:'Manrope',var(--font);
+  --font-edit:'Instrument Sans',var(--font);
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --radius:12px; --radius-sm:8px;
+  --transition:0.2s ease;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-in-out:cubic-bezier(.65,0,.35,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:#fff}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1.15;letter-spacing:-0.025em}
+h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:600;line-height:1.2;letter-spacing:-0.02em;margin-bottom:1.25rem}
+h3{font-size:clamp(1rem,2vw,1.25rem);font-weight:600;line-height:1.3;letter-spacing:-0.015em;margin-bottom:0.75rem}
+h4{font-size:0.7rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent-2);margin-bottom:0.75rem}
+p{color:var(--text-2);margin-bottom:1rem;font-size:0.95rem;line-height:1.75}
+p:last-child{margin-bottom:0}
+strong{color:var(--text);font-weight:600}
+em{color:var(--text);font-style:italic}
+
+.container{max-width:1100px;margin:0 auto;padding:0 2rem}
+
+/* HEADER */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,13,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.header-inner{max-width:1240px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:1rem;height:60px}
+.brand{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+.brand-logo{height:26px;width:auto;display:block;color:#fff}
+.brand-logo svg{height:100%;width:auto;display:block}
+.brand-tag{font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);padding-left:.7rem;border-left:1px solid var(--border-md);font-family:var(--font-mono)}
+.brand-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(99,102,241,.6);animation:pulse 2.4s var(--ease-in-out) infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 10px rgba(99,102,241,.6);transform:scale(1)}50%{box-shadow:0 0 18px rgba(99,102,241,.9);transform:scale(1.15)}}
+
+.tab-nav{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:center}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{background:none;border:none;border-bottom:2px solid transparent;color:var(--text-3);font-family:var(--font);font-size:.7rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:0 14px;height:60px;cursor:pointer;transition:color var(--transition),border-color var(--transition);white-space:nowrap}
+.tab-btn:hover{color:var(--text-2)}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--accent)}
+
+.dl-brandbook{flex-shrink:0;display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .85rem;background:transparent;border:1px solid var(--border-md);border-radius:8px;color:var(--text-2);font-family:var(--font);font-size:.7rem;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:all .2s var(--ease-out)}
+.dl-brandbook:hover{background:var(--accent-dim);border-color:rgba(99,102,241,.3);color:var(--accent-2);transform:translateY(-1px);box-shadow:0 4px 14px rgba(99,102,241,.15)}
+.dl-brandbook .arr{font-size:.85rem;line-height:1}
+
+/* Mobile menu */
+.menu-toggle{display:none;background:transparent;border:1px solid var(--border-md);color:var(--text);width:38px;height:34px;border-radius:6px;cursor:pointer;align-items:center;justify-content:center;font-size:1.1rem}
+.mobile-drawer{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(8,8,13,.98);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:1rem 1.25rem 1.5rem;z-index:99;flex-direction:column;gap:.4rem;max-height:calc(100vh - 60px);overflow-y:auto}
+.mobile-drawer.open{display:flex}
+.mobile-drawer .tab-btn{height:auto;padding:.7rem .9rem;border-bottom:1px solid var(--border);text-align:left;justify-content:flex-start}
+.mobile-drawer .tab-btn.active{border-bottom-color:var(--accent);background:var(--accent-dim)}
+.mobile-drawer .dl-brandbook{margin-top:.6rem;justify-content:center;padding:.7rem 1rem}
+
+/* PANELS */
+.tab-panel{display:none;padding-top:88px;padding-bottom:6rem;min-height:100vh}
+.tab-panel.active{display:block}
+.tab-panel.capa-panel{padding:0;height:100vh;overflow:hidden}
+.tab-panel.capa-panel.active{display:block}
+
+/* HERO / SECTION blocks */
+.hero-block{padding:5rem 0 4rem;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
+.hero-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--accent-2)}
+.hero-headline{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:600;line-height:1.15;letter-spacing:-0.025em;max-width:760px;margin-bottom:1.5rem}
+.hero-headline .accent{color:var(--accent-2)}
+.hero-sub{font-size:1rem;color:var(--text-2);max-width:560px;line-height:1.7}
+.section{padding:3.5rem 0;border-bottom:1px solid var(--border)}
+.section:last-child{border-bottom:none}
+.section-header{margin-bottom:2.5rem}
+.section-number{font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:.5rem;font-family:var(--font-mono)}
+
+/* CARDS / GRIDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:border-color var(--transition),background var(--transition),transform var(--transition),box-shadow var(--transition)}
+.card:hover{border-color:var(--border-md);background:var(--surface-2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(99,102,241,.08)}
+.card-accent{border-left:2px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0}
+.card-elevated{background:var(--surface-2);border-color:var(--border-md)}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.grid-2-cell{background:var(--surface);padding:1.75rem;transition:background var(--transition)}
+.grid-2-cell:hover{background:var(--surface-2)}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.grid-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+
+.quote-block{background:var(--accent-dim);border:1px solid rgba(99,102,241,0.18);border-radius:var(--radius);padding:2rem 2.5rem;position:relative}
+.quote-block::before{content:'"';position:absolute;top:-.75rem;left:2rem;font-size:6rem;line-height:1;color:var(--accent);opacity:.2;font-family:Georgia,serif}
+.quote-text{font-size:1.1rem;line-height:1.65;color:var(--text);font-weight:400;position:relative}
+
+.stat-strip{display:flex;align-items:center;gap:2rem;padding:1.5rem 2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);flex-wrap:wrap}
+.stat-item{display:flex;flex-direction:column;gap:.1rem}
+.stat-value{font-size:1.5rem;font-weight:600;letter-spacing:-0.02em;color:var(--text);font-family:var(--font-display)}
+.stat-label{font-size:.72rem;color:var(--text-3);letter-spacing:.06em;text-transform:uppercase}
+.stat-divider{width:1px;height:2rem;background:var(--border-md);flex-shrink:0}
+
+.tag{display:inline-flex;align-items:center;gap:.35rem;font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .65rem;border-radius:4px;background:var(--accent-dim);color:var(--accent-2);border:1px solid rgba(99,102,241,0.15)}
+.pill-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+
+.divider{height:1px;background:var(--border);margin:2rem 0}
+.divider-strong{background:var(--border-md)}
+.divider-grad{height:1px;margin:2rem 0;background:linear-gradient(90deg,rgba(255,255,255,.02),rgba(255,255,255,.1) 50%,rgba(255,255,255,.02))}
+
+.brand-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.brand-table th{text-align:left;font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding:.75rem 1rem;border-bottom:1px solid var(--border-md)}
+.brand-table td{padding:1rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text-2);line-height:1.6}
+.brand-table tr:last-child td{border-bottom:none}
+.brand-table tr:hover td{background:var(--surface-2)}
+.brand-table .col-key{color:var(--text);font-weight:500;width:40%}
+
+/* Archetype */
+.archetype-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.archetype-header{padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.archetype-name{font-size:1.1rem;font-weight:600;letter-spacing:-.01em}
+.archetype-pct{font-size:2rem;font-weight:700;letter-spacing:-.04em;color:var(--accent);font-family:var(--font-display)}
+.archetype-body{padding:1.75rem}
+.archetype-body p{margin-bottom:.75rem}
+
+.bar-row{display:flex;align-items:center;gap:1rem;margin-bottom:.75rem}
+.bar-label{font-size:.8rem;font-weight:500;min-width:80px;color:var(--text)}
+.bar-track{flex:1;height:6px;background:var(--surface-3);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;background:var(--accent);border-radius:3px;transition:width 1s ease}
+.bar-fill.muted{background:var(--accent-2);opacity:.4}
+.bar-pct{font-size:.78rem;font-weight:600;color:var(--text-2);min-width:36px;text-align:right;font-family:var(--font-mono)}
+
+.phase-card{display:grid;grid-template-columns:80px 1fr;gap:1.5rem;padding:2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1rem;transition:border-color var(--transition)}
+.phase-card:hover{border-color:var(--border-md)}
+.phase-number{font-size:3rem;font-weight:700;letter-spacing:-.04em;color:var(--surface-3);line-height:1;padding-top:.25rem;font-family:var(--font-display)}
+.phase-label{font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2);margin-bottom:.25rem}
+.phase-title{font-size:1.1rem;font-weight:600;margin-bottom:.5rem;letter-spacing:-.01em}
+.phase-quote{font-size:.88rem;color:var(--text-3);font-style:italic;margin-bottom:1rem}
+
+.value-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;gap:.75rem;transition:border-color var(--transition),background var(--transition),transform var(--transition)}
+.value-card:hover{border-color:rgba(99,102,241,.2);background:var(--surface-2);transform:translateY(-3px)}
+.value-number{font-size:.68rem;font-weight:500;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;font-family:var(--font-mono)}
+.value-name{font-size:1rem;font-weight:600;letter-spacing:-.01em}
+
+.tagline-hero{font-size:clamp(1.6rem,4vw,2.8rem);font-weight:600;letter-spacing:-.025em;line-height:1.15;margin-bottom:.75rem;font-family:var(--font-display)}
+.tagline-hero .dot{color:var(--accent)}
+.tagline-context{font-size:.85rem;color:var(--text-3);max-width:520px}
+
+.vocab-power{color:var(--text);font-weight:500}
+.vocab-forbidden{color:var(--deny-text);text-decoration:line-through;opacity:.7}
+
+.inline-quote{font-size:.9rem;color:var(--accent-2);background:var(--accent-dim);border:1px solid rgba(99,102,241,.15);border-radius:var(--radius-sm);padding:.75rem 1rem;margin:.5rem 0;font-style:italic}
+
+.manifesto-text{font-size:1rem;line-height:1.8;color:var(--text-2);max-width:740px}
+.manifesto-text p{margin-bottom:1.5rem}
+.manifesto-text strong{color:var(--text)}
+.manifesto-closing{font-size:1.05rem;font-weight:500;color:var(--text);line-height:1.6}
+
+.gc-block{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:2rem}
+.gc-cell{background:var(--surface);padding:2rem 1.75rem;display:flex;flex-direction:column;gap:.75rem}
+.gc-label{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-2)}
+.gc-title{font-size:1.2rem;font-weight:600;letter-spacing:-.015em}
+
+.bs-table{width:100%;border-collapse:collapse}
+.bs-table tr{border-bottom:1px solid var(--border)}
+.bs-table tr:last-child{border-bottom:none}
+.bs-table td{padding:1.25rem 1rem;vertical-align:top}
+.bs-act{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-2);white-space:nowrap;padding-right:1.5rem}
+.bs-elem{font-size:.82rem;font-weight:600;color:var(--text);white-space:nowrap;padding-right:1.5rem;min-width:120px}
+.bs-desc{font-size:.88rem;color:var(--text-2);line-height:1.65}
+
+.enemy-block{background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.12);border-radius:var(--radius);padding:2rem;margin:1.5rem 0}
+.enemy-label{font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#F87171;margin-bottom:.75rem}
+.enemy-name{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;color:var(--text);margin-bottom:.5rem;font-family:var(--font-display)}
+
+.voice-table{width:100%;border-collapse:collapse}
+.voice-table th{padding:.75rem 1rem;font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-align:left}
+.voice-table th.col-yes{color:var(--allow-text)}
+.voice-table th.col-no{color:var(--deny-text)}
+.voice-table td{padding:.9rem 1rem;border-top:1px solid var(--border);font-size:.88rem;line-height:1.5}
+.voice-table .cell-yes{color:var(--allow-text);background:rgba(99,102,241,0.04)}
+.voice-table .cell-no{color:var(--deny-text);background:rgba(239,68,68,0.04);border-left:1px solid var(--border)}
+
+.promise-card{display:grid;grid-template-columns:2.5rem 1fr;gap:1.25rem;padding:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:.75rem;transition:border-color var(--transition)}
+.promise-card:hover{border-color:rgba(99,102,241,.2)}
+.promise-num{font-size:.8rem;font-weight:700;color:var(--accent);padding-top:.1rem;font-family:var(--font-mono)}
+.promise-title{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:.4rem;letter-spacing:-.01em}
+
+.pos-statement{font-size:1rem;line-height:1.8;color:var(--text-2);border-left:2px solid var(--accent);padding-left:1.5rem;margin:1.5rem 0}
+.pos-statement strong{color:var(--text)}
+
+/* Architecture diagram (mãe → oráculo → agentes) */
+.arch-diag{margin:2rem 0;padding:2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;gap:1rem}
+.arch-node{padding:.8rem 1.4rem;border:1px solid var(--border-md);border-radius:8px;background:var(--surface-2);font-weight:600;letter-spacing:-.01em;text-align:center;min-width:200px}
+.arch-node.mother{background:linear-gradient(135deg,rgba(99,102,241,.18),rgba(99,102,241,.06));border-color:rgba(99,102,241,.4);color:var(--text);box-shadow:0 0 30px rgba(99,102,241,.15)}
+.arch-node.oracle{background:rgba(99,102,241,.08);border-color:rgba(99,102,241,.25);color:var(--accent-2)}
+.arch-node .meta{display:block;font-size:.62rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:.25rem;font-family:var(--font-mono)}
+.arch-line{width:1px;height:28px;background:linear-gradient(180deg,var(--accent-2),transparent)}
+.arch-agents{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:.4rem;width:100%;max-width:560px}
+.arch-agent{aspect-ratio:1;border-radius:6px;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:var(--text-2);font-family:var(--font-mono)}
+.arch-agent:hover{border-color:var(--accent);color:var(--accent-2)}
+
+/* Design System specifics */
+.ds-swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem}
+.ds-swatch{border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border-md)}
+.ds-swatch-color{height:60px}
+.ds-swatch-info{padding:.65rem .75rem;background:var(--surface-2)}
+.ds-swatch-name{font-size:.72rem;font-weight:600;color:var(--text);margin-bottom:.2rem;font-family:var(--font-mono)}
+.ds-swatch-value{font-size:.66rem;color:var(--text-3);letter-spacing:.04em;font-family:var(--font-mono)}
+.ds-type-row{display:flex;align-items:baseline;gap:2rem;padding:1.25rem 0;border-bottom:1px solid var(--border)}
+.ds-type-row:last-child{border-bottom:none}
+.ds-type-meta{min-width:200px;flex-shrink:0}
+.ds-type-tag{font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.3rem;font-family:var(--font-mono)}
+.ds-type-spec{font-size:.72rem;color:var(--text-3);font-family:var(--font-mono)}
+.ds-space-row{display:flex;align-items:center;gap:1.25rem;margin-bottom:.75rem}
+.ds-space-bar{background:var(--accent-dim);border:1px solid rgba(99,102,241,.2);border-radius:3px;height:20px;flex-shrink:0}
+.ds-space-label{font-size:.72rem;color:var(--text-2);font-family:var(--font-mono);min-width:120px}
+.ds-comp-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;padding:1.5rem 0;border-bottom:1px solid var(--border)}
+.ds-comp-row:last-child{border-bottom:none}
+.ds-comp-label{min-width:140px;font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding-top:.25rem;flex-shrink:0;font-family:var(--font-mono)}
+
+/* Animation showcase */
+.anim-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.anim-card{padding:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);position:relative;overflow:hidden}
+.anim-card h4{margin-bottom:.5rem}
+.anim-card .anim-spec{font-family:var(--font-mono);font-size:.7rem;color:var(--text-3);letter-spacing:.02em;margin-top:.75rem;display:block}
+.anim-card .demo{margin:1rem 0;padding:1rem;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;min-height:60px;font-family:var(--font-display);font-weight:700;color:var(--text);overflow:hidden}
+.demo-mask span{display:inline-block;-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 0%,transparent 0%);mask-image:linear-gradient(90deg,#000 0%,#000 0%,transparent 0%);-webkit-mask-size:100% 100%;mask-size:100% 100%;animation:maskWipe 1.1s var(--ease-out) forwards;animation-delay:.2s}
+@keyframes maskWipe{to{-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 100%,transparent 100%);mask-image:linear-gradient(90deg,#000 0%,#000 100%,transparent 100%)}}
+.demo-blur span{display:inline-block;animation:blurReveal 1s var(--ease-out) forwards;opacity:0;filter:blur(6px);transform:translateX(20px)}
+@keyframes blurReveal{to{opacity:1;filter:blur(0);transform:none}}
+.demo-glow{position:relative}
+.demo-glow .ddot{width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent-glow);animation:pulse 2.4s var(--ease-in-out) infinite}
+.demo-counter{font-family:var(--font-display);font-size:1.6rem;color:var(--accent-2)}
+
+/* ====== CAPA · HORIZONTAL DECK ====== */
+.deck{display:flex;height:calc(100vh - 60px);width:100vw;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-behavior:auto;position:relative;z-index:1}
+.deck::-webkit-scrollbar{display:none}
+.dsec{flex:0 0 auto;height:calc(100vh - 60px);position:relative;display:flex;flex-direction:column;justify-content:center;padding:4rem 5vw 5rem;overflow:hidden;background:var(--bg);border-right:1px solid var(--border)}
+.dsec.dark{background:radial-gradient(ellipse at center,#0A0A14 0%,#06060B 100%)}
+.dsec::before{content:"";position:absolute;top:0;bottom:0;left:0;width:1px;background:linear-gradient(180deg,transparent,var(--border-md) 30%,var(--border-md) 70%,transparent);opacity:.7}
+.w-md{width:100vw;min-width:56rem}
+.w-lg{width:120vw;min-width:72rem}
+.dsec > *:not(.bg-numeral):not(.dfooter){position:relative;z-index:2}
+.bg-numeral{position:absolute;font-family:var(--font-display);font-weight:800;font-size:clamp(18rem,38vw,38rem);line-height:.8;letter-spacing:-.06em;color:var(--accent);opacity:.035;bottom:-4rem;right:-2rem;pointer-events:none;user-select:none;will-change:transform;z-index:0}
+.dfooter{position:absolute;bottom:1.5rem;left:5vw;right:5vw;display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.65rem;letter-spacing:.12em;color:var(--text-3);z-index:3}
+.dfooter::before{content:"";position:absolute;top:-1rem;left:0;right:0;height:1px;background:var(--border)}
+.eyebrow{font-family:var(--font);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2);font-weight:500;margin-bottom:1rem;display:inline-flex;align-items:center;gap:.6rem}
+.eyebrow::before{content:"";display:inline-block;width:24px;height:1px;background:var(--accent-2)}
+.dtitle{font-family:var(--font-display);font-weight:700;letter-spacing:-.025em;line-height:1.05;margin:0;color:var(--text);font-size:clamp(2.25rem,5vw,4.4rem);max-width:30ch}
+.dlead{font-size:clamp(1rem,1.2vw,1.2rem);line-height:1.65;color:var(--text-2);max-width:48rem;margin:1.4rem 0 0;font-weight:400}
+.dmono{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.02em;color:var(--text-2);margin-top:1.5rem;display:block}
+
+/* Capa cover (1) */
+.cover-stack{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.6rem;width:100%;max-width:1100px;margin:0 auto}
+.cover-logo{height:30vh;min-height:140px;color:#fff;display:flex;align-items:center;justify-content:center}
+.cover-logo svg{height:100%;width:auto;display:block;filter:drop-shadow(0 0 60px rgba(99,102,241,.25))}
+.cover-tag{font-size:clamp(1.05rem,1.8vw,1.4rem);font-family:var(--font-edit);font-style:italic;color:var(--text);max-width:46rem;line-height:1.45}
+.cover-meta{font-family:var(--font-mono);font-size:.74rem;color:var(--text-3);letter-spacing:.1em}
+
+/* CTA continue card (6) */
+.cta-card{background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(129,140,248,.04));border:1px solid rgba(99,102,241,.25);border-radius:18px;padding:3rem 2.5rem;text-align:center;max-width:680px;margin:auto;box-shadow:0 0 80px rgba(99,102,241,.08)}
+.cta-card .ct{font-family:var(--font-display);font-size:clamp(1.5rem,2.6vw,2.2rem);font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:.7rem}
+.cta-card p{font-size:1rem;color:var(--text-2);margin-bottom:2rem}
+.cta-btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2rem;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:.95rem;font-weight:600;letter-spacing:.02em;cursor:pointer;transition:all .25s var(--ease-out);box-shadow:0 8px 24px rgba(99,102,241,.3)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(99,102,241,.45);background:var(--accent-2)}
+
+/* Navdots only on capa */
+.navdots{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:.4rem;padding:.5rem .85rem;background:rgba(15,15,22,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:999px;z-index:40;border:1px solid var(--border-md);box-shadow:0 8px 32px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s}
+.navdots.show{opacity:1;pointer-events:auto}
+.nd{width:6px;height:6px;border-radius:50%;background:rgba(244,244,245,.22);cursor:pointer;transition:all .25s var(--ease-out);border:none;padding:0}
+.nd:hover{background:var(--accent-2);transform:scale(1.5)}
+.nd.active{background:var(--accent);width:1.25rem;border-radius:6px;box-shadow:0 0 8px var(--accent-glow)}
+.kbd-hint{position:fixed;bottom:1rem;right:1.25rem;font-family:var(--font-mono);font-size:.65rem;color:var(--text-3);letter-spacing:.1em;z-index:40;display:flex;align-items:center;gap:.4rem;opacity:0;transition:opacity .3s}
+.kbd-hint.show{opacity:.8}
+.kbd-hint .key{padding:.15rem .35rem;border:1px solid var(--border-md);border-radius:3px;background:var(--surface)}
+
+.reveal{opacity:0;transform:translate3d(28px,4px,0);will-change:transform,opacity,filter;filter:blur(4px)}
+.reveal.in{opacity:1;transform:none;filter:blur(0);transition:opacity .8s var(--ease-out),transform .9s var(--ease-out),filter .7s var(--ease-out)}
+.mask-wipe{display:inline-block;-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 0%,transparent 0%);mask-image:linear-gradient(90deg,#000 0%,#000 0%,transparent 0%);-webkit-mask-size:100% 100%;mask-size:100% 100%;transition:-webkit-mask-image 1.1s var(--ease-out),mask-image 1.1s var(--ease-out)}
+.reveal.in .mask-wipe{-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 100%,transparent 100%);mask-image:linear-gradient(90deg,#000 0%,#000 100%,transparent 100%)}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;filter:none;transition:none}.mask-wipe{-webkit-mask-image:none;mask-image:none}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .tab-nav,.dl-brandbook{display:none}
+  .menu-toggle{display:inline-flex}
+  .header-inner{justify-content:space-between}
+}
+@media (max-width:768px){
+  .container{padding:0 1.25rem}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .gc-block{grid-template-columns:1fr}
+  .phase-card{grid-template-columns:1fr;gap:.75rem}
+  .phase-number{font-size:1.5rem}
+  .stat-divider{display:none}
+  .ds-type-row{flex-direction:column;gap:.75rem}
+  .ds-type-meta{min-width:unset}
+  .ds-comp-label{min-width:unset;width:100%}
+  .w-md{width:100vw;min-width:0}
+  .w-lg{width:130vw;min-width:0}
+  .dsec{padding:3rem 1.5rem 4rem}
+  .dtitle{font-size:clamp(1.8rem,7vw,2.6rem)}
+  .cover-logo{height:22vh;min-height:100px}
+}
+</style>
+</head>
+<body>
+
+<!-- Inline SVG symbol -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="seyai-logo" viewBox="0 0 517.76 204.57">
+    <defs>
+      <linearGradient id="seyai-grad" x1="489.82" y1="156.74" x2="515.86" y2="6.62" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#6366f1"/>
+        <stop offset="1" stop-color="#818cf8"/>
+      </linearGradient>
+    </defs>
+    <g>
+      <path fill="currentColor" d="M341.33,154.16L394.13,1.36h32.26l53.61,152.8h-30.67s-24.41-73.84-24.41-73.84c-2.94-9.57-5.93-19.91-8.97-31.02-3.04-11.11-6.27-23.33-9.69-36.66h7.18c-3.35,13.33-6.46,25.59-9.33,36.77-2.87,11.18-5.74,21.48-8.61,30.92l-23.89,73.84h-30.26ZM370.05,119.19v-24.71h81.22v24.71h-81.22Z"/>
+      <path fill="url(#seyai-grad)" d="M517.76,1.36v152.8h-28.49V1.36h28.49Z"/>
+      <path fill="currentColor" d="M63.43,157.31c-11.2,0-21.3-1.98-30.3-5.93-9-3.95-16.38-9.62-22.16-17.01-5.78-7.39-9.43-16.19-10.97-26.41l29.82-4.41c2.1,8.68,6.44,15.37,13.02,20.06,6.58,4.69,14.07,7.04,22.47,7.04,4.69,0,9.24-.73,13.65-2.2,4.41-1.47,8.03-3.64,10.87-6.51,2.84-2.87,4.25-6.41,4.25-10.61,0-1.54-.23-3.03-.68-4.46-.46-1.43-1.21-2.78-2.26-4.04-1.05-1.26-2.54-2.45-4.46-3.57-1.93-1.12-4.36-2.14-7.3-3.05l-39.28-11.55c-2.94-.84-6.35-2.03-10.24-3.57-3.89-1.54-7.65-3.75-11.29-6.62-3.64-2.87-6.67-6.67-9.08-11.39-2.42-4.73-3.62-10.69-3.62-17.9,0-10.15,2.55-18.59,7.67-25.31,5.11-6.72,11.94-11.72,20.48-15.02C42.57,1.54,52.02-.07,62.38,0c10.43.14,19.74,1.93,27.93,5.36,8.19,3.43,15.05,8.42,20.58,14.96,5.53,6.55,9.52,14.54,11.97,24l-30.87,5.25c-1.12-4.9-3.19-9.03-6.2-12.39-3.01-3.36-6.6-5.92-10.76-7.67-4.17-1.75-8.52-2.69-13.07-2.84-4.48-.14-8.7.47-12.65,1.84-3.96,1.36-7.18,3.34-9.66,5.93-2.49,2.59-3.73,5.67-3.73,9.24,0,3.29,1.01,5.97,3.05,8.03,2.03,2.07,4.58,3.73,7.67,4.99,3.08,1.26,6.23,2.31,9.45,3.15l26.25,7.14c3.92,1.05,8.26,2.43,13.02,4.15,4.76,1.72,9.33,4.09,13.7,7.14,4.37,3.05,7.98,7.05,10.82,12.02,2.84,4.97,4.25,11.27,4.25,18.9,0,8.12-1.7,15.21-5.09,21.27-3.4,6.06-7.96,11.06-13.7,15.02-5.74,3.96-12.23,6.91-19.48,8.87-7.25,1.96-14.72,2.94-22.42,2.94Z"/>
+      <path fill="currentColor" d="M192.49,157.31c-11.62,0-21.86-2.5-30.72-7.51-8.86-5-15.79-11.9-20.79-20.69-5.01-8.79-7.51-18.85-7.51-30.19,0-12.39,2.45-23.17,7.35-32.35,4.9-9.17,11.66-16.29,20.27-21.37,8.61-5.08,18.52-7.61,29.72-7.61,11.9,0,22.02,2.8,30.35,8.4,8.33,5.6,14.49,13.48,18.48,23.63,3.99,10.15,5.39,22.09,4.2,35.81h-28.25v-10.5c0-11.55-1.84-19.86-5.51-24.94-3.68-5.07-9.68-7.61-18.01-7.61-9.73,0-16.89,2.96-21.48,8.87-4.59,5.92-6.88,14.65-6.88,26.2,0,10.57,2.29,18.74,6.88,24.52,4.58,5.78,11.32,8.66,20.22,8.66,5.6,0,10.4-1.22,14.39-3.68,3.99-2.45,7.04-5.98,9.14-10.61l28.56,8.19c-4.27,10.36-11.01,18.41-20.22,24.15-9.21,5.74-19.27,8.61-30.19,8.61ZM154.9,105.44v-21.21h75.19v21.21h-75.19Z"/>
+      <path fill="currentColor" d="M271.36,204.57l20.84-60.07.42,17.64-49.36-121.4h29.61l33.18,85.9h-6.72l31.97-85.9h28.56l-62.06,163.82h-26.46Z"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="brand" onclick="showTab('capa');return false;" aria-label="SeyAI">
+      <span class="brand-dot"></span>
+      <span class="brand-logo"><svg><use href="#seyai-logo"></use></svg></span>
+      <span class="brand-tag">Brandbook · v3</span>
+    </a>
+    <nav class="tab-nav" id="tabNav">
+      <button class="tab-btn active" onclick="showTab('capa',this)">Capa</button>
+      <button class="tab-btn" onclick="showTab('manifesto',this)">Manifesto</button>
+      <button class="tab-btn" onclick="showTab('essencia',this)">Essência</button>
+      <button class="tab-btn" onclick="showTab('arquetipos',this)">Arquétipos</button>
+      <button class="tab-btn" onclick="showTab('posicionamento',this)">Posicionamento</button>
+      <button class="tab-btn" onclick="showTab('voz',this)">Voz</button>
+      <button class="tab-btn" onclick="showTab('vocabulario',this)">Vocabulário</button>
+      <button class="tab-btn" onclick="showTab('jornada',this)">Jornada</button>
+      <button class="tab-btn" onclick="showTab('contrato',this)">Contrato</button>
+      <button class="tab-btn" onclick="showTab('design-system',this)">Design System</button>
+    </nav>
+    <button class="dl-brandbook" onclick="downloadBrandbook()" title="Baixar brandbook completo (.md)"><span class="arr">↓</span> Brandbook</button>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  </div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <button class="tab-btn active" onclick="showTab('capa',this);toggleMenu()">Capa</button>
+    <button class="tab-btn" onclick="showTab('manifesto',this);toggleMenu()">Manifesto</button>
+    <button class="tab-btn" onclick="showTab('essencia',this);toggleMenu()">Essência</button>
+    <button class="tab-btn" onclick="showTab('arquetipos',this);toggleMenu()">Arquétipos</button>
+    <button class="tab-btn" onclick="showTab('posicionamento',this);toggleMenu()">Posicionamento</button>
+    <button class="tab-btn" onclick="showTab('voz',this);toggleMenu()">Voz</button>
+    <button class="tab-btn" onclick="showTab('vocabulario',this);toggleMenu()">Vocabulário</button>
+    <button class="tab-btn" onclick="showTab('jornada',this);toggleMenu()">Jornada</button>
+    <button class="tab-btn" onclick="showTab('contrato',this);toggleMenu()">Contrato</button>
+    <button class="tab-btn" onclick="showTab('design-system',this);toggleMenu()">Design System</button>
+    <button class="dl-brandbook" style="display:inline-flex" onclick="downloadBrandbook();toggleMenu()"><span class="arr">↓</span> Brandbook (.md)</button>
+  </div>
+</header>
+
+<!-- ==================== TAB 01 · CAPA (HORIZONTAL) ==================== -->
+<div id="capa" class="tab-panel capa-panel active">
+  <div class="deck" id="deck">
+
+    <!-- 1. Nome grande -->
+    <section class="dsec dark w-md" data-name="Capa">
+      <div class="cover-stack">
+        <div class="cover-logo reveal"><svg><use href="#seyai-logo"></use></svg></div>
+        <div class="cover-tag reveal"><span class="mask-wipe">A mesa onde 19 agentes se sentam — e o seu marketing nasce coordenado.</span></div>
+        <div class="cover-meta reveal">sayai.com.br · seyai.com.br · pronúncia "ceia"</div>
+      </div>
+      <div class="dfooter"><span>SeyAI · Brandbook</span><span>01 / 06</span></div>
+    </section>
+
+    <!-- 2. O que somos -->
+    <section class="dsec w-md" data-name="O que somos">
+      <span class="bg-numeral" data-parallax="0.35">02</span>
+      <div class="reveal">
+        <span class="eyebrow">Essência</span>
+        <h2 class="dtitle"><span class="mask-wipe">Uma empresa de IA que produz</span><br><span class="mask-wipe">marketing inteiro — coordenado,</span><br><span class="mask-wipe">não fragmentado.</span></h2>
+        <p class="dlead">Não é assistente que ajuda você a fazer. Não é gerador de pedaços. É a operação inteira, montada por uma orquestra de agentes especializados que falam entre si.</p>
+        <span class="dmono">19 agentes · 1 cabeça-mestre · 1 oráculo de nicho</span>
+      </div>
+      <div class="dfooter"><span>SeyAI</span><span>02 / 06</span></div>
+    </section>
+
+    <!-- 3. O que NÃO somos -->
+    <section class="dsec w-md" data-name="Antítese">
+      <span class="bg-numeral" data-parallax="0.35">03</span>
+      <div class="reveal">
+        <span class="eyebrow" style="color:#F87171">Antítese</span>
+        <h2 class="dtitle" style="color:#FCA5A5"><span class="mask-wipe">Não somos marketplace de agentes.</span><br><span class="mask-wipe">Não somos biblioteca de prompts.</span><br><span class="mask-wipe">Não somos rascunho.</span></h2>
+        <p class="dlead">O mercado virou uma feira de pedaços. Você compra ferramentas em paralelo e ainda precisa costurar tudo no fim. SeyAI nasce do oposto: já chega coordenada.</p>
+      </div>
+      <div class="dfooter"><span>SeyAI</span><span>03 / 06</span></div>
+    </section>
+
+    <!-- 4. Pra quem -->
+    <section class="dsec w-md" data-name="Para quem">
+      <span class="bg-numeral" data-parallax="0.35">04</span>
+      <div class="reveal">
+        <span class="eyebrow">Vertical hoje</span>
+        <h2 class="dtitle"><span class="mask-wipe">Agências de lançamento</span><br><span class="mask-wipe">de infoproduto.</span></h2>
+        <p class="dlead">Mentores, cursos, treinamentos, consultorias. Quem opera com equipe enxuta e precisa entregar campanha de operação grande. O nicho onde a oferta merece mais do que a equipe consegue produzir no prazo.</p>
+        <span class="dmono">Vertical inicial: lançamento · Próximos: a definir</span>
+      </div>
+      <div class="dfooter"><span>SeyAI · Opus</span><span>04 / 06</span></div>
+    </section>
+
+    <!-- 5. Como pensamos -->
+    <section class="dsec w-lg" data-name="Princípio">
+      <span class="bg-numeral" data-parallax="0.35">05</span>
+      <div class="reveal">
+        <span class="eyebrow">Princípio · Arquitetura</span>
+        <h2 class="dtitle"><span class="mask-wipe">SeyAI é a mãe. Cada nicho ganha</span><br><span class="mask-wipe">um cabeça-oráculo abstrato.</span></h2>
+        <p class="dlead">Hoje: <strong style="color:var(--accent-2)">Opus</strong>, oráculo do lançamento. Embaixo dele, 19 agentes operacionais simultâneos — copy, criativo, funil, email, página, oferta, headline, prova, objeção, sequência, CTA, segmentação, ads, landing, evento, métricas, captura, branding, narrativa.</p>
+        <div class="arch-diag" style="background:transparent;border:none;padding:1.5rem 0;align-items:center">
+          <div class="arch-node mother"><span class="meta">Cabeça-mestre</span>SeyAI</div>
+          <div class="arch-line"></div>
+          <div class="arch-node oracle"><span class="meta">Oráculo · Vertical lançamento</span>Opus</div>
+          <div class="arch-line"></div>
+          <div class="arch-agents">
+            <div class="arch-agent">01</div><div class="arch-agent">02</div><div class="arch-agent">03</div><div class="arch-agent">04</div><div class="arch-agent">05</div><div class="arch-agent">06</div><div class="arch-agent">07</div><div class="arch-agent">08</div><div class="arch-agent">09</div><div class="arch-agent">10</div><div class="arch-agent">11</div><div class="arch-agent">12</div><div class="arch-agent">13</div><div class="arch-agent">14</div><div class="arch-agent">15</div><div class="arch-agent">16</div><div class="arch-agent">17</div><div class="arch-agent">18</div><div class="arch-agent">19</div>
+          </div>
+        </div>
+      </div>
+      <div class="dfooter"><span>SeyAI → Opus → 19 agentes</span><span>05 / 06</span></div>
+    </section>
+
+    <!-- 6. Continue -->
+    <section class="dsec dark w-md" data-name="Continue">
+      <span class="bg-numeral" data-parallax="0.35">06</span>
+      <div class="cta-card reveal">
+        <div class="ct">Esta é a capa.</div>
+        <p>O brandbook completo continua na vertical — Manifesto, Essência, Arquétipos, Posicionamento, Voz, Vocabulário, Jornada, Contrato e Design System.</p>
+        <button class="cta-btn" onclick="showTab('manifesto')">Continuar para o Manifesto →</button>
+      </div>
+      <div class="dfooter"><span>SeyAI · Brandbook</span><span>06 / 06</span></div>
+    </section>
+
+  </div>
+  <div class="navdots show" id="navdots"></div>
+  <div class="kbd-hint show"><span class="key">←</span><span class="key">→</span><span>navegar</span></div>
+</div>
+
+<!-- ==================== TAB 02 · MANIFESTO ==================== -->
+<div id="manifesto" class="tab-panel">
+  <div class="container">
+    <div class="hero-block">
+      <div class="hero-eyebrow">02 — Manifesto da Marca</div>
+      <h1 class="hero-headline">O mercado normalizou a <span class="accent">fragmentação</span>.</h1>
+      <p class="hero-sub">E vendeu isso como se fosse modernidade. Como se ter 17 ferramentas abertas ao mesmo tempo fosse sinônimo de produtividade.</p>
+    </div>
+
+    <div class="section">
+      <div class="manifesto-text">
+        <p>Normalizou o marketplace que vende prompt avulso e chama de "agente". Normalizou a biblioteca de templates que entrega rascunho e diz que automatizou. Normalizou a IA que gera pedaço — uma headline aqui, um parágrafo ali, um esqueleto de funil acolá — e empurra para você a tarefa real: <strong>costurar tudo isso e fazer parecer uma campanha</strong>. O mercado normalizou a coordenação como problema do operador. E o mais perverso: normalizou a culpa que você sente quando o resultado fica desconexo — como se o problema fosse seu, e não da arquitetura que entregou peças soltas.</p>
+
+        <p>Você conhece esse ciclo. Você é o gestor de lançamento que acorda às 5h com 47 abas abertas, 6 ferramentas pagas, e a certeza silenciosa de que a campanha não vai sair no nível que a oferta merece. Não porque você não sabe o que fazer — você sabe exatamente. O problema nunca foi estratégia. O problema é que entre saber o que precisa ser feito e ter tudo pronto para publicar existe um abismo de <strong>coordenação</strong> que exige 12 pessoas, 3 semanas e um orçamento que você não tem. Então você improvisa. Adapta. Corta. E lança sabendo que poderia ter sido melhor.</p>
+
+        <p><strong>SeyAI</strong> existe porque essa equação está quebrada. Não somos marketplace. Não somos biblioteca. Não somos plug-and-play. Somos uma <strong>orquestra</strong>: 19 agentes especializados que trabalham simultaneamente, coordenados pela cabeça-mestre (SeyAI) e pelo oráculo do nicho (Opus, no vertical de lançamento). Não há custura no fim. A coordenação acontece o tempo todo, dentro do sistema — não na sua cabeça às 23h.</p>
+
+        <p>O que acontece dentro da plataforma não é sugestão. Não é rascunho. Não é "ponto de partida para você desenvolver". <strong>19 agentes especializados</strong> trabalham em paralelo, cada um dominando uma função específica do marketing de lançamento, conversando entre si através do oráculo. Copy final. Criativo finalizado. Funil configurado. Sequência de emails escrita. Página montada. Tudo conversando, tudo coerente. Não 80% pronto. <strong>Pronto.</strong></p>
+
+        <p>A diferença entre o que você tinha antes e o que você tem agora não é incremental — é categórica. Você sai do paradigma "monto a campanha juntando peças de 6 ferramentas" e entra no paradigma "recebo a campanha inteira, coordenada desde o briefing".</p>
+      </div>
+
+      <div style="margin-top:2.5rem">
+        <div class="quote-block">
+          <p class="quote-text manifesto-closing">A diferença entre montar uma campanha e receber uma campanha. A diferença entre marketplace e orquestra.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="stat-strip">
+        <div class="stat-item"><span class="stat-value">19</span><span class="stat-label">Agentes simultâneos</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-value">1</span><span class="stat-label">Mãe (SeyAI)</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-value">1</span><span class="stat-label">Oráculo (Opus)</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-value">0</span><span class="stat-label">Fragmentação</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 03 · ESSÊNCIA ==================== -->
+<div id="essencia" class="tab-panel">
+  <div class="container">
+    <div class="hero-block">
+      <div class="hero-eyebrow">03 — Essência, Missão e Visão</div>
+      <h1 class="hero-headline">O que somos.<br>Por que existimos.</h1>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Essência</div><h2>O núcleo</h2></div>
+      <div class="quote-block"><p class="quote-text" style="font-size:1.5rem;font-weight:600;letter-spacing:-.02em">Briefing entra. Campanha sai. Coordenada.</p></div>
+      <p style="margin-top:1.5rem;max-width:620px;color:var(--text-2)">Sete palavras. Três frases. Um gap implícito entre elas onde 19 agentes trabalham em orquestra. A essência não promete — descreve. E a descrição é tão desproporcional que funciona como promessa.</p>
+
+      <div class="card card-accent" style="max-width:720px;margin-top:2rem">
+        <h4>Arquitetura conceitual da marca</h4>
+        <p style="color:var(--text);margin:0"><strong>A mãe:</strong> SeyAI. <strong>O oráculo (vertical atual):</strong> Opus. <strong>A operação:</strong> 19 agentes especializados, simultâneos, coordenados.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Missão</div><h2>Para que existimos</h2></div>
+      <div class="card card-accent" style="max-width:720px">
+        <p style="color:var(--text);line-height:1.75;margin:0">Transformar briefings de lançamento em campanhas completas, coordenadas e prontas para publicação — do copy ao criativo, do funil ao asset — entregues por uma orquestra de 19 agentes especializados, para agências de qualquer tamanho que recusam aceitar que equipe pequena signifique resultado pequeno.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Visão</div><h2>Para onde vamos</h2></div>
+      <div class="card" style="max-width:720px">
+        <p style="color:var(--text-2);margin:0;line-height:1.75">Um mercado onde a qualidade de uma campanha é determinada pela qualidade da ideia e da estratégia — nunca pelo tamanho da equipe, pela quantidade de ferramentas abertas ou pela habilidade de quem costura pedaços. Onde uma agência de 2 pessoas entrega com o volume, a coerência e o acabamento de uma operação de 20. Onde "fragmentação" deixou de ser um padrão aceitável e virou um problema do passado. SeyAI hoje atende lançamento via Opus; amanhã, cada nicho terá seu próprio oráculo embaixo da mesma mãe.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Os 6 Valores</div><h2>O que não negociamos</h2></div>
+      <div class="grid-3" style="margin-top:1.5rem">
+        <div class="value-card"><div class="value-number">Valor 01</div><div class="value-name">Coordenado, não montado</div><p style="font-size:.85rem;margin:0">Os 19 agentes não trabalham em silos. Conversam pelo oráculo. O output é uma campanha — não 19 arquivos soltos para você costurar.</p></div>
+        <div class="value-card"><div class="value-number">Valor 02</div><div class="value-name">Padrão, não palpite</div><p style="font-size:.85rem;margin:0">Toda decisão criativa é fundamentada em padrões reais extraídos de milhares de lançamentos. Não é intuição. Não é tendência. É evidência processada com método.</p></div>
+        <div class="value-card"><div class="value-number">Valor 03</div><div class="value-name">Autoria é de quem publica</div><p style="font-size:.85rem;margin:0">O output é da agência. A campanha leva o nome dela. SeyAI é invisível no resultado final, e isso é uma decisão de design.</p></div>
+        <div class="value-card"><div class="value-number">Valor 04</div><div class="value-name">Criação real</div><p style="font-size:.85rem;margin:0">Existe uma diferença entre gerar texto e criar copy. Os outputs não são variantes de um molde genérico — são criações com voz, ritmo, lógica criativa e coerência de campanha.</p></div>
+        <div class="value-card"><div class="value-number">Valor 05</div><div class="value-name">Desproporção como padrão</div><p style="font-size:.85rem;margin:0">O resultado que sai não deveria ser possível com a equipe que entrou. Esse descompasso entre input e output não é um bug — é a proposta.</p></div>
+        <div class="value-card"><div class="value-number">Valor 06</div><div class="value-name">Confiança silenciosa</div><p style="font-size:.85rem;margin:0">SeyAI não precisa explicar o truque. Quando você abre a campanha pronta e pensa "isso não deveria ser possível", a confiança já se instalou.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Golden Circle</div><h2>Por quê. Como. O quê.</h2></div>
+      <div class="gc-block">
+        <div class="gc-cell"><div class="gc-label">Por que</div><div class="gc-title">A equação está fragmentada</div><p style="font-size:.88rem;margin:0">Acreditamos que a coordenação não deveria ser problema do operador. Uma grande ideia merece uma grande campanha — coordenada desde a primeira linha, não costurada às pressas no final.</p></div>
+        <div class="gc-cell"><div class="gc-label">Como</div><div class="gc-title">19 agentes, 1 oráculo</div><p style="font-size:.88rem;margin:0">Dezenove agentes especializados trabalham em paralelo — copy, criativo, funil, email, página — coordenados pela cabeça-mestre SeyAI e pelo oráculo do nicho (Opus). Nenhum para antes do output estar pronto e coerente com o resto.</p></div>
+        <div class="gc-cell"><div class="gc-label">O que</div><div class="gc-title">Campanhas coordenadas</div><p style="font-size:.88rem;margin:0">SeyAI é a plataforma que transforma briefings em campanhas completas e coordenadas de lançamento. Do copy ao criativo, do funil ao asset. Tudo produzido, finalizado e entregue pronto para publicar.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">BrandScript</div><h2>Os 7 atos da narrativa</h2></div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <table class="bs-table">
+          <tr><td class="bs-act">Ato 1</td><td class="bs-elem">Herói</td><td class="bs-desc">O gestor de lançamento que opera com equipe enxuta e carrega a responsabilidade de entregar campanhas com qualidade de grande operação. Sabe exatamente o que precisa ser feito. O gap não é de conhecimento — é de capacidade de coordenação e produção.</td></tr>
+          <tr><td class="bs-act">Ato 2</td><td class="bs-elem">Guia</td><td class="bs-desc">SeyAI — a mãe que abriga a orquestra. Opus — o oráculo do lançamento. Juntos, coordenam 19 agentes que processaram padrões de milhares de lançamentos. Não ensinam o herói a fazer marketing — reconhecem que ele já sabe.</td></tr>
+          <tr><td class="bs-act">Ato 3</td><td class="bs-elem">Problema Externo</td><td class="bs-desc">Produzir todos os elementos de uma campanha exige equipe grande, tempo longo e orçamento alto. As ferramentas existentes ajudam em partes isoladas, criam o problema da costura.</td></tr>
+          <tr><td class="bs-act">Ato 4</td><td class="bs-elem">Problema Interno</td><td class="bs-desc">A frustração de saber que existe um nível acima. A sensação constante de que a qualidade do output não reflete a qualidade da estratégia. A tensão entre o que a oferta merece e o que a equipe consegue coordenar no prazo.</td></tr>
+          <tr><td class="bs-act">Ato 5</td><td class="bs-elem">Problema Filosófico</td><td class="bs-desc">Tamanho não deveria determinar qualidade. Coordenação não deveria ser problema do operador. A tecnologia para mudar isso já existe — falta só montar a orquestra certa.</td></tr>
+          <tr><td class="bs-act">Ato 6</td><td class="bs-elem">O Plano</td><td class="bs-desc"><strong style="color:var(--accent-2)">1.</strong> Briefing estratégico. <strong style="color:var(--accent-2)">2.</strong> 19 agentes coordenados pelo Opus produzem em paralelo. <strong style="color:var(--accent-2)">3.</strong> Você revisa e aplica julgamento criativo. <strong style="color:var(--accent-2)">4.</strong> Publica. Tudo pronto, tudo coerente.</td></tr>
+          <tr><td class="bs-act">Ato 7a</td><td class="bs-elem">Sucesso</td><td class="bs-desc">Uma campanha completa e coordenada com a profundidade de uma operação de 20 pessoas — entregue por uma equipe de 2. O gestor abre o material e reconhece: isso é o nível que eu sempre quis entregar.</td></tr>
+          <tr><td class="bs-act">Ato 7b</td><td class="bs-elem">Fracasso Evitado</td><td class="bs-desc">Lançar com campanha desconexa. Email que contradiz a página. Criativo genérico. Funil pela metade. O resultado fragmentado não porque a estratégia era ruim, mas porque a coordenação ficou nas costas do operador.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 04 · ARQUÉTIPOS ==================== -->
+<div id="arquetipos" class="tab-panel">
+  <div class="container">
+    <div class="hero-block">
+      <div class="hero-eyebrow">04 — Arquétipos da Marca</div>
+      <h1 class="hero-headline">Quem somos, em essência.</h1>
+      <p class="hero-sub">Três arquétipos em equilíbrio estratégico — não por acidente, mas por precisão. SeyAI é a mãe-mago. Opus é o oráculo-sábio.</p>
+    </div>
+
+    <div class="section">
+      <div style="margin-bottom:2rem">
+        <div class="bar-row"><span class="bar-label">Mago</span><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><span class="bar-pct">55%</span></div>
+        <div class="bar-row"><span class="bar-label">Sábio</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-pct">25%</span></div>
+        <div class="bar-row"><span class="bar-label">Criador</span><div class="bar-track"><div class="bar-fill muted" style="width:20%"></div></div><span class="bar-pct">20%</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="archetype-card">
+        <div class="archetype-header"><div><h4>Arquétipo Primário</h4><div class="archetype-name">O Mago</div></div><div class="archetype-pct">55%</div></div>
+        <div class="archetype-body">
+          <p><strong>Justificativa estratégica:</strong> O Mago é o arquétipo dominante porque a experiência central do produto é transformação que parece impossível. Um briefing entra, uma campanha completa e coordenada sai. O usuário não acompanha a orquestração interna — vê o input e o output, e a distância entre os dois é grande demais para parecer convencional. Essa é a essência do Mago: a transformação acontece, o resultado é real, e o "como" permanece elegantemente opaco.</p>
+          <div class="divider"></div>
+          <div class="grid-2" style="margin-bottom:1.5rem">
+            <div class="grid-2-cell"><h4>Motivação Central</h4><p style="margin:0">Tornar real o que parecia impossível. Transformar — não descrevendo um futuro melhor, mas entregando-o agora, coordenado e pronto.</p></div>
+            <div class="grid-2-cell"><h4>Medo Central</h4><p style="margin:0">Ser banal. Que a transformação perca o impacto, que o resultado se torne esperado a ponto de virar commodity.</p></div>
+            <div class="grid-2-cell"><h4>Promessa ao Cliente</h4><p style="margin:0">O que você vai receber não deveria ser possível com o que você colocou. Mas é. E está coordenado. E está pronto.</p></div>
+            <div class="grid-2-cell"><h4>Referência de Mercado</h4><p style="margin:0">Apple sob Steve Jobs. O produto chegava pronto, integrado, funcionando. "It just works" é puro Mago.</p></div>
+          </div>
+          <div class="inline-quote">No tom: nunca explica demais. Mostra o antes e o depois e deixa o gap falar por si.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="archetype-card">
+        <div class="archetype-header"><div><h4>Arquétipo Secundário</h4><div class="archetype-name">O Sábio</div></div><div class="archetype-pct" style="color:var(--accent-2)">25%</div></div>
+        <div class="archetype-body">
+          <p><strong>Justificativa estratégica:</strong> O Sábio é o segundo arquétipo porque a orquestra não opera por acaso. A "magia" do Mago sem o Sábio seria percebida como truque ou caixa-preta perigosa. O Sábio garante que a coordenação tem fundamento: padrões reais de milhares de lançamentos, processados pelo oráculo Opus e distribuídos aos 19 agentes. A inteligência é verificável.</p>
+          <div class="divider"></div>
+          <div class="grid-2" style="margin-bottom:1.5rem">
+            <div class="grid-2-cell"><h4>Motivação Central</h4><p style="margin:0">Compreender os padrões que governam o sucesso e aplicá-los com precisão. Substituir achismo por evidência.</p></div>
+            <div class="grid-2-cell"><h4>Medo Central</h4><p style="margin:0">Ser impreciso. Que o output não reflita os padrões reais. Que a coerência da campanha quebre em algum agente do meio.</p></div>
+            <div class="grid-2-cell"><h4>Promessa ao Cliente</h4><p style="margin:0">Não é sorte. São padrões. Cada decisão criativa dentro da campanha tem fundamento em dados reais.</p></div>
+            <div class="grid-2-cell"><h4>Referência de Mercado</h4><p style="margin:0">Google. Você não pergunta como ele encontrou. Você confia porque ele sempre encontra.</p></div>
+          </div>
+          <div class="inline-quote">No tom: autoridade que não precisa ser barulhenta. O oráculo fala pouco e fala denso.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="archetype-card">
+        <div class="archetype-header"><div><h4>Arquétipo Terciário</h4><div class="archetype-name">O Criador</div></div><div class="archetype-pct" style="color:var(--text-2);font-size:1.5rem">20%</div></div>
+        <div class="archetype-body">
+          <p><strong>Justificativa estratégica:</strong> O Criador é o terceiro arquétipo porque o output precisa ser criativo de verdade — não genérico, não template, não "cara de IA". Se o Mago transforma e o Sábio fundamenta, o Criador garante que o resultado final tem voz, autoria e qualidade criativa perceptível.</p>
+          <div class="divider"></div>
+          <div class="grid-2" style="margin-bottom:1.5rem">
+            <div class="grid-2-cell"><h4>Motivação Central</h4><p style="margin:0">Produzir algo que tenha voz própria. Que o output não seja preenchimento de template, mas criação com lógica criativa, ritmo e personalidade.</p></div>
+            <div class="grid-2-cell"><h4>Medo Central</h4><p style="margin:0">Ser genérico. Que os outputs sejam reconhecíveis como "feitos por IA" — sem textura, sem surpresa.</p></div>
+            <div class="grid-2-cell"><h4>Promessa ao Cliente</h4><p style="margin:0">O que sai da SeyAI não tem cara de IA. Tem cara de equipe boa com tempo de sobra.</p></div>
+            <div class="grid-2-cell"><h4>Referência de Mercado</h4><p style="margin:0">Figma. Permitiu que equipes menores produzissem trabalho de design no nível de estúdios grandes.</p></div>
+          </div>
+          <div class="inline-quote">No produto: os outputs passam no "teste do orgulho" — a agência publica sem ressalvas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 05 · POSICIONAMENTO ==================== -->
+<div id="posicionamento" class="tab-panel">
+  <div class="container">
+    <div class="hero-block">
+      <div class="hero-eyebrow">05 — Posicionamento Estratégico</div>
+      <h1 class="hero-headline">Onde estamos.<br>Por que importa.</h1>
+      <p class="hero-sub">Arquitetura monolítica (branded house, no modelo AtivoCerto/AtivoTech). Uma marca-mãe, oráculos por nicho, agentes embaixo.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Arquitetura de marca</div><h2>SeyAI · Opus · 19 agentes</h2></div>
+      <div class="arch-diag">
+        <div class="arch-node mother"><span class="meta">Cabeça-mestre · A mãe</span>SeyAI</div>
+        <div class="arch-line"></div>
+        <div class="arch-node oracle"><span class="meta">Oráculo · Vertical lançamento (hoje)</span>Opus</div>
+        <div class="arch-line"></div>
+        <div class="arch-agents">
+          <div class="arch-agent">01</div><div class="arch-agent">02</div><div class="arch-agent">03</div><div class="arch-agent">04</div><div class="arch-agent">05</div><div class="arch-agent">06</div><div class="arch-agent">07</div><div class="arch-agent">08</div><div class="arch-agent">09</div><div class="arch-agent">10</div><div class="arch-agent">11</div><div class="arch-agent">12</div><div class="arch-agent">13</div><div class="arch-agent">14</div><div class="arch-agent">15</div><div class="arch-agent">16</div><div class="arch-agent">17</div><div class="arch-agent">18</div><div class="arch-agent">19</div>
+        </div>
+        <p style="font-size:.85rem;color:var(--text-3);margin:1rem 0 0;text-align:center;max-width:520px">19 agentes especializados, simultâneos. Cada nicho futuro ganha seu próprio oráculo embaixo da mesma mãe — modelo monolítico inspirado em AtivoCerto/AtivoTech.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Declaração de Posicionamento</div><h2>Em uma frase</h2></div>
+      <div class="pos-statement">
+        <strong>SeyAI</strong> é a única plataforma de produção de campanhas de lançamento com IA <strong>coordenada</strong> que entrega todos os assets prontos para publicação — orquestrados por 19 agentes especializados embaixo do oráculo <strong>Opus</strong> — para agências de lançamento com equipes enxutas que precisam produzir no nível de grandes operações sem ampliar headcount, ao contrário de marketplaces de agentes, bibliotecas de prompts e ferramentas de IA generativas que entregam pedaços e empurram a coordenação para o operador.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Inimigo da Marca</div><h2>O que combatemos</h2></div>
+      <div class="enemy-block">
+        <div class="enemy-label">O inimigo não é uma empresa — é um padrão</div>
+        <div class="enemy-name">A Fragmentação</div>
+        <p style="color:var(--text-2);margin:0">ChatGPT solo que faz pedaço. Biblioteca de prompts que vende script. Marketplace de agentes que cobra por unidade. Ferramenta que gera rascunho e chama de entrega. Em todos esses casos, a <strong style="color:#FCA5A5">coordenação</strong> recai sobre o operador — e a campanha sai costurada, não nascida coordenada.</p>
+      </div>
+      <div class="grid-2" style="margin-top:1.5rem">
+        <div class="grid-2-cell"><h4>O padrão do mercado</h4><p style="margin:0;font-size:.88rem">A IA fez 30% e vendeu como se tivesse feito 90%. Esse padrão é insidioso porque cria a ilusão de produtividade. A agência compra 4 ferramentas, assina 6 plataformas, e no fim do dia o gestor ainda está acordado às 23h costurando peças.</p></div>
+        <div class="grid-2-cell"><h4>Nossa resposta</h4><p style="margin:0;font-size:.88rem">SeyAI existe para eliminar a fragmentação como padrão aceitável. A única entrega que conta é a campanha pronta, coerente e publicável — coordenada pelos 19 agentes embaixo do oráculo Opus. Não há costura no fim porque a coordenação acontece o tempo todo, dentro do sistema.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Território competitivo</div><h2>Onde nos posicionamos</h2></div>
+      <div class="grid-3">
+        <div class="card"><h4>Contra ChatGPT solo</h4><p style="font-size:.88rem;margin:0">Solo é assistente. Você precisa pedir cada peça. SeyAI é orquestra: você dá o briefing e a campanha inteira chega.</p></div>
+        <div class="card"><h4>Contra biblioteca de prompts</h4><p style="font-size:.88rem;margin:0">Biblioteca é estoque de receitas. SeyAI é o restaurante — a refeição já chega coordenada.</p></div>
+        <div class="card"><h4>Contra marketplace de agentes</h4><p style="font-size:.88rem;margin:0">Marketplace vende peças avulsas. SeyAI entrega a orquestra montada — 19 agentes que já se conhecem e conversam.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Positioning Tone · Chris Do</div><h2>A justaposição que define a marca</h2></div>
+      <div class="quote-block">
+        <p class="quote-text" style="font-size:1.4rem;font-weight:600;letter-spacing:-.02em">Coordenação Impossível</p>
+        <p style="margin-top:1rem;margin-bottom:0;font-size:.9rem">"Coordenação" evoca o Sábio — método, padrão, fundamento. "Impossível" evoca o Mago — a transformação que desafia expectativas. Juntos, definem uma marca que entrega uma campanha inteira, coerente, coordenada — algo que não deveria ser possível com o input que você deu, mas é.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 06 · TOM DE VOZ ==================== -->
+<div id="voz" class="tab-panel">
+  <div class="container">
+    <div class="hero-block">
+      <div class="hero-eyebrow">06 — Tom de Voz</div>
+      <h1 class="hero-headline">Como falamos.</h1>
+      <p class="hero-sub">Três adjetivos consistentes — não adaptáveis. A voz é o que torna SeyAI reconhecível antes do nome aparecer.</p>
+    </div>
+
+    <div class="section">
+      <div class="grid-3">
+        <div class="card card-elevated"><h4>Adjetivo 01</h4><h3>Tranquila</h3><p style="font-size:.88rem;margin:0">SeyAI fala como quem não precisa convencer. Sem urgência artificial, sem superlativos, sem exclamações. A confiança está na cadência, não no volume. Quando você já sabe que o resultado fala por si, você não precisa gritar.</p></div>
+        <div class="card card-elevated"><h4>Adjetivo 02</h4><h3>Densa</h3><p style="font-size:.88rem;margin:0">Cada frase carrega peso. Não há preenchimento, não há floreio. Não é minimalismo estético — é precisão comunicativa. Menos palavras, mais impacto por palavra. O oráculo fala pouco e fala denso.</p></div>
+        <div class="card card-elevated"><h4>Adjetivo 03</h4><h3>Reveladora</h3><p style="font-size:.88rem;margin:0">O tom não é de pitch — é de revelação. Como se SeyAI estivesse mostrando algo que sempre esteve ali mas ninguém tinha nomeado. A fragmentação que você aceitava sem questionar.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Manifestação por Touchpoint</div><h2>A voz em contexto</h2></div>
+      <div style="display:flex;flex-direction:column;gap:.75rem">
+        <div class="card"><h4>Headline de Produto</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin:0">"Briefing entra. Campanha sai. Coordenada."</p></div>
+        <div class="card"><h4>Sub-headline · Mãe + Oráculo</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin:0">"SeyAI é a mãe. Opus é o oráculo do lançamento. Embaixo, 19 agentes em orquestra."</p></div>
+        <div class="card"><h4>Descrição de Feature</h4><p style="font-size:.9rem;color:var(--text-2);margin:0">"O agente de copy não trabalha sozinho. Ele lê o briefing junto com os outros 18 agentes, pelo Opus. Quando a copy chega, ela já conversa com o criativo, com o email, com a página. Não é paralelo solto — é orquestra."</p></div>
+        <div class="card"><h4>CTA Principal</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin:0">"Envie seu primeiro briefing à SeyAI."</p></div>
+        <div class="card"><h4>Email de Onboarding · Dia 1</h4><p style="font-size:.9rem;color:var(--text-2);margin:0">"Você tem acesso ao Opus. Os 19 agentes já estão à mesa, esperando o seu briefing. Comece com um lançamento real ou um fictício — nos dois casos, o resultado é uma campanha inteira, coordenada, pronta para publicar."</p></div>
+        <div class="card"><h4>Mensagem de Erro</h4><p style="font-size:.9rem;color:var(--text-2);margin:0">"Algo no fluxo da orquestra travou. Estamos coordenando a correção. Você será notificado quando o output estiver pronto — e ele vai estar pronto."</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">7 Exemplos</div><h2>Assim Sim · Assim Não</h2></div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <table class="voice-table">
+          <thead><tr><th class="col-yes" style="width:50%;padding:1rem 1.25rem">Assim SIM</th><th class="col-no" style="width:50%;padding:1rem 1.25rem;border-left:1px solid var(--border)">Assim NÃO</th></tr></thead>
+          <tbody>
+            <tr><td class="cell-yes">"19 agentes. 1 oráculo. Campanha coordenada."</td><td class="cell-no">"Nossa revolucionária plataforma de IA com 19 agentes inteligentes potencializa seus lançamentos!"</td></tr>
+            <tr><td class="cell-yes">"O output está pronto para publicar. Não pronto para revisar."</td><td class="cell-no">"Gere conteúdo incrível em segundos com IA disruptiva!"</td></tr>
+            <tr><td class="cell-yes">"SeyAI é a mãe. Opus é o oráculo. Embaixo, a orquestra."</td><td class="cell-no">"Acesse nosso marketplace de agentes especializados!"</td></tr>
+            <tr><td class="cell-yes">"A agência de 2 que entrega como a de 20."</td><td class="cell-no">"Escale sua agência com automação ponta a ponta!"</td></tr>
+            <tr><td class="cell-yes">"Não é sorte. São padrões de milhares de lançamentos, processados pelo Opus."</td><td class="cell-no">"Algoritmo proprietário com machine learning analisa milhões de data points!"</td></tr>
+            <tr><td class="cell-yes">"19 agentes. 1 promessa. 0 fragmentação."</td><td class="cell-no">"Plug-and-play, modular, escalável e infinitamente customizável."</td></tr>
+            <tr><td class="cell-yes">"Coordenado, não montado."</td><td class="cell-no">"Junte vários prompts e monte seu próprio fluxo!"</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 07 · VOCABULÁRIO ==================== -->
+<div id="vocabulario" class="tab-panel">
+  <div class="container">
+    <div class="hero-block">
+      <div class="hero-eyebrow">07 — Vocabulário da Marca</div>
+      <h1 class="hero-headline">O que dizemos.<br>O que nunca dizemos.</h1>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Truelines & Taglines</div><h2>As frases que nos definem</h2></div>
+      <div style="display:flex;flex-direction:column;gap:1.25rem">
+        <div class="card card-elevated"><h4>Tagline Principal · Assinatura</h4><div class="tagline-hero">Briefing entra<span class="dot">.</span> Campanha sai<span class="dot">.</span> Coordenada<span class="dot">.</span></div><p class="tagline-context">Sete palavras. Três frases. Um gap implícito entre elas onde 19 agentes trabalham em orquestra. Não promete. Descreve.</p></div>
+        <div class="card"><h4>Hero Statement · Homepage</h4><p style="font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"A mesa onde 19 agentes se sentam — e o seu marketing nasce coordenado."</p><p class="tagline-context">A imagem da mesa torna concreta a ideia de orquestra. Implica que outros vendem cadeiras avulsas.</p></div>
+        <div class="card"><h4>Pacto · Marca-promessa</h4><p style="font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"19 agentes. 1 promessa. 0 fragmentação."</p><p class="tagline-context">Ritmo numérico. Funciona em ad, em palco, em rodapé. O pacto-resumo da marca.</p></div>
+        <div class="card"><h4>Posicionamento Direto · Proposta Comercial</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"19 agentes especializados, coordenados pelo oráculo Opus, produzem sua campanha de lançamento completa — do briefing ao asset final. Pronto para publicar, não para revisar."</p><p class="tagline-context">Para contextos onde clareza operacional importa mais que impacto emocional.</p></div>
+        <div class="card"><h4>Brand Essence · Bio de Redes Sociais</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"SeyAI · Campanhas de lançamento coordenadas. 19 agentes. 1 oráculo (Opus)."</p><p class="tagline-context">Funcional, claro, pesquisável.</p></div>
+        <div class="card"><h4>Tom Inspiracional · Palcos e Eventos</h4><p style="font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;letter-spacing:-.015em">"O tamanho da equipe nunca mais vai determinar o tamanho da campanha."</p><p class="tagline-context">Para keynotes e palestras. O "por quê" comprimido em uma única sentença.</p></div>
+        <div class="card" style="border-color:rgba(239,68,68,0.15);background:rgba(239,68,68,0.03)"><h4 style="color:var(--deny-text)">Anti-Tagline · Uso Interno</h4><p style="font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.5rem">"Nós não fazemos rascunhos. Nós não vendemos pedaços."</p><p class="tagline-context">Filtro interno para toda decisão de produto e comunicação. Se algo pudesse ser descrito como "rascunho" ou "pedaço", não está no nível.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Palavras de Poder</div><h2>Usar sempre</h2></div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <table class="brand-table">
+          <thead><tr><th>Palavra</th><th>Por que usar</th></tr></thead>
+          <tbody>
+            <tr><td class="col-key vocab-power">Coordenado / Coordenação</td><td>O diferencial estrutural. SeyAI não é "rápido" — é coordenado. Substitui "integrado".</td></tr>
+            <tr><td class="col-key vocab-power">Orquestra</td><td>Imagem central. Cada agente é instrumento. O oráculo é o maestro. SeyAI é a sala de concerto.</td></tr>
+            <tr><td class="col-key vocab-power">Mãe</td><td>SeyAI é a mãe. Termo afetivo + arquitetural. Estabelece hierarquia sem hierarquia fria.</td></tr>
+            <tr><td class="col-key vocab-power">Oráculo</td><td>O cabeça-de-nicho. Opus, hoje. Evoca sabedoria, profundidade, autoridade silenciosa.</td></tr>
+            <tr><td class="col-key vocab-power">Cabeça-de-nicho</td><td>Termo interno para descrever o oráculo de cada vertical futuro.</td></tr>
+            <tr><td class="col-key vocab-power">Simultâneo / Simultaneamente</td><td>Os 19 agentes não trabalham em fila. Trabalham juntos. Substitui "paralelo" quando o paralelismo é o ponto.</td></tr>
+            <tr><td class="col-key vocab-power">19 agentes</td><td>O número específico vira pacto. Não diga "vários agentes" — diga 19.</td></tr>
+            <tr><td class="col-key vocab-power">Pronto</td><td>A palavra que mais diferencia. Não "quase", não "rascunho" — pronto.</td></tr>
+            <tr><td class="col-key vocab-power">Campanha</td><td>Reforça que a entrega é completa e integrada, não peças soltas.</td></tr>
+            <tr><td class="col-key vocab-power">Publicar</td><td>O verbo que define a linha de chegada real — o asset no ar.</td></tr>
+            <tr><td class="col-key vocab-power">Briefing</td><td>O único input que o usuário precisa dar.</td></tr>
+            <tr><td class="col-key vocab-power">Padrões</td><td>O fundamento do Sábio. Substitui "algoritmo" e "dados" com mais substância.</td></tr>
+            <tr><td class="col-key vocab-power">Output</td><td>Técnico o suficiente para ser preciso, acessível para ser claro.</td></tr>
+            <tr><td class="col-key vocab-power">Coerência</td><td>O diferencial entre peças soltas e campanha integrada.</td></tr>
+            <tr><td class="col-key vocab-power">Nível</td><td>"Entregar no nível" — eleva sem ser arrogante.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">Palavras Proibidas</div><h2>Nunca usar</h2></div>
+      <div class="card" style="padding:0;overflow:hidden;border-color:rgba(239,68,68,0.12)">
+        <table class="brand-table">
+          <thead><tr><th>Palavra</th><th>Por que evitar</th></tr></thead>
+          <tbody>
+            <tr><td class="col-key vocab-forbidden">Marketplace</td><td>SeyAI é o oposto disso. Marketplace vende peças. Nós entregamos a orquestra.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Biblioteca (de prompts/agentes)</td><td>Biblioteca é estoque. SeyAI não é estoque — é operação coordenada.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Agentes individuais / avulsos</td><td>Os 19 agentes só fazem sentido juntos, sob o oráculo. Falar deles em separado quebra a metáfora.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Plug-and-play</td><td>Linguagem de modularidade. SeyAI é o oposto: monolítica, integrada, coordenada.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Prompt avulso</td><td>O que vendemos não é prompt. É orquestra de agentes especializados.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Revolucionário</td><td>Clichê de startup. Todo mundo é "revolucionário". Ninguém acredita mais.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Disruptivo</td><td>White noise de pitch deck.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Incrível</td><td>Superlativo vazio. SeyAI mostra, não adjetiva.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Potencializar</td><td>Jargão corporativo que não diz nada concreto.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Escalar</td><td>Linguagem de growth hacking que não pertence ao tom.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Automatizar</td><td>Reduz SeyAI a uma ferramenta de automação. Ela coordena, não automatiza.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Hack / Growth</td><td>Cultura de atalho. SeyAI é sobre qualidade de output, não truques.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Mágico</td><td>Sendo Mago, nunca se auto-rotule. O Mago não diz que é mágico.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Garantido</td><td>Promessa que gera desconfiança.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Ilimitado</td><td>Promessa impossível. SeyAI é precisa, não hiperbólica.</td></tr>
+            <tr><td class="col-key vocab-forbidden">Futuro</td><td>SeyAI entrega no presente. "Futuro do marketing" é clichê sem substância.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 08 · JORNADA ==================== -->
+<div id="jornada" class="tab-panel">
+  <div class="container">
+    <div class="hero-block">
+      <div class="hero-eyebrow">08 — Jornada do Cliente</div>
+      <h1 class="hero-headline">Como o ceticismo<br>vira dependência estrutural.</h1>
+      <p class="hero-sub">4 fases. O cliente entra pelo vertical (Opus, lançamento) e descobre, ao longo do caminho, que existe uma mãe — SeyAI — e uma orquestra de 19 agentes embaixo.</p>
+    </div>
+
+    <div class="section">
+      <div class="phase-card">
+        <div class="phase-number">01</div>
+        <div>
+          <div class="phase-label">Fase 1 · Porta de entrada: Opus</div>
+          <div class="phase-title">Ceticismo Curioso</div>
+          <div class="phase-quote">"Isso não pode ser real."</div>
+          <p style="font-size:.9rem;margin-bottom:.75rem">O gestor de lançamento descobre <strong>SeyAI Opus</strong> — o oráculo de lançamento — provavelmente via indicação ou por um exemplo de output coordenado que viu e não acreditou que foi feito por IA. Ele visita sayai.com.br, lê a promessa de "19 agentes coordenados", e a reação imediata é desconfiança produtiva. Já viu marketplace de IA prometer demais. Mas algo é diferente: a comunicação não é empolgada — é precisa.</p>
+          <div class="inline-quote">"Vou testar com algo pequeno. Se voltar fragmentado como tudo que já testei, pelo menos confirmo rápido."</div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-number">02</div>
+        <div>
+          <div class="phase-label">Fase 2 · Verificação</div>
+          <div class="phase-title">Verificação Silenciosa</div>
+          <div class="phase-quote">"Espera. Tudo isso conversa entre si?"</div>
+          <p style="font-size:.9rem;margin-bottom:.75rem">O gestor envia o primeiro briefing à Opus. A campanha volta — completa e <strong>coordenada</strong>. Copy final. Criativos finalizados. Funil estruturado. Emails escritos. O criativo refere uma frase do copy. O email continua o tom da página. Ele abre cada peça esperando achar o ponto onde a coerência cai. Não cai.</p>
+          <div class="inline-quote">"Eu gastaria 3 semanas e 4 pessoas só para garantir que tudo isso conversasse. Saiu coordenado de fábrica. Preciso testar de novo."</div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-number">03</div>
+        <div>
+          <div class="phase-label">Fase 3 · Descoberta da mãe</div>
+          <div class="phase-title">Integração Silenciosa</div>
+          <div class="phase-quote">"Agora eu começo pelo briefing."</div>
+          <p style="font-size:.9rem;margin-bottom:.75rem">O gestor muda o workflow. Antes começava com "o que a equipe consegue produzir". Agora começa com "qual é a melhor campanha possível para essa oferta". Descobre que <strong>Opus</strong> é apenas o oráculo do lançamento — embaixo de uma marca-mãe, <strong>SeyAI</strong>, que vai abrigar outros oráculos para outros nichos. Começa a ver SeyAI como infraestrutura, não como ferramenta.</p>
+          <div class="inline-quote">"Eu não sei como funciona por dentro e honestamente não preciso. Funciona. E meu papel voltou a ser estratégia, não coordenação."</div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-number">04</div>
+        <div>
+          <div class="phase-label">Fase 4 · Dependência</div>
+          <div class="phase-title">Dependência Estrutural</div>
+          <div class="phase-quote">"Eu não consigo imaginar lançar sem isso."</div>
+          <p style="font-size:.9rem;margin-bottom:.75rem">SeyAI não é mais uma ferramenta que a agência usa. É a infraestrutura sobre a qual a agência opera. O modelo de negócio mudou: a agência aceita mais projetos, entrega em prazos menores, cobra por estratégia (não por hora de produção), e a reputação cresce porque a coerência do output é consistente. Voltar ao modelo anterior — montar campanha juntando peças de 6 ferramentas — é impensável.</p>
+          <div class="inline-quote">"Minha agência de 3 pessoas entrega como se fossem 15. E ninguém pergunta como. Só percebem que tudo conversa entre si."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 09 · CONTRATO ==================== -->
+<div id="contrato" class="tab-panel">
+  <div class="container">
+    <div class="hero-block">
+      <div class="hero-eyebrow">09 — Contrato da Marca</div>
+      <h1 class="hero-headline">O que prometemos.<br>O que pedimos.</h1>
+    </div>
+
+    <div class="section">
+      <div class="card card-accent" style="background:linear-gradient(135deg,rgba(99,102,241,.10),rgba(99,102,241,.02));max-width:760px;margin-bottom:1rem">
+        <h4>O Pacto SeyAI</h4>
+        <div style="font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.02em;font-family:var(--font-display);line-height:1.3">19 agentes. 1 promessa. 0 fragmentação.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">5 Promessas da Marca ao Cliente</div><h2>O que não se negocia</h2></div>
+
+      <div class="promise-card"><div class="promise-num">01</div><div><div class="promise-title">O output vai estar pronto para publicar</div><p style="font-size:.88rem;margin:0">Não pronto para revisar. Não pronto para "dar uma ajustada". Pronto para ir ao ar. Esse é o padrão mínimo e inegociável dos 19 agentes.</p></div></div>
+
+      <div class="promise-card"><div class="promise-num">02</div><div><div class="promise-title">A campanha vai ter coerência interna</div><p style="font-size:.88rem;margin:0">Os 19 agentes não produzem peças isoladas. Produzem uma campanha coordenada pelo oráculo Opus. O tom do email conversa com o tom da página. O criativo reforça o argumento do copy. A sequência do funil tem lógica narrativa. Você recebe uma campanha, não uma coleção de arquivos.</p></div></div>
+
+      <div class="promise-card"><div class="promise-num">03</div><div><div class="promise-title">A autoria percebida é sua</div><p style="font-size:.88rem;margin:0">O output final não tem marca d'água da SeyAI — literal ou figurativa. Não tem "cara de IA", não tem padrão genérico reconhecível. O que sai daqui, você assina com orgulho.</p></div></div>
+
+      <div class="promise-card"><div class="promise-num">04</div><div><div class="promise-title">O fundamento é real</div><p style="font-size:.88rem;margin:0">Cada decisão criativa é baseada em padrões extraídos de lançamentos reais, processados pelo oráculo Opus e distribuídos aos 19 agentes. Não é geração aleatória. Não é template requentado.</p></div></div>
+
+      <div class="promise-card"><div class="promise-num">05</div><div><div class="promise-title">O padrão se mantém</div><p style="font-size:.88rem;margin:0">O primeiro lançamento que você produzir com SeyAI não vai ser melhor que o décimo. Vai ser igual. Consistência não é bônus — é arquitetura. Os 19 agentes operam pelo mesmo oráculo, com o mesmo padrão, toda vez.</p></div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-number">4 Expectativas da Marca do Cliente</div><h2>O que pedimos em troca</h2></div>
+      <div class="grid-2">
+        <div class="grid-2-cell"><h4>Expectativa 01</h4><h3 style="font-size:1rem;margin-bottom:.5rem">Invista no briefing</h3><p style="font-size:.88rem;margin:0">A qualidade do output dos 19 agentes é diretamente proporcional à qualidade do briefing que chega ao Opus. Faça do briefing o melhor trabalho do processo.</p></div>
+        <div class="grid-2-cell"><h4>Expectativa 02</h4><h3 style="font-size:1rem;margin-bottom:.5rem">Revise com julgamento, não com desconfiança</h3><p style="font-size:.88rem;margin:0">Sua função na revisão não é "verificar se a IA errou" — é aplicar seu julgamento estratégico. Faça o que um diretor criativo faz: eleve, não reconstrua.</p></div>
+        <div class="grid-2-cell"><h4>Expectativa 03</h4><h3 style="font-size:1rem;margin-bottom:.5rem">Não explique como foi feito</h3><p style="font-size:.88rem;margin:0">A autoria é sua. SeyAI foi desenhada para que o output seja indistinguível de trabalho humano de alto nível. Você não precisa explicar a orquestra.</p></div>
+        <div class="grid-2-cell"><h4>Expectativa 04</h4><h3 style="font-size:1rem;margin-bottom:.5rem">Use Opus para o que ele foi feito</h3><p style="font-size:.88rem;margin:0">Opus é o oráculo de lançamento. Use para campanhas de lançamento de infoproduto. Outros nichos terão seus próprios oráculos embaixo da mesma mãe SeyAI.</p></div>
+      </div>
+    </div>
+
+    <div class="section" style="border-bottom:none">
+      <div class="card" style="text-align:center;padding:3rem 2rem">
+        <div style="font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:1.5rem">Status da Marca</div>
+        <div style="font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:1rem;letter-spacing:-.015em">SeyAI · Opus · 19 agentes · ativo</div>
+        <p style="color:var(--text-3);font-size:.85rem;max-width:520px;margin:0 auto">sayai.com.br · seyai.com.br · pronúncia "ceia"</p>
+        <div class="pill-row" style="justify-content:center;margin-top:1.5rem">
+          <span class="tag">Manifesto ✓</span><span class="tag">Essência ✓</span><span class="tag">Arquétipos ✓</span><span class="tag">Posicionamento ✓</span><span class="tag">Voz ✓</span><span class="tag">Vocabulário ✓</span><span class="tag">Jornada ✓</span><span class="tag">Contrato ✓</span><span class="tag">Design System ✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 10 · DESIGN SYSTEM ==================== -->
+<div id="design-system" class="tab-panel">
+  <div class="container">
+    <div class="hero-block">
+      <div class="hero-eyebrow">10 — Design System</div>
+      <h1 class="hero-headline">Tokens, tipografia,<br>componentes e <span class="accent">animações</span>.</h1>
+      <p class="hero-sub">Unidades atômicas que garantem consistência visual em todos os pontos de contato — extraídas das apresentações reais (capa horizontal, arquitetura, brandbook).</p>
+    </div>
+
+    <!-- COLOR -->
+    <div class="section">
+      <div class="section-header"><div class="section-number">01</div><h2>Color Tokens</h2></div>
+
+      <h4 style="margin-bottom:1rem">Camadas de Background</h4>
+      <div class="ds-swatch-grid" style="margin-bottom:2rem">
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#08080D"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--bg</div><div class="ds-swatch-value">#08080D</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#0B0B12"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--bg-2</div><div class="ds-swatch-value">#0B0B12</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#0F0F16"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--surface</div><div class="ds-swatch-value">#0F0F16</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#16161F"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--surface-2</div><div class="ds-swatch-value">#16161F</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#1C1C28"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--surface-3</div><div class="ds-swatch-value">#1C1C28</div></div></div>
+      </div>
+
+      <h4 style="margin-bottom:1rem">Accent · Indigo Elétrico</h4>
+      <div class="ds-swatch-grid" style="margin-bottom:2rem">
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#6366F1"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--accent</div><div class="ds-swatch-value">#6366F1</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#818CF8"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--accent-2</div><div class="ds-swatch-value">#818CF8</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#A5B4FC"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--accent-3</div><div class="ds-swatch-value">#A5B4FC</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:rgba(99,102,241,0.10)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--accent-dim</div><div class="ds-swatch-value">rgba 0.10</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:rgba(99,102,241,0.20)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--accent-glow</div><div class="ds-swatch-value">rgba 0.20</div></div></div>
+      </div>
+
+      <h4 style="margin-bottom:1rem">Texto + Ouro Editorial</h4>
+      <div class="ds-swatch-grid" style="margin-bottom:2rem">
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#F4F4F5"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--text</div><div class="ds-swatch-value">#F4F4F5</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:rgba(244,244,245,0.55)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--text-2</div><div class="ds-swatch-value">rgba 0.55</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:rgba(244,244,245,0.30)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--text-3</div><div class="ds-swatch-value">rgba 0.30</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#FCD34D"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--gold-text</div><div class="ds-swatch-value">#FCD34D</div></div></div>
+      </div>
+
+      <h4 style="margin-bottom:1rem">Bordas e Status</h4>
+      <div class="ds-swatch-grid">
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:rgba(255,255,255,0.06)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--border</div><div class="ds-swatch-value">rgba 0.06</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:rgba(255,255,255,0.10)"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--border-md</div><div class="ds-swatch-value">rgba 0.10</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#F87171"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--deny-text</div><div class="ds-swatch-value">#F87171</div></div></div>
+        <div class="ds-swatch"><div class="ds-swatch-color" style="background:#34D399"></div><div class="ds-swatch-info"><div class="ds-swatch-name">--ok</div><div class="ds-swatch-value">#34D399</div></div></div>
+      </div>
+    </div>
+
+    <!-- TYPO -->
+    <div class="section">
+      <div class="section-header"><div class="section-number">02</div><h2>Tipografia</h2></div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.6rem;align-items:center">
+          <span class="tag">Inter 300-700 · UI</span>
+          <span class="tag">Manrope 700-800 · Display</span>
+          <span class="tag">Instrument Sans · Editorial</span>
+          <span class="tag">JetBrains Mono · Dados</span>
+        </div>
+        <div style="padding:1.25rem 1.75rem">
+          <div class="ds-type-row">
+            <div class="ds-type-meta"><div class="ds-type-tag">Display / H1 · Manrope</div><div class="ds-type-spec">clamp(2.25rem,5vw,4.4rem) · 700 · -0.025em</div></div>
+            <div style="font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-.025em;line-height:1.05;color:var(--text)">SeyAI é a mãe.</div>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta"><div class="ds-type-tag">Heading / H2 · Inter</div><div class="ds-type-spec">clamp(1.4rem,3vw,2rem) · 600 · -0.02em</div></div>
+            <div style="font-size:clamp(1.2rem,2.5vw,1.75rem);font-weight:600;letter-spacing:-.02em;line-height:1.2;color:var(--text)">19 agentes. 1 oráculo.</div>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta"><div class="ds-type-tag">Subheading / H3</div><div class="ds-type-spec">clamp(1rem,2vw,1.25rem) · 600 · -0.015em</div></div>
+            <div style="font-size:1.1rem;font-weight:600;letter-spacing:-.015em;line-height:1.3;color:var(--text)">Coordenação Impossível</div>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta"><div class="ds-type-tag">Eyebrow / Label</div><div class="ds-type-spec">0.7rem · 500 · 0.12em · uppercase</div></div>
+            <div style="font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2)">Vertical · Lançamento</div>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta"><div class="ds-type-tag">Editorial · Instrument Sans</div><div class="ds-type-spec">clamp(1.05rem,1.8vw,1.4rem) · italic</div></div>
+            <div style="font-family:var(--font-edit);font-style:italic;font-size:1.2rem;color:var(--text)">A mesa onde 19 agentes se sentam.</div>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta"><div class="ds-type-tag">Body · Inter</div><div class="ds-type-spec">0.95rem · 400 · 1.75 line-height</div></div>
+            <p style="font-size:.95rem;color:var(--text-2);line-height:1.75;margin:0">O output é da agência. A campanha leva o nome dela. SeyAI é invisível no resultado final.</p>
+          </div>
+          <div class="ds-type-row">
+            <div class="ds-type-meta"><div class="ds-type-tag">Mono · JetBrains</div><div class="ds-type-spec">0.72rem · 500 · 0.06em</div></div>
+            <div style="font-family:var(--font-mono);font-size:.78rem;letter-spacing:.04em;color:var(--text-3)">sayai.com.br · seyai.com.br · v3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPACING -->
+    <div class="section">
+      <div class="section-header"><div class="section-number">03</div><h2>Espaçamento</h2></div>
+      <p style="max-width:560px;margin-bottom:2rem">Sistema baseado em múltiplos de 4px. Todos os paddings, gaps e margens derivam desta escala.</p>
+      <div class="card" style="padding:2rem">
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:4px"></div><div class="ds-space-label">4px · 0.25rem</div><div style="font-size:.78rem;color:var(--text-3)">Micro gap ícone/texto</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:8px"></div><div class="ds-space-label">8px · 0.5rem</div><div style="font-size:.78rem;color:var(--text-3)">Padding interno de tag</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:12px"></div><div class="ds-space-label">12px · 0.75rem</div><div style="font-size:.78rem;color:var(--text-3)">Gap entre próximos</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:16px"></div><div class="ds-space-label">16px · 1rem</div><div style="font-size:.78rem;color:var(--text-3)">Padding tabela</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:24px"></div><div class="ds-space-label">24px · 1.5rem</div><div style="font-size:.78rem;color:var(--text-3)">Gap grid de cards</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:28px"></div><div class="ds-space-label">28px · 1.75rem</div><div style="font-size:.78rem;color:var(--text-3)">Padding de card</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:40px"></div><div class="ds-space-label">40px · 2.5rem</div><div style="font-size:.78rem;color:var(--text-3)">Espaço entre seções internas</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:56px"></div><div class="ds-space-label">56px · 3.5rem</div><div style="font-size:.78rem;color:var(--text-3)">Padding de seção principal</div></div>
+        <div class="ds-space-row"><div class="ds-space-bar" style="width:80px"></div><div class="ds-space-label">80px · 5rem</div><div style="font-size:.78rem;color:var(--text-3)">Padding de hero block</div></div>
+      </div>
+    </div>
+
+    <!-- COMPONENTS -->
+    <div class="section">
+      <div class="section-header"><div class="section-number">04</div><h2>Componentes</h2></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Cards</div><div style="flex:1;display:flex;flex-wrap:wrap;gap:1rem">
+        <div class="card" style="flex:1;min-width:180px;max-width:260px"><h4>Card Base</h4><p style="font-size:.85rem;margin:0">Surface L1 · border 1px · radius 12px · hover eleva.</p></div>
+        <div class="card card-accent" style="flex:1;min-width:180px;max-width:260px"><h4>Card Accent</h4><p style="font-size:.85rem;margin:0">Border-left 2px indigo. Citações de destaque.</p></div>
+        <div class="card card-elevated" style="flex:1;min-width:180px;max-width:260px"><h4>Card Elevated</h4><p style="font-size:.85rem;margin:0">Surface L2 + border-md. Maior contraste.</p></div>
+      </div></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Eyebrow</div><div style="flex:1"><span class="eyebrow">Vertical · Lançamento</span><div style="margin-top:.5rem"><span class="hero-eyebrow" style="margin:0;display:inline-flex">02 — Manifesto</span></div></div></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Tags / Badges</div><div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center">
+        <span class="tag">Padrão</span>
+        <span class="tag" style="background:var(--deny-bg);color:var(--deny-text);border-color:rgba(239,68,68,.2)">Negativo</span>
+        <span class="tag" style="background:rgba(16,185,129,.08);color:#34D399;border-color:rgba(16,185,129,.2)">Positivo</span>
+        <span class="tag" style="background:rgba(252,211,77,.10);color:var(--gold-text);border-color:rgba(252,211,77,.25)">Editorial</span>
+        <span class="tag" style="background:var(--surface-2);color:var(--text-3);border-color:var(--border-md)">Neutro</span>
+      </div></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Quote Block</div><div style="flex:1"><div class="quote-block"><p class="quote-text">19 agentes. 1 promessa. 0 fragmentação.</p></div></div></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Inline Quote</div><div style="flex:1"><div class="inline-quote">"Briefing entra. Campanha sai. Coordenada."</div></div></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Stat Strip</div><div style="flex:1">
+        <div class="stat-strip">
+          <div class="stat-item"><span class="stat-value">19</span><span class="stat-label">Agentes</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat-item"><span class="stat-value">100%</span><span class="stat-label">Pronto</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat-item"><span class="stat-value">0</span><span class="stat-label">Fragmentação</span></div>
+        </div>
+      </div></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Mark / Wipe</div><div style="flex:1">
+        <div class="reveal in" style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--text)"><span class="mask-wipe">SeyAI · Opus · 19 agentes</span></div>
+      </div></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Dividers</div><div style="flex:1;display:flex;flex-direction:column;gap:1rem">
+        <div><div style="font-size:.7rem;color:var(--text-3);margin-bottom:.4rem">Default</div><div class="divider" style="margin:0"></div></div>
+        <div><div style="font-size:.7rem;color:var(--text-3);margin-bottom:.4rem">Strong</div><div class="divider divider-strong" style="margin:0"></div></div>
+        <div><div style="font-size:.7rem;color:var(--text-3);margin-bottom:.4rem">Gradient</div><div class="divider-grad" style="margin:0"></div></div>
+      </div></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Border Radius</div><div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem"><div style="width:48px;height:48px;background:var(--accent-dim);border:1px solid rgba(99,102,241,.2);border-radius:4px"></div><span style="font-size:.68rem;color:var(--text-3)">4px</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem"><div style="width:48px;height:48px;background:var(--accent-dim);border:1px solid rgba(99,102,241,.2);border-radius:8px"></div><span style="font-size:.68rem;color:var(--text-3)">8px · sm</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem"><div style="width:48px;height:48px;background:var(--accent-dim);border:1px solid rgba(99,102,241,.2);border-radius:12px"></div><span style="font-size:.68rem;color:var(--text-3)">12px · md</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem"><div style="width:48px;height:48px;background:var(--accent-dim);border:1px solid rgba(99,102,241,.2);border-radius:9999px"></div><span style="font-size:.68rem;color:var(--text-3)">full</span></div>
+      </div></div>
+
+      <div class="ds-comp-row"><div class="ds-comp-label">Pulse Dot (topbar)</div><div style="flex:1;display:flex;align-items:center;gap:.6rem"><span class="brand-dot"></span><span style="font-size:.8rem;color:var(--text-2);font-family:var(--font-mono)">2.4s · cubic-bezier(.65,0,.35,1) · infinite</span></div></div>
+    </div>
+
+    <!-- ANIMATIONS · NEW SECTION -->
+    <div class="section">
+      <div class="section-header"><div class="section-number">05</div><h2>Animações da Marca</h2></div>
+      <p style="max-width:620px;margin-bottom:2rem">Vocabulário de movimento extraído das apresentações reais (capa horizontal, arquitetura, brandbook). Princípio: <strong>discreto, nunca obstrutivo, respeita</strong> <code style="font-family:var(--font-mono);font-size:.85rem;color:var(--accent-2)">prefers-reduced-motion</code>.</p>
+
+      <h4 style="margin-bottom:1rem">Easings canônicos</h4>
+      <div class="grid-2" style="margin-bottom:2rem">
+        <div class="grid-2-cell"><h4>--ease-out</h4><div style="font-family:var(--font-mono);font-size:.78rem;color:var(--accent-2);margin-bottom:.5rem">cubic-bezier(.16, 1, .3, 1)</div><p style="font-size:.85rem;margin:0">Entradas, reveals, micro-elevações em hover. Sai forte e desacelera com elegância.</p></div>
+        <div class="grid-2-cell"><h4>--ease-in-out</h4><div style="font-family:var(--font-mono);font-size:.78rem;color:var(--accent-2);margin-bottom:.5rem">cubic-bezier(.65, 0, .35, 1)</div><p style="font-size:.85rem;margin:0">Loops contínuos (pulse), transições simétricas. Acelera no meio, suaviza nas pontas.</p></div>
+      </div>
+
+      <h4 style="margin-bottom:1rem">Durações canônicas</h4>
+      <div class="card" style="padding:0;overflow:hidden;margin-bottom:2rem">
+        <table class="brand-table">
+          <thead><tr><th>Duração</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td class="col-key vocab-power">220ms</td><td>Lock entre seções no scroll horizontal (debounce de transição)</td></tr>
+            <tr><td class="col-key vocab-power">350ms · 500ms</td><td>Smooth scroll entre slides via teclado / botões</td></tr>
+            <tr><td class="col-key vocab-power">700ms</td><td>Smooth scroll programático maior (clique em dot)</td></tr>
+            <tr><td class="col-key vocab-power">800ms · 900ms</td><td>Reveal de blocos (opacity + transform + filter)</td></tr>
+            <tr><td class="col-key vocab-power">1.1s</td><td>Mask wipe reveal de títulos</td></tr>
+            <tr><td class="col-key vocab-power">1.4s</td><td>Counter animation (números crescendo)</td></tr>
+            <tr><td class="col-key vocab-power">2.4s · infinite</td><td>Pulse glow no dot da topbar</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="margin-bottom:1rem">Padrões / Showcase ao vivo</h4>
+      <div class="anim-grid">
+        <div class="anim-card">
+          <h4>Mask Wipe Reveal</h4>
+          <p style="font-size:.85rem;margin:0">Título aparece da esquerda para direita por máscara linear. Usado em headlines de seção horizontal.</p>
+          <div class="demo demo-mask"><span>SeyAI</span></div>
+          <span class="anim-spec">mask-image · 1.1s · ease-out</span>
+        </div>
+        <div class="anim-card">
+          <h4>Reveal Blur+Slide</h4>
+          <p style="font-size:.85rem;margin:0">Bloco entra com blur(4px) e translate3d(28px,4px,0), perde blur e desliza ao entrar no viewport.</p>
+          <div class="demo demo-blur"><span>19 agentes</span></div>
+          <span class="anim-spec">opacity .8s + transform .9s + filter .7s</span>
+        </div>
+        <div class="anim-card">
+          <h4>Pulse Glow Dot</h4>
+          <p style="font-size:.85rem;margin:0">Indicador "vivo" da marca. Box-shadow respira entre 10px e 18px de raio com leve scale(1.15).</p>
+          <div class="demo demo-glow"><div class="ddot"></div></div>
+          <span class="anim-spec">2.4s · ease-in-out · infinite</span>
+        </div>
+        <div class="anim-card">
+          <h4>Parallax Horizontal</h4>
+          <p style="font-size:.85rem;margin:0">Numerais de fundo (bg-numeral) deslocam em factor 0.35 do scroll horizontal — profundidade sem ruído.</p>
+          <div class="demo" style="font-family:var(--font-display);font-size:3rem;color:var(--accent);opacity:.15">19</div>
+          <span class="anim-spec">translate3d(scrollLeft × factor, 0, 0)</span>
+        </div>
+        <div class="anim-card">
+          <h4>Counter Animation</h4>
+          <p style="font-size:.85rem;margin:0">Números crescem de 0 ao valor final em 1.4s com easing out — sensação de "preenchimento da promessa".</p>
+          <div class="demo"><span class="demo-counter" id="demoCounter">0</span></div>
+          <span class="anim-spec">1.4s · ease-out · IntersectionObserver</span>
+        </div>
+        <div class="anim-card">
+          <h4>Hover Micro</h4>
+          <p style="font-size:.85rem;margin:0">Cards e botões: <code style="font-family:var(--font-mono);font-size:.75rem;color:var(--accent-2)">translateY(-3px)</code> + glow indigo. Confirma interatividade sem dramatismo.</p>
+          <div class="demo"><div class="card" style="margin:0;padding:.6rem 1rem;font-size:.85rem">Hover me</div></div>
+          <span class="anim-spec">220ms · ease-out · all properties</span>
+        </div>
+      </div>
+
+      <div class="card card-accent" style="margin-top:2rem">
+        <h4>Princípios de movimento</h4>
+        <ul style="margin:0;padding-left:1.25rem;color:var(--text-2);font-size:.9rem;line-height:1.8">
+          <li><strong>Discreto:</strong> nenhuma animação dura mais que 1.4s, exceto loops contínuos.</li>
+          <li><strong>Nunca obstrutivo:</strong> conteúdo é sempre o protagonista; movimento é cenário.</li>
+          <li><strong>Coerente:</strong> apenas dois easings — out (entradas) e in-out (loops/transições).</li>
+          <li><strong>Acessível:</strong> <code style="font-family:var(--font-mono);font-size:.78rem">@media (prefers-reduced-motion: reduce)</code> desativa tudo.</li>
+          <li><strong>Performático:</strong> apenas <code style="font-family:var(--font-mono);font-size:.78rem">opacity, transform, filter</code> — propriedades que não disparam reflow.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- USAGE -->
+    <div class="section" style="border-bottom:none">
+      <div class="section-header"><div class="section-number">06</div><h2>Princípios de Uso</h2></div>
+      <div class="grid-3">
+        <div class="card"><h4>Hierarquia de superfície</h4><p style="font-size:.88rem;margin:0">Nunca pule camadas. Cards sobre --bg usam --surface. Cards dentro de cards usam --surface-2. Modais ou popovers usam --surface-3.</p></div>
+        <div class="card"><h4>Accent com parcimônia</h4><p style="font-size:.88rem;margin:0">O indigo elétrico é usado para 1 ponto focal por seção. Múltiplos elementos accent na mesma view diluem o impacto.</p></div>
+        <div class="card"><h4>Texto com intenção</h4><p style="font-size:.88rem;margin:0">--text é para headings e valores de destaque. --text-2 é o padrão de corpo. --text-3 é para labels e metadados.</p></div>
+        <div class="card"><h4>Manrope só em display</h4><p style="font-size:.88rem;margin:0">Manrope para títulos grandes (display, archetype-pct, stat-value). Inter para tudo o resto. Nunca misture na mesma linha.</p></div>
+        <div class="card"><h4>Mono é dado</h4><p style="font-size:.88rem;margin:0">JetBrains Mono apenas para tokens, valores numéricos, IDs, captions de URL. Nunca para body.</p></div>
+        <div class="card"><h4>Editorial é raro</h4><p style="font-size:.88rem;margin:0">Instrument Sans italic para taglines/cover-tags emocionais. Usar com escassez — perde o peso se aparecer demais.</p></div>
+      </div>
+    </div>
+
+    <!-- DOWNLOAD DS -->
+    <div class="section" style="text-align:center;border-bottom:none">
+      <button onclick="downloadDS()" style="display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.7rem;background:var(--accent-dim);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:var(--accent-2);font-family:inherit;font-size:.82rem;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:all .2s var(--ease-out)" onmouseover="this.style.background='rgba(99,102,241,.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--accent-dim)';this.style.transform=''">↓ Download Design System (.md)</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+/* ============== TAB SWITCHER ============== */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // Activate matching tab buttons (header + drawer)
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    const onclick = b.getAttribute('onclick')||'';
+    if(onclick.includes("'"+id+"'")) b.classList.add('active');
+  });
+  if(btn){ btn.classList.add('active'); try{btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}catch(e){} }
+  const isCapa = id==='capa';
+  document.getElementById('navdots').classList.toggle('show', isCapa);
+  document.querySelector('.kbd-hint').classList.toggle('show', isCapa);
+  if(!isCapa){ window.scrollTo(0,0); }
+}
+
+function toggleMenu(){
+  document.getElementById('mobileDrawer').classList.toggle('open');
+}
+
+/* ============== HORIZONTAL DECK ENGINE (CAPA only) ============== */
+(function(){
+  const deck = document.getElementById('deck');
+  if(!deck) return;
+  const sections = Array.from(deck.querySelectorAll('.dsec'));
+  const total = sections.length;
+  const navdotsEl = document.getElementById('navdots');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pad = n => String(n).padStart(2,'0');
+
+  sections.forEach((s,i)=>{
+    const d = document.createElement('button');
+    d.className = 'nd';
+    d.dataset.idx = i;
+    d.setAttribute('aria-label', `${pad(i+1)} - ${s.dataset.name||''}`);
+    d.addEventListener('click',()=>scrollToSection(i));
+    navdotsEl.appendChild(d);
+  });
+  const dotEls = Array.from(navdotsEl.querySelectorAll('.nd'));
+
+  let activeIdx = 0;
+  function setActive(i){
+    if(i===activeIdx) return;
+    activeIdx = i;
+    dotEls.forEach((d,idx)=>d.classList.toggle('active', idx===i));
+  }
+  let scrollAnim = null;
+  function smoothScrollTo(targetLeft, duration){
+    if(scrollAnim) cancelAnimationFrame(scrollAnim);
+    const startLeft = deck.scrollLeft;
+    const distance = targetLeft - startLeft;
+    if(Math.abs(distance) < 1) return;
+    const startTime = performance.now();
+    const ease = t => t<0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+    function step(now){
+      const t = Math.min((now-startTime)/duration, 1);
+      deck.scrollLeft = startLeft + distance*ease(t);
+      if(t<1) scrollAnim = requestAnimationFrame(step);
+      else scrollAnim = null;
+    }
+    scrollAnim = requestAnimationFrame(step);
+  }
+  function scrollToSection(i){
+    i = Math.max(0, Math.min(total-1, i));
+    smoothScrollTo(sections[i].offsetLeft, 700);
+  }
+
+  const parallaxEls = Array.from(deck.querySelectorAll('[data-parallax]'));
+  function updateOnScroll(){
+    if(reduceMotion) return;
+    const scrollLeft = deck.scrollLeft;
+    parallaxEls.forEach(el=>{
+      const factor = parseFloat(el.dataset.parallax)||0.4;
+      const parent = el.parentElement;
+      const offset = (scrollLeft - parent.offsetLeft) * factor;
+      el.style.transform = `translate3d(${-offset}px, 0, 0)`;
+    });
+  }
+  deck.addEventListener('scroll', updateOnScroll, {passive:true});
+
+  const visibilityObserver = new IntersectionObserver((entries)=>{
+    let bestIdx = activeIdx, bestRatio = 0;
+    entries.forEach(entry=>{
+      if(entry.intersectionRatio > bestRatio){ bestRatio = entry.intersectionRatio; bestIdx = sections.indexOf(entry.target); }
+    });
+    if(bestRatio > 0) setActive(bestIdx);
+  }, {root:deck, threshold:[0.25,0.5,0.75]});
+  sections.forEach(s=>visibilityObserver.observe(s));
+
+  const revealObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const el = entry.target;
+        const siblings = Array.from(el.parentElement.children).filter(c=>c.classList.contains('reveal'));
+        const idx = siblings.indexOf(el);
+        const delay = Math.max(0, idx) * 90;
+        setTimeout(()=>el.classList.add('in'), delay);
+        revealObserver.unobserve(el);
+      }
+    });
+  }, {root:deck, threshold:0.12, rootMargin:'0px 8% 0px 8%'});
+  deck.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+  /* Wheel routing */
+  let isTransitioning = false;
+  const FULL_ALIGN_THRESHOLD = 0.92;
+  function getFullyAlignedSection(){
+    const viewLeft = deck.scrollLeft, viewRight = viewLeft + deck.clientWidth, viewWidth = deck.clientWidth;
+    if(viewWidth<=0) return null;
+    for(let i=0;i<sections.length;i++){
+      const s = sections[i];
+      const overlap = Math.max(0, Math.min(s.offsetLeft+s.offsetWidth, viewRight) - Math.max(s.offsetLeft, viewLeft));
+      if(overlap/viewWidth >= FULL_ALIGN_THRESHOLD) return s;
+    }
+    return null;
+  }
+  function routeVerticalDelta(dy){
+    if(isTransitioning) return true;
+    const section = getFullyAlignedSection();
+    if(section){
+      const startX = section.offsetLeft, endX = section.offsetLeft + section.offsetWidth;
+      const viewL = deck.scrollLeft, viewR = viewL + deck.clientWidth;
+      const atEnd = viewR >= endX - 4, atStart = viewL <= startX + 4;
+      if(dy > 0 && !atEnd){
+        if(scrollAnim){cancelAnimationFrame(scrollAnim);scrollAnim=null;}
+        deck.scrollLeft = Math.min(endX - deck.clientWidth, deck.scrollLeft + dy);
+        return false;
+      }
+      if(dy < 0 && !atStart){
+        if(scrollAnim){cancelAnimationFrame(scrollAnim);scrollAnim=null;}
+        deck.scrollLeft = Math.max(startX, deck.scrollLeft + dy);
+        return false;
+      }
+      const idx = sections.indexOf(section);
+      const targetIdx = dy>0 ? Math.min(total-1, idx+1) : Math.max(0, idx-1);
+      const target = sections[targetIdx];
+      if(target && target !== section){
+        isTransitioning = true;
+        const tl = dy>0 ? target.offsetLeft : target.offsetLeft + target.offsetWidth - deck.clientWidth;
+        smoothScrollTo(Math.max(0, Math.min(deck.scrollWidth-deck.clientWidth, tl)), 500);
+        setTimeout(()=>{isTransitioning=false;}, 220);
+      }
+      return false;
+    }
+    if(scrollAnim){cancelAnimationFrame(scrollAnim);scrollAnim=null;}
+    deck.scrollLeft += dy;
+    return false;
+  }
+  deck.addEventListener('wheel', (e)=>{
+    if(!document.getElementById('capa').classList.contains('active')) return;
+    if(Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    routeVerticalDelta(e.deltaY);
+  }, {passive:false});
+
+  /* Keyboard */
+  window.addEventListener('keydown', (e)=>{
+    if(!document.getElementById('capa').classList.contains('active')) return;
+    if(e.key==='ArrowRight'){ e.preventDefault(); scrollToSection(activeIdx+1); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); scrollToSection(activeIdx-1); }
+    else if(e.key==='Home'){ e.preventDefault(); scrollToSection(0); }
+    else if(e.key==='End'){ e.preventDefault(); scrollToSection(total-1); }
+  });
+
+  /* Touch */
+  let tStartX=null, tStartY=null, tLastY=null, tScrollLeft=0, tMode=null;
+  const isMobile = ()=>window.matchMedia('(max-width:768px)').matches;
+  deck.addEventListener('touchstart',(e)=>{
+    tStartX=e.touches[0].clientX; tStartY=e.touches[0].clientY; tLastY=tStartY; tScrollLeft=deck.scrollLeft; tMode=null;
+    if(scrollAnim){cancelAnimationFrame(scrollAnim);scrollAnim=null;}
+  }, {passive:true});
+  deck.addEventListener('touchmove',(e)=>{
+    if(tStartX===null) return;
+    const cx=e.touches[0].clientX, cy=e.touches[0].clientY;
+    const dx = tStartX-cx, dy = tStartY-cy;
+    if(isMobile()){
+      if(!tMode){
+        if(Math.abs(dx)>12 && Math.abs(dx)>Math.abs(dy)*1.4) tMode='hpan';
+        else if(Math.abs(dy)>6) tMode='vert';
+      }
+      if(tMode==='vert'){ if(e.cancelable) e.preventDefault(); const sd=(tLastY-cy)*1.5; tLastY=cy; if(Math.abs(sd)>0.5) routeVerticalDelta(sd); return; }
+      if(tMode==='hpan'){ if(e.cancelable) e.preventDefault(); deck.scrollLeft = tScrollLeft+dx; return; }
+      return;
+    }
+    if(Math.abs(dx)>Math.abs(dy)) deck.scrollLeft = tScrollLeft+dx;
+  }, {passive:false});
+  deck.addEventListener('touchend',()=>{ tStartX=tStartY=tLastY=null; tMode=null; }, {passive:true});
+
+  if(dotEls[0]) dotEls[0].classList.add('active');
+})();
+
+/* ============== COUNTER DEMO (DS) ============== */
+(function(){
+  const el = document.getElementById('demoCounter');
+  if(!el) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const start = performance.now(), dur = 1400, target = 19;
+      const ease = t => 1 - Math.pow(1-t, 3);
+      function tick(now){
+        const t = Math.min((now-start)/dur, 1);
+        el.textContent = Math.round(target * ease(t));
+        if(t<1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      obs.unobserve(e.target);
+    });
+  }, {threshold:0.5});
+  obs.observe(el);
+})();
+
+/* ============== DOWNLOADS ============== */
+function downloadDS(){
+  const md = `# SeyAI · Design System
+
+> Branded house monolítica. Mãe: SeyAI. Oráculo (vertical lançamento): Opus. 19 agentes operacionais.
+> Domínios: sayai.com.br · seyai.com.br · pronúncia "ceia"
+
+---
+
+## 1. Color Tokens
+
+### Backgrounds
+| Token | Hex | Uso |
+|---|---|---|
+| --bg | #08080D | Background principal |
+| --bg-2 | #0B0B12 | Background alternativo (decks) |
+| --surface | #0F0F16 | Cards L1 |
+| --surface-2 | #16161F | Cards L2 / hover |
+| --surface-3 | #1C1C28 | Modais / popovers |
+
+### Accent (Indigo Elétrico)
+| Token | Valor | Uso |
+|---|---|---|
+| --accent | #6366F1 | Cor primária, CTAs, focal |
+| --accent-2 | #818CF8 | Eyebrows, labels, links |
+| --accent-3 | #A5B4FC | Decorativo |
+| --accent-dim | rgba(99,102,241,0.10) | Background de pills |
+| --accent-glow | rgba(99,102,241,0.20) | Glow / inner shadow |
+
+### Texto + Editorial
+| Token | Valor | Uso |
+|---|---|---|
+| --text | #F4F4F5 | Texto principal |
+| --text-2 | rgba(244,244,245,0.55) | Body |
+| --text-3 | rgba(244,244,245,0.30) | Captions |
+| --gold-text | #FCD34D | Editorial / destaque raro |
+
+### Bordas e Status
+| Token | Valor | Uso |
+|---|---|---|
+| --border | rgba(255,255,255,0.06) | Separadores sutis |
+| --border-md | rgba(255,255,255,0.10) | Hover / destaque |
+| --deny-text | #F87171 | Erro / negação |
+| OK | #34D399 | Sucesso |
+
+---
+
+## 2. Tipografia
+
+| Stack | Pesos | Uso |
+|---|---|---|
+| Inter | 300-700 | UI / body / labels |
+| Manrope | 700-800 | Display / títulos / números |
+| Instrument Sans | 400-700 italic | Editorial / taglines emocionais |
+| JetBrains Mono | 400-500 | Dados / tokens / URLs |
+
+| Elemento | Family | Size | Weight | Spacing |
+|---|---|---|---|---|
+| Display H1 | Manrope | clamp(2.25rem, 5vw, 4.4rem) | 700 | -0.025em |
+| Heading H2 | Inter | clamp(1.4rem, 3vw, 2rem) | 600 | -0.02em |
+| Subheading H3 | Inter | clamp(1rem, 2vw, 1.25rem) | 600 | -0.015em |
+| Eyebrow | Inter | 0.7rem uppercase | 500 | 0.12em |
+| Editorial | Instrument Sans | clamp(1.05rem, 1.8vw, 1.4rem) italic | 400 | normal |
+| Body | Inter | 0.95rem | 400 | normal · lh 1.75 |
+| Mono | JetBrains | 0.72-0.78rem | 500 | 0.04-0.06em |
+
+---
+
+## 3. Espaçamento (escala 4px)
+
+| Token | Valor | Uso |
+|---|---|---|
+| 4px | 0.25rem | Micro gap |
+| 8px | 0.5rem | Padding tag |
+| 12px | 0.75rem | Gap próximos |
+| 16px | 1rem | Padding tabela |
+| 24px | 1.5rem | Gap grid |
+| 28px | 1.75rem | Padding card |
+| 40px | 2.5rem | Espaço entre seções internas |
+| 56px | 3.5rem | Padding seção |
+| 80px | 5rem | Padding hero |
+
+---
+
+## 4. Bordas e Radius
+
+| Token | Valor | Uso |
+|---|---|---|
+| --radius | 12px | Cards |
+| --radius-sm | 8px | Buttons / inputs |
+| pill | 4px | Tags |
+| full | 9999px | Dots / pills circulares |
+
+---
+
+## 5. Componentes
+
+- **Card**: surface · border 1px · radius 12px · padding 1.75rem · hover eleva +3px com glow indigo (.08 alpha)
+- **Card Accent**: border-left 2px var(--accent)
+- **Card Elevated**: surface-2 + border-md
+- **Tag/Pill**: 0.7rem uppercase · padding .3rem .65rem · radius 4px
+- **Eyebrow**: 0.7rem 0.12em uppercase accent-2 com linha de 24px à esquerda
+- **Quote Block**: accent-dim · border indigo .18 · aspas decorativas Georgia
+- **Inline Quote**: accent-dim · italic accent-2
+- **Stat Strip**: flex com stat-value (Manrope 1.5rem 600) + stat-label (.72rem uppercase)
+- **Divider**: 1px · default border / strong border-md / gradient horizontal
+
+---
+
+## 6. Animações da Marca
+
+### Easings canônicos
+| Token | cubic-bezier | Uso |
+|---|---|---|
+| --ease-out | (.16, 1, .3, 1) | Entradas, reveals, hover micros |
+| --ease-in-out | (.65, 0, .35, 1) | Loops contínuos, transições simétricas |
+
+### Durações canônicas
+| Duração | Uso |
+|---|---|
+| 220ms | Lock entre seções no scroll horizontal |
+| 350-500ms | Smooth scroll teclado/botões |
+| 700ms | Smooth scroll programático maior |
+| 800-900ms | Reveal de blocos |
+| 1.1s | Mask wipe reveal de títulos |
+| 1.4s | Counter animation |
+| 2.4s infinite | Pulse glow do dot |
+
+### Padrões
+1. **Mask wipe reveal** — \`mask-image: linear-gradient(90deg, #000 0% → 100%, transparent)\` com transition 1.1s ease-out. Aplicado em \`.mask-wipe\` quando \`.reveal\` recebe \`.in\`.
+2. **Reveal scroll-driven com blur+slide** — opacity 0 → 1, transform translate3d(28px,4px,0) → 0, filter blur(4px) → 0. Disparado por IntersectionObserver, com stagger de 90ms entre siblings.
+3. **Parallax horizontal** — \`bg-numeral\` desloca em \`translate3d(-(scrollLeft × factor), 0, 0)\`, factor 0.35-0.4. Sempre via requestAnimationFrame implícito do scroll passive.
+4. **Counter animation** — easing out cubic, 1.4s, disparado por IntersectionObserver threshold 0.5.
+5. **Pulse glow dot** — keyframes 0/100% box-shadow 10px + scale(1), 50% box-shadow 18px + scale(1.15). 2.4s ease-in-out infinite.
+6. **Hover micro** — \`translateY(-3px)\` + box-shadow indigo (.08 alpha). Transition 220ms ease-out em todas propriedades aplicáveis.
+
+### Princípios
+- **Discreto:** nenhuma animação dura mais que 1.4s, exceto loops contínuos.
+- **Nunca obstrutivo:** conteúdo sempre protagonista; movimento é cenário.
+- **Coerente:** apenas dois easings — out e in-out.
+- **Acessível:** \`@media (prefers-reduced-motion: reduce)\` desativa tudo.
+- **Performático:** apenas opacity, transform e filter — não dispara reflow.
+
+---
+
+## 7. Logo SVG
+
+ViewBox 0 0 517.76 204.57. Letterforma "SeyAI" com a barra do "I" em gradiente indigo (#6366F1 → #818CF8). Demais letras herdam currentColor — fácil colorir via CSS.
+
+Inline como \`<symbol id="seyai-logo">\` no body, reuso via \`<svg><use href="#seyai-logo"></use></svg>\`.
+
+Tamanhos canônicos:
+- Topbar desktop: 26-32px altura
+- Cover hero: 30vh (capa horizontal)
+- Footer/inline: 18-22px
+`;
+  const blob = new Blob([md], {type:'text/markdown'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'seyai-design-system.md'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function downloadBrandbook(){
+  const md = `# SeyAI · Brandbook Estratégico
+
+> A mesa onde 19 agentes se sentam — e o seu marketing nasce coordenado.
+> Domínios: sayai.com.br · seyai.com.br · pronúncia "ceia"
+> Arquitetura: SeyAI (mãe) → Opus (oráculo do lançamento) → 19 agentes operacionais simultâneos
+
+---
+
+## 01 · Capa
+
+### O que somos
+Uma empresa de IA que produz marketing inteiro — coordenado, não fragmentado.
+
+### O que NÃO somos
+Não somos marketplace de agentes. Não somos biblioteca de prompts. Não somos rascunho.
+
+### Para quem
+Agências de lançamento de infoproduto — mentores, cursos, treinamentos, consultorias.
+
+### Como pensamos
+SeyAI é a mãe. Cada nicho ganha um cabeça-oráculo abstrato. Hoje: **Opus**, oráculo do lançamento. 19 agentes operacionais embaixo dele, simultâneos.
+
+---
+
+## 02 · Manifesto
+
+**O mercado normalizou a fragmentação.** E vendeu isso como se fosse modernidade.
+
+Normalizou o marketplace que vende prompt avulso e chama de "agente". Normalizou a biblioteca de templates que entrega rascunho e diz que automatizou. Normalizou a IA que gera pedaço — uma headline aqui, um parágrafo ali, um esqueleto de funil acolá — e empurra para você a tarefa real: costurar tudo isso e fazer parecer uma campanha. O mercado normalizou a coordenação como problema do operador.
+
+Você é o gestor de lançamento que opera com equipe enxuta e carrega a responsabilidade de entregar campanhas com qualidade de grande operação. O problema nunca foi estratégia — é coordenação.
+
+**SeyAI** existe porque essa equação está quebrada. Não somos marketplace. Não somos biblioteca. Não somos plug-and-play. Somos uma **orquestra**: 19 agentes especializados que trabalham simultaneamente, coordenados pela cabeça-mestre (SeyAI) e pelo oráculo do nicho (Opus, no vertical de lançamento).
+
+> A diferença entre montar uma campanha e receber uma campanha. A diferença entre marketplace e orquestra.
+
+**19 agentes simultâneos · 1 mãe (SeyAI) · 1 oráculo (Opus) · 0 fragmentação**
+
+---
+
+## 03 · Essência
+
+### Núcleo
+> Briefing entra. Campanha sai. Coordenada.
+
+A mãe: SeyAI. O oráculo (vertical atual): Opus. A operação: 19 agentes especializados, simultâneos, coordenados.
+
+### Missão
+Transformar briefings de lançamento em campanhas completas, coordenadas e prontas para publicação — entregues por uma orquestra de 19 agentes especializados.
+
+### Visão
+Um mercado onde a qualidade de uma campanha é determinada pela qualidade da ideia e da estratégia — nunca pelo tamanho da equipe ou pela habilidade de quem costura pedaços.
+
+### Os 6 Valores
+1. **Coordenado, não montado** — Os 19 agentes conversam pelo oráculo.
+2. **Padrão, não palpite** — Decisões fundamentadas em padrões reais.
+3. **Autoria é de quem publica** — SeyAI é invisível no resultado final.
+4. **Criação real** — Outputs com voz, ritmo, lógica criativa.
+5. **Desproporção como padrão** — Resultado maior que o input.
+6. **Confiança silenciosa** — A campanha pronta fala por si.
+
+### Golden Circle
+- **Por que:** A coordenação não deveria ser problema do operador.
+- **Como:** 19 agentes coordenados pela mãe SeyAI e pelo oráculo Opus.
+- **O quê:** Campanhas completas e coordenadas de lançamento.
+
+---
+
+## 04 · Arquétipos
+
+| Arquétipo | % | Justificativa |
+|---|---|---|
+| **Mago** | 55% | A transformação que parece impossível: briefing entra, campanha coordenada sai. |
+| **Sábio** | 25% | A orquestra não opera por acaso — padrões reais processados pelo Opus. |
+| **Criador** | 20% | Output com voz e autoria, não cara de IA, não template. |
+
+### Referências
+- Mago → Apple/Jobs ("It just works")
+- Sábio → Google
+- Criador → Figma
+
+---
+
+## 05 · Posicionamento
+
+### Arquitetura monolítica (branded house)
+**SeyAI** (mãe) → **Opus** (oráculo do vertical lançamento) → 19 agentes operacionais. Modelo inspirado em AtivoCerto/AtivoTech: uma marca-mãe, oráculos especializados por nicho, agentes embaixo.
+
+### Declaração
+**SeyAI** é a única plataforma de produção de campanhas de lançamento com IA **coordenada** que entrega todos os assets prontos para publicação — orquestrados por 19 agentes especializados embaixo do oráculo **Opus** — para agências de lançamento com equipes enxutas, ao contrário de marketplaces de agentes, bibliotecas de prompts e ferramentas generativas que entregam pedaços.
+
+### Inimigo da Marca
+**A Fragmentação.** ChatGPT solo que faz pedaço. Biblioteca de prompts que vende script. Marketplace de agentes que cobra por unidade.
+
+### Território competitivo
+- Contra **ChatGPT solo**: solo é assistente; SeyAI é orquestra.
+- Contra **biblioteca de prompts**: biblioteca é estoque; SeyAI é o restaurante.
+- Contra **marketplace de agentes**: marketplace vende peças; SeyAI entrega a orquestra montada.
+
+### Positioning Tone (Chris Do)
+**Coordenação Impossível.** Sábio + Mago. Método com transformação.
+
+---
+
+## 06 · Tom de Voz
+
+Três adjetivos: **Tranquila · Densa · Reveladora**.
+
+### Assim SIM · Assim NÃO
+| SIM | NÃO |
+|---|---|
+| 19 agentes. 1 oráculo. Campanha coordenada. | Nossa revolucionária plataforma de IA com 19 agentes potencializa seus lançamentos! |
+| O output está pronto para publicar. Não pronto para revisar. | Gere conteúdo incrível em segundos com IA disruptiva! |
+| SeyAI é a mãe. Opus é o oráculo. Embaixo, a orquestra. | Acesse nosso marketplace de agentes especializados! |
+| A agência de 2 que entrega como a de 20. | Escale sua agência com automação ponta a ponta! |
+| 19 agentes. 1 promessa. 0 fragmentação. | Plug-and-play, modular, escalável. |
+| Coordenado, não montado. | Junte vários prompts e monte seu próprio fluxo! |
+
+---
+
+## 07 · Vocabulário
+
+### Truelines & Taglines
+- **Assinatura:** Briefing entra. Campanha sai. Coordenada.
+- **Hero:** A mesa onde 19 agentes se sentam — e o seu marketing nasce coordenado.
+- **Pacto:** 19 agentes. 1 promessa. 0 fragmentação.
+- **Anti-tagline (interno):** Nós não fazemos rascunhos. Nós não vendemos pedaços.
+
+### Palavras de Poder (usar sempre)
+Coordenado · Orquestra · Mãe · Oráculo · Cabeça-de-nicho · Simultâneo · 19 agentes · Pronto · Campanha · Publicar · Briefing · Padrões · Output · Coerência · Nível
+
+### Palavras Proibidas (nunca usar)
+Marketplace · Biblioteca · Agentes individuais · Plug-and-play · Prompt avulso · Revolucionário · Disruptivo · Incrível · Potencializar · Escalar · Automatizar · Hack/Growth · Mágico · Garantido · Ilimitado · Futuro
+
+---
+
+## 08 · Jornada do Cliente
+
+### Fase 1 · Ceticismo Curioso
+Cliente entra pelo vertical (Opus). "Isso não pode ser real."
+
+### Fase 2 · Verificação Silenciosa
+Envia briefing. "Espera. Tudo isso conversa entre si?"
+
+### Fase 3 · Integração Silenciosa (descoberta da mãe)
+Descobre que Opus é apenas o oráculo do lançamento — embaixo de uma marca-mãe SeyAI. "Agora eu começo pelo briefing."
+
+### Fase 4 · Dependência Estrutural
+SeyAI vira infraestrutura. "Eu não consigo imaginar lançar sem isso."
+
+---
+
+## 09 · Contrato
+
+### O Pacto
+> 19 agentes. 1 promessa. 0 fragmentação.
+
+### 5 Promessas
+1. O output vai estar pronto para publicar.
+2. A campanha vai ter coerência interna (os 19 conversam pelo Opus).
+3. A autoria percebida é sua.
+4. O fundamento é real (padrões processados pelo oráculo).
+5. O padrão se mantém.
+
+### 4 Expectativas
+1. Invista no briefing.
+2. Revise com julgamento, não com desconfiança.
+3. Não explique como foi feito.
+4. Use Opus para o que ele foi feito (lançamento).
+
+---
+
+**Status:** SeyAI · Opus · 19 agentes · ativo
+**Domínios:** sayai.com.br · seyai.com.br
+`;
+  const blob = new Blob([md], {type:'text/markdown'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'seyai-brandbook.md'; a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
