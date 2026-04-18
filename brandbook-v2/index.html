@@ -1111,6 +1111,11 @@ body:hover .bb-arrow.show{opacity:.6}
       <p class="hero-sub">Unidades atômicas que garantem consistência visual em todos os pontos de contato — extraídas das apresentações reais (capa horizontal, arquitetura, brandbook).</p>
     </div>
 
+    <!-- DOWNLOAD DS -->
+    <div style="text-align:right;margin-bottom:1.5rem">
+      <button onclick="downloadDS()" style="display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.7rem;background:var(--accent-dim);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:var(--accent-2);font-family:inherit;font-size:.82rem;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:all .2s var(--ease-out)" onmouseover="this.style.background='rgba(99,102,241,.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--accent-dim)';this.style.transform=''">↓ Download Design System (.md)</button>
+    </div>
+
     <!-- LOGO & MARCA -->
     <div class="section">
       <div class="section-header"><div class="section-number">00</div><h2>Identidade Visual / Logo</h2></div>
@@ -1412,11 +1417,6 @@ body:hover .bb-arrow.show{opacity:.6}
       </div>
     </div>
 
-    <!-- DOWNLOAD DS -->
-    <div class="section" style="text-align:center;border-bottom:none">
-      <button onclick="downloadDS()" style="display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.7rem;background:var(--accent-dim);border:1px solid rgba(99,102,241,.3);border-radius:8px;color:var(--accent-2);font-family:inherit;font-size:.82rem;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:all .2s var(--ease-out)" onmouseover="this.style.background='rgba(99,102,241,.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--accent-dim)';this.style.transform=''">↓ Download Design System (.md)</button>
-    </div>
-
   </div>
 </div>
 
@@ -1432,10 +1432,10 @@ function showTab(id, btn){
     const onclick = b.getAttribute('onclick')||'';
     if(onclick.includes("'"+id+"'")) b.classList.add('active');
   });
-  if(btn){ btn.classList.add('active'); try{btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'})}catch(e){} }
+  if(btn){ btn.classList.add('active'); try{btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}catch(e){} }
   // Sync header tab also into view
   const headerTab = document.querySelector('#tabNav .tab-btn.active');
-  if(headerTab){ try{headerTab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'})}catch(e){} }
+  if(headerTab){ try{headerTab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}catch(e){} }
   const isCapa = id==='capa';
   document.getElementById('navdots').classList.toggle('show', isCapa);
   document.querySelector('.kbd-hint').classList.toggle('show', isCapa);
