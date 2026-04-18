@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SeyAI — Arquitetura de Marca & Produto · Teste de Hipóteses</title>
+<title>SeyAI — Arquitetura de Marca · 18 · 04 · 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* =============================================
-     TOKENS — copiados 1:1 da apresentacao-seiya
+     TOKENS — DS dark indigo (paridade com versão anterior)
      ============================================= */
   :root{
     --bg:          #08080D;
@@ -94,11 +94,12 @@
     backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
     pointer-events:none;
   }
-  .topbar .left{display:flex;gap:1rem;align-items:center;color:var(--text-2)}
-  .topbar .left strong{color:var(--text);font-weight:600;letter-spacing:.14em}
+  .topbar .left{display:flex;gap:.85rem;align-items:center;color:var(--text-2)}
+  .topbar .left .logo-mini{height:22px;width:auto;display:block}
+  .topbar .left .sep{opacity:.4}
   .topbar .dot{
     width:7px;height:7px;border-radius:50%;background:var(--accent);
-    display:inline-block;margin-right:.5rem;
+    display:inline-block;
     box-shadow:0 0 10px rgba(99,102,241,.6);
     animation:pulse 2.4s var(--ease-in-out) infinite;
   }
@@ -158,7 +159,7 @@
   .w-sm{width:75vw;min-width:42rem}
   .w-md{width:100vw;min-width:56rem}
   .w-lg{width:120vw;min-width:72rem}
-  .w-xl{width:140vw;min-width:88rem}
+  .w-xl{width:160vw;min-width:96rem}
 
   .reveal{
     opacity:0;
@@ -323,79 +324,46 @@
   .arrow.right{right:1rem}
 
   /* =============================================
-     COVER + LOGO TREATMENT — SeyA(I)
+     LOGO SVG — uso via <svg><use href="#seyai-logo"/></svg>
      ============================================= */
-  .cover{display:grid;grid-template-columns:1fr;gap:0;align-content:center}
-  .cover .meta-line{
-    display:flex;justify-content:space-between;
-    font-family:var(--font);font-size:0.65rem;
-    letter-spacing:.18em;text-transform:uppercase;color:var(--text-3);
-    margin-bottom:5rem;font-weight:500;flex-wrap:wrap;gap:1rem;
-    padding-bottom:1rem;border-bottom:1px solid var(--border);
-  }
-  .cover h1{
-    font-family:var(--font-display);font-weight:800;
-    font-size:clamp(4.5rem,11vw,12rem);line-height:.92;letter-spacing:-.05em;
-    margin:0;color:var(--text);
-    text-shadow:0 0 80px rgba(99,102,241,.15);
-  }
-  .cover .sub{
-    font-family:var(--font);font-weight:400;
-    font-size:clamp(1.125rem,1.6vw,1.5rem);color:var(--text-2);
-    max-width:42rem;margin-top:1.875rem;line-height:1.5;
-  }
-  .cover .stat{display:flex;align-items:baseline;gap:1.25rem;margin-top:5rem}
-  .cover .stat .n{
-    font-family:var(--font-display);font-weight:700;
-    font-size:clamp(3.75rem,8vw,8.5rem);line-height:1;
-    color:var(--accent);letter-spacing:-.05em;
-    text-shadow:0 0 60px var(--accent-glow);
-  }
-  .cover .stat .lbl{
+  .logo{display:block;color:var(--text)}
+  .logo--cover{height:30vh;width:auto;margin:0 auto;
+    filter:drop-shadow(0 0 60px rgba(99,102,241,.25));}
+  .logo--md{height:9rem;width:auto;margin:0 auto;
+    filter:drop-shadow(0 0 40px rgba(99,102,241,.18));}
+  .logo--sm{height:3.25rem;width:auto;display:inline-block;vertical-align:middle}
+  .logo--xs{height:2rem;width:auto;display:inline-block;vertical-align:middle}
+  .logo--mini{height:1.4rem;width:auto;display:inline-block;vertical-align:middle}
+
+  /* =============================================
+     COVER
+     ============================================= */
+  .cover{display:flex;flex-direction:column;justify-content:center;align-items:center;
+    gap:2.5rem;height:100%;text-align:center}
+  .cover .sig{
     font-family:var(--font);font-size:0.7rem;
-    letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);
-    max-width:14rem;line-height:1.6;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--accent-2);font-weight:500;
   }
-
-  /* SeyAI logo treatment — "Sey + A" branco peso pleno + "I" como cursor roxo */
-  .seyai-mark{
-    font-family:var(--font-display);
-    font-weight:800;letter-spacing:-.05em;
-    color:var(--text);
-    display:inline-block;
-    line-height:1;
+  .cover .tagline{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(1.5rem,2.6vw,2.25rem);line-height:1.25;
+    color:var(--text);max-width:38rem;letter-spacing:-.02em;
   }
-  .seyai-mark .seyai-i{
-    color:var(--accent);
-    font-weight:400;          /* mais fino que o resto */
-    opacity:.78;              /* atenuado */
-    margin-left:-0.06em;      /* aproxima do A, como uma barra de cursor */
-    display:inline-block;
-    transform:translateY(-0.02em);
-    text-shadow:0 0 24px var(--accent-glow);
-    animation:seyai-blink 2.6s var(--ease-in-out) infinite;
+  .cover .caption{
+    font-family:var(--font-mono);font-size:0.72rem;
+    letter-spacing:.14em;color:var(--text-3);
   }
-  @keyframes seyai-blink{
-    0%,100%{opacity:.78}
-    48%{opacity:.78}
-    50%{opacity:.18}
-    52%{opacity:.78}
-  }
-  @media (prefers-reduced-motion: reduce){
-    .seyai-mark .seyai-i{animation:none}
-  }
-
-  .cover .seyai-mark{
-    font-size:clamp(4.5rem,11vw,12rem);
+  .close-wrap{
+    text-align:center;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:1.875rem;height:100%;
   }
 
   /* =============================================
-     GRIDS / BLOCKS / etc — paridade total com base
+     BLOCKS / GRIDS
      ============================================= */
   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:start}
   .grid-2.tight{gap:3rem}
   .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
 
   .block{
     background:var(--surface);
@@ -409,8 +377,6 @@
     background:var(--surface-2);
     transform:translateY(-2px);
   }
-  .block.bare{background:transparent;border:none;padding:0}
-  .block.bare:hover{transform:none;background:transparent}
   .block .k{
     font-family:var(--font);font-size:0.65rem;
     letter-spacing:.14em;text-transform:uppercase;color:var(--accent-2);
@@ -424,140 +390,6 @@
   }
   .block p{font-size:0.88rem;color:var(--text-2);line-height:1.7;margin:.6rem 0 0}
 
-  .nlist{display:grid;gap:0}
-  .nlist .row{
-    display:grid;grid-template-columns:3rem 1fr;gap:1.25rem;
-    padding:1.1rem 0;border-top:1px solid var(--border);
-    align-items:baseline;
-    transition:border-color .25s, background .25s;
-  }
-  .nlist .row:last-child{border-bottom:1px solid var(--border)}
-  .nlist .row:hover{border-color:var(--border-md)}
-  .nlist .row .n{
-    font-family:var(--font-display);font-size:1.25rem;
-    color:var(--accent-2);font-weight:700;letter-spacing:-.02em;
-  }
-  .nlist .row .ttl{
-    font-family:var(--font-display);font-size:1.05rem;
-    color:var(--text);margin-bottom:.3rem;font-weight:600;letter-spacing:-.01em;
-  }
-  .nlist .row .desc{font-size:0.85rem;color:var(--text-2);line-height:1.65}
-
-  .chip{
-    display:inline-flex;align-items:center;gap:.35rem;
-    font-family:var(--font);font-size:0.68rem;font-weight:500;
-    letter-spacing:.1em;text-transform:uppercase;
-    padding:.35rem .7rem;border-radius:4px;
-    background:var(--accent-dim);color:var(--accent-2);
-    border:1px solid rgba(99,102,241,0.18);
-  }
-  .chip.muted{
-    color:var(--text-3);background:transparent;
-    border-color:var(--border-md);
-  }
-  .chip.gold{
-    color:var(--gold-text);background:var(--gold-bg);
-    border-color:rgba(245,158,11,.2);
-  }
-
-  .quote{
-    font-family:var(--font-display);font-weight:600;
-    font-size:clamp(1.5rem,3vw,2.5rem);line-height:1.3;
-    color:var(--text);max-width:60rem;letter-spacing:-.02em;
-    position:relative;padding-left:1.5rem;
-  }
-  .quote::before{
-    content:"";position:absolute;left:0;top:.4em;bottom:.4em;
-    width:2px;background:var(--accent);border-radius:1px;
-  }
-  .quote .open{color:var(--accent);font-weight:700}
-
-  .phon{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem}
-  .phon .p{
-    padding:1.75rem;background:var(--surface);
-    border:1px solid var(--border);
-    border-left:2px solid var(--accent);
-    border-radius:0 var(--radius) var(--radius) 0;
-    transition:background .25s, border-color .25s, transform .3s var(--ease-out);
-  }
-  .phon .p:hover{background:var(--surface-2);transform:translateY(-2px)}
-  .phon .p .lbl{
-    font-family:var(--font);font-size:0.65rem;
-    letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2);font-weight:500;
-  }
-  .phon .p .val{
-    font-family:var(--font-display);font-size:1.625rem;
-    margin-top:.6rem;color:var(--text);font-weight:700;letter-spacing:-.02em;
-  }
-  .phon .p .desc{font-size:0.85rem;color:var(--text-2);margin-top:.6rem;line-height:1.65}
-
-  .close-wrap{
-    text-align:center;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:1.875rem;
-  }
-  .close-wrap .mark{
-    font-family:var(--font-display);font-weight:800;
-    font-size:clamp(5rem,11vw,11rem);line-height:1;letter-spacing:-.05em;
-    color:var(--text);
-    text-shadow:0 0 80px rgba(99,102,241,.2);
-  }
-  .close-wrap .sig{
-    font-family:var(--font);font-size:0.7rem;
-    letter-spacing:.18em;text-transform:uppercase;color:var(--accent-2);font-weight:500;
-  }
-
-  .mtx-wrap{width:100%;
-    border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
-  .mtx{width:100%;border-collapse:collapse;font-size:0.85rem;table-layout:auto}
-  .mtx th,.mtx td{text-align:left;padding:.85rem .9rem;border-bottom:1px solid var(--border)}
-  .mtx th{
-    font-family:var(--font);font-size:0.65rem;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);font-weight:500;
-    background:var(--surface-2);
-  }
-  .mtx td{color:var(--text-2)}
-  .mtx td.nm{font-family:var(--font-display);font-size:1rem;color:var(--text);font-weight:600;letter-spacing:-.01em}
-  .mtx td.good{color:var(--accent-2);font-weight:500}
-  .mtx td.bad{color:var(--deny-text);font-weight:500}
-  .mtx td.center{text-align:center}
-  .mtx tbody tr{transition:background .2s}
-  .mtx tbody tr:hover{background:var(--surface-2)}
-  .mtx tr.hi td{background:rgba(99,102,241,.06)}
-  .mtx tr.hi:hover td{background:rgba(99,102,241,.10)}
-
-  .triple{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.25rem}
-  .triple .layer{
-    padding:1.875rem 1.625rem;background:var(--surface);
-    border:1px solid var(--border);border-radius:var(--radius);
-    position:relative;
-    transition:transform .35s var(--ease-out), box-shadow .35s, border-color .25s, background .25s;
-  }
-  @media (hover:hover){
-    .triple .layer:hover{
-      transform:translateY(-4px);
-      border-color:var(--border-md);background:var(--surface-2);
-      box-shadow:0 12px 32px rgba(0,0,0,.4), 0 0 0 1px var(--accent-dim);
-    }
-  }
-  .triple .layer .badge{
-    position:absolute;top:-.75rem;left:1.5rem;
-    background:var(--accent);color:#fff;
-    font-family:var(--font);font-size:0.6rem;
-    letter-spacing:.16em;text-transform:uppercase;
-    padding:.35rem .7rem;border-radius:4px;font-weight:500;
-    box-shadow:0 4px 12px var(--accent-glow);
-  }
-  .triple .layer h4{
-    font-family:var(--font-display);font-weight:700;font-size:1.375rem;
-    margin:.4rem 0 .5rem;color:var(--text);letter-spacing:-.02em;
-  }
-  .triple .layer .lbl{
-    font-family:var(--font);font-size:0.65rem;
-    letter-spacing:.14em;text-transform:uppercase;
-    color:var(--accent-2);margin-bottom:1rem;font-weight:500;
-  }
-  .triple .layer p{font-size:0.86rem;color:var(--text-2);line-height:1.7;margin:0}
-
   ul.b{list-style:none;padding:0;margin:0;display:grid;gap:.75rem}
   ul.b li{
     padding-left:1.25rem;position:relative;
@@ -568,182 +400,235 @@
     width:.6rem;height:1px;background:var(--accent);
   }
 
-  .megnum{
-    font-family:var(--font-display);font-weight:800;
-    font-size:clamp(7.5rem,16vw,16rem);line-height:.85;letter-spacing:-.06em;
-    color:var(--accent);
-    text-shadow:0 0 80px var(--accent-glow);
+  .quote{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(1.5rem,2.6vw,2.25rem);line-height:1.3;
+    color:var(--text);max-width:60rem;letter-spacing:-.02em;
+    position:relative;padding-left:1.5rem;
   }
-  .megnum.dim{color:var(--accent-dim);text-shadow:none}
-
-  /* =============================================
-     PRODUCT FAMILY GRID
-     ============================================= */
-  .pfam{display:grid;grid-template-columns:repeat(5,1fr);gap:.85rem;margin-top:1.5rem}
-  .pfam .pf{
-    padding:1.4rem 1.1rem;background:var(--surface);
-    border:1px solid var(--border);border-radius:var(--radius-sm);
-    transition:transform .3s var(--ease-out), border-color .25s, background .25s, box-shadow .3s;
-    display:flex;flex-direction:column;gap:.5rem;
-    min-height:9rem;
-  }
-  @media (hover:hover){
-    .pfam .pf:hover{
-      transform:translateY(-3px);border-color:var(--accent);
-      background:var(--surface-2);
-      box-shadow:0 10px 28px rgba(99,102,241,.12);
-    }
-  }
-  .pfam .pf .nm{
-    font-family:var(--font-display);font-size:1.125rem;
-    color:var(--text);letter-spacing:-.01em;font-weight:700;
-  }
-  .pfam .pf .nm .lite{color:var(--accent);font-weight:500;opacity:.78}
-  .pfam .pf .desc{
-    font-family:var(--font);font-size:0.78rem;
-    color:var(--text-2);line-height:1.55;
-  }
-  .pfam .pf .tag{
-    font-family:var(--font);font-size:0.6rem;
-    letter-spacing:.14em;text-transform:uppercase;
-    color:var(--text-3);font-weight:500;margin-top:auto;
+  .quote::before{
+    content:"";position:absolute;left:0;top:.4em;bottom:.4em;
+    width:2px;background:var(--accent);border-radius:1px;
   }
 
-  /* =============================================
-     HERO CANDIDATES
-     ============================================= */
-  .hero-cands{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:1.875rem}
-  .hero-cands .hc{
-    padding:1.625rem 1.25rem;background:var(--surface);
-    border:1px solid var(--border);border-radius:var(--radius);
-    display:flex;flex-direction:column;gap:.75rem;
-    text-align:center;
-    transition:transform .3s var(--ease-out), border-color .25s, background .25s, box-shadow .3s;
-  }
-  @media (hover:hover){
-    .hero-cands .hc:hover{
-      transform:translateY(-4px);border-color:var(--accent);
-      background:var(--surface-2);
-      box-shadow:0 12px 32px rgba(99,102,241,.18);
-    }
-  }
-  .hero-cands .hc .nm{
-    font-family:var(--font-display);font-size:1.875rem;
-    color:var(--text);font-weight:700;letter-spacing:-.025em;
-  }
-  .hero-cands .hc .pron{
-    font-family:var(--font-mono);font-size:0.72rem;
-    letter-spacing:.06em;color:var(--accent-2);
-  }
-  .hero-cands .hc .mean{
-    font-size:0.78rem;color:var(--text-2);line-height:1.55;
-  }
-  .hero-cands .hc .vibe{
-    font-family:var(--font);font-size:0.62rem;
-    letter-spacing:.14em;text-transform:uppercase;
-    color:var(--text-3);font-weight:500;margin-top:auto;
-  }
-  .hero-cands .hc.hi{
-    border-color:var(--accent);
-    background:linear-gradient(180deg, rgba(99,102,241,.10) 0%, var(--surface) 100%);
-    box-shadow:0 0 0 1px var(--accent-dim) inset;
-  }
-
-  /* =============================================
-     TIERS
-     ============================================= */
-  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2rem}
-  .tiers .ti{
-    padding:1.875rem 1.625rem;background:var(--surface);
-    border:1px solid var(--border);border-radius:var(--radius);
-    position:relative;
-    transition:transform .35s var(--ease-out), border-color .25s, background .25s, box-shadow .35s;
-  }
-  @media (hover:hover){
-    .tiers .ti:hover{
-      transform:translateY(-4px);border-color:var(--border-md);
-      background:var(--surface-2);
-      box-shadow:0 12px 32px rgba(0,0,0,.35);
-    }
-  }
-  .tiers .ti .lbl{
-    font-family:var(--font);font-size:0.62rem;
-    letter-spacing:.16em;text-transform:uppercase;
-    color:var(--accent-2);font-weight:500;
-  }
-  .tiers .ti .nm{
-    font-family:var(--font-display);font-size:1.875rem;
-    color:var(--text);font-weight:700;letter-spacing:-.02em;
-    margin-top:.5rem;
-  }
-  .tiers .ti .desc{
-    font-size:0.86rem;color:var(--text-2);line-height:1.65;margin-top:.75rem;
-  }
-
-  /* =============================================
-     PROS/CONS TABLE
-     ============================================= */
-  .pc{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
-  .pc .col{
-    padding:1.625rem;background:var(--surface);
-    border:1px solid var(--border);border-radius:var(--radius);
-  }
-  .pc .col.pro{border-left:2px solid var(--accent)}
-  .pc .col.con{border-left:2px solid var(--deny-text)}
-  .pc .col h4{
-    font-family:var(--font);font-size:0.65rem;
-    letter-spacing:.16em;text-transform:uppercase;font-weight:500;
-    margin-bottom:1rem;
-  }
-  .pc .col.pro h4{color:var(--accent-2)}
-  .pc .col.con h4{color:var(--deny-text)}
-  .pc .col ul{list-style:none;padding:0;margin:0;display:grid;gap:.75rem}
-  .pc .col ul li{
-    font-size:0.88rem;line-height:1.6;color:var(--text-2);
-    padding-left:1rem;position:relative;
-  }
-  .pc .col.pro ul li::before{
-    content:"+";position:absolute;left:0;top:0;color:var(--accent-2);font-weight:700;
-  }
-  .pc .col.con ul li::before{
-    content:"−";position:absolute;left:0;top:0;color:var(--deny-text);font-weight:700;
-  }
-
-  /* =============================================
-     ARCHITECTURE TREE
-     ============================================= */
-  .tree{
-    font-family:var(--font-mono);font-size:0.95rem;
-    background:var(--surface);
+  .phon{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:2rem;max-width:40rem}
+  .phon .p{
+    padding:1.5rem;background:var(--surface);
     border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:2.5rem 2.25rem;
-    color:var(--text-2);line-height:2;
+    border-left:2px solid var(--accent);
+    border-radius:0 var(--radius) var(--radius) 0;
+  }
+  .phon .p .lbl{
+    font-family:var(--font);font-size:0.65rem;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2);font-weight:500;
+  }
+  .phon .p .val{
+    font-family:var(--font-display);font-size:1.625rem;
+    margin-top:.5rem;color:var(--text);font-weight:700;letter-spacing:-.02em;
+  }
+
+  /* =============================================
+     SECTION 03 — ANTES / AGORA
+     ============================================= */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem}
+  .compare .col{
+    padding:2rem 1.75rem;background:var(--surface);
+    border:1px solid var(--border);border-radius:var(--radius);
+    display:flex;flex-direction:column;gap:1rem;
+  }
+  .compare .col.before{opacity:.55}
+  .compare .col.before .ttl{color:var(--text-3)}
+  .compare .col.after{
+    border-color:var(--accent);
+    background:linear-gradient(180deg, rgba(99,102,241,.08) 0%, var(--surface) 100%);
+    box-shadow:0 0 0 1px var(--accent-dim) inset, 0 12px 36px rgba(99,102,241,.12);
+  }
+  .compare .col .ttl{
+    font-family:var(--font);font-size:0.65rem;
+    letter-spacing:.18em;text-transform:uppercase;font-weight:600;
+    color:var(--accent-2);
+  }
+  .compare .col h3{
+    font-family:var(--font-display);font-size:1.5rem;font-weight:700;
+    color:var(--text);letter-spacing:-.02em;
+  }
+  .compare .col .sku-list{
+    list-style:none;padding:0;margin:0;
+    display:flex;flex-wrap:wrap;gap:.45rem;
+  }
+  .compare .col .sku-list li{
+    font-family:var(--font);font-size:0.8rem;
+    padding:.4rem .7rem;border:1px solid var(--border-md);
+    border-radius:6px;color:var(--text-2);background:rgba(255,255,255,.02);
+  }
+  .compare .col.before .sku-list li{
+    text-decoration:line-through;text-decoration-color:rgba(244,244,245,.25);
+  }
+  .compare .col.after .sku-list li{
+    border-color:var(--accent);color:var(--text);
+    background:rgba(99,102,241,.08);font-weight:500;
+  }
+  .closing-line{
     margin-top:2rem;
-    overflow-x:auto;
-  }
-  .tree .root{
-    font-family:var(--font-display);font-size:1.625rem;font-weight:800;
-    color:var(--text);letter-spacing:-.02em;display:inline-block;
-  }
-  .tree .root .seyai-i{font-family:var(--font-display)}
-  .tree .hero{
-    font-family:var(--font-display);font-size:1.375rem;font-weight:700;
-    color:var(--accent-2);letter-spacing:-.01em;
-  }
-  .tree .leaf{
     font-family:var(--font-display);font-size:1.05rem;font-weight:600;
+    color:var(--accent-2);letter-spacing:-.01em;text-align:center;
+  }
+
+  /* =============================================
+     SECTION 04 — DIAGRAMA MONOLÍTICA
+     ============================================= */
+  .arch{
+    margin-top:2.25rem;
+    display:grid;grid-template-columns:auto 1fr;gap:2rem;
+    align-items:stretch;
+  }
+  .arch .axis{
+    display:flex;flex-direction:column;
+    justify-content:space-between;align-items:center;
+    padding:1rem 0;
+    font-family:var(--font);font-size:0.62rem;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--text-3);
+    font-weight:500;
+    position:relative;
+  }
+  .arch .axis .axis-line{
+    position:absolute;top:1.5rem;bottom:1.5rem;left:50%;
+    width:1px;background:linear-gradient(180deg,var(--accent-2),var(--text-4));
+    opacity:.4;
+  }
+  .arch .axis span{background:var(--bg-2);padding:.4rem .25rem;writing-mode:vertical-rl;
+    transform:rotate(180deg);position:relative;z-index:2}
+  .arch .axis .top{color:var(--accent-2)}
+  .arch .rows{display:flex;flex-direction:column;gap:1rem}
+  .arch .row{
+    display:grid;grid-template-columns:11rem 1fr 1fr;gap:1.5rem;
+    align-items:center;
+    padding:1.25rem 1.5rem;
+    background:var(--surface);
+    border:1px solid var(--border);border-radius:var(--radius);
+    min-height:7rem;
+  }
+  .arch .row .label{
+    font-family:var(--font-display);font-size:1.05rem;font-weight:700;
     color:var(--text);letter-spacing:-.01em;
   }
-  .tree .lbl{
-    font-family:var(--font);font-size:0.62rem;
-    letter-spacing:.14em;text-transform:uppercase;
-    color:var(--text-3);margin-left:.6rem;font-weight:500;
+  .arch .row .label .sub{
+    display:block;font-family:var(--font);font-size:0.65rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);
+    margin-top:.35rem;font-weight:500;
   }
-  .tree .pipe{color:var(--accent);opacity:.6}
+  .arch .row .abstract,
+  .arch .row .concrete{
+    display:flex;align-items:center;justify-content:center;gap:.7rem;
+    min-height:3.5rem;
+  }
+  .arch .row .concrete{justify-content:flex-start;padding-left:1rem;border-left:1px dashed var(--border-md)}
+  .arch .row.hi{
+    border-color:var(--accent);
+    background:linear-gradient(180deg, rgba(99,102,241,.10) 0%, var(--surface) 100%);
+    box-shadow:0 0 0 1px var(--accent-dim) inset, 0 12px 36px rgba(99,102,241,.18);
+    position:relative;
+  }
+  .arch .row.hi .badge{
+    position:absolute;top:-.7rem;right:1.5rem;
+    background:var(--accent);color:#fff;
+    font-family:var(--font);font-size:0.6rem;
+    letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+    padding:.32rem .65rem;border-radius:4px;
+    box-shadow:0 4px 12px var(--accent-glow);
+  }
+  .arch .empty{
+    color:var(--text-4);font-family:var(--font-mono);font-size:.7rem;
+    letter-spacing:.14em;text-transform:uppercase;
+  }
+
+  /* abstract shape primitives */
+  .shape{display:inline-block}
+  .shape.sq{width:32px;height:32px;background:var(--accent);border-radius:3px}
+  .shape.sq.sm{width:18px;height:18px}
+  .shape.tri{
+    width:0;height:0;
+    border-left:14px solid transparent;border-right:14px solid transparent;
+    border-bottom:22px solid var(--accent-2);
+  }
+  .shape.tri.sm{
+    border-left:7px solid transparent;border-right:7px solid transparent;
+    border-bottom:11px solid var(--accent-3);
+  }
+  .shape.tri.alt{border-bottom-color:#FCD34D}
+  .shape.tri.alt2{border-bottom-color:#F87171}
+  .shape.circ{width:30px;height:30px;border-radius:50%;background:var(--accent-2)}
+  .shape.circ.alt{background:#FCD34D}
+  .shape.dia{width:26px;height:26px;background:#34D399;transform:rotate(45deg)}
+  .stack{display:flex;flex-direction:column;gap:4px;align-items:center}
+
+  .compose{display:inline-flex;align-items:center;gap:.55rem}
+  .compose .suffix{
+    font-family:var(--font-display);font-size:1.7rem;
+    font-weight:700;color:var(--text);letter-spacing:-.02em;
+  }
+  .compose .by{
+    font-family:var(--font);font-size:0.72rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);font-weight:500;
+  }
 
   /* =============================================
-     KEYBOARD HINT + MOBILE NAV (paridade)
+     SECTION 06 — APPLICATION
+     ============================================= */
+  .app-mark{
+    display:flex;align-items:center;justify-content:center;gap:1rem;
+    margin:1.5rem auto 2rem;
+    padding:2rem 2.5rem;
+    background:var(--surface);border:1px solid var(--border-md);border-radius:var(--radius-lg);
+    max-width:36rem;
+  }
+  .app-mark .logo--sm{height:3.75rem}
+  .app-mark .opus{
+    font-family:var(--font-display);font-size:3rem;font-weight:700;
+    color:var(--text);letter-spacing:-.025em;
+  }
+
+  /* =============================================
+     SECTION 07 — ROADMAP
+     ============================================= */
+  .roadmap{
+    display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem;
+  }
+  .roadmap .col h4{
+    font-family:var(--font);font-size:0.65rem;
+    letter-spacing:.18em;text-transform:uppercase;font-weight:600;
+    color:var(--accent-2);margin-bottom:1rem;
+  }
+  .roadmap .col.future h4{color:var(--text-3)}
+  .roadmap .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+  .roadmap .col.today .cards{grid-template-columns:1fr}
+  .card-niche{
+    padding:1.5rem 1.25rem;background:var(--surface);
+    border:1px solid var(--accent);border-radius:var(--radius);
+    display:flex;flex-direction:column;align-items:center;gap:.85rem;
+    min-height:9rem;justify-content:center;
+    background:linear-gradient(180deg, rgba(99,102,241,.08) 0%, var(--surface) 100%);
+  }
+  .card-niche .nm{
+    font-family:var(--font-display);font-size:1.25rem;font-weight:700;
+    color:var(--text);letter-spacing:-.02em;
+  }
+  .card-niche .logo{height:2rem}
+  .card-niche.future{
+    border:1px dashed var(--border-lg);background:transparent;
+    color:var(--text-3);
+  }
+  .card-niche.future .q{
+    font-family:var(--font-display);font-size:2.5rem;font-weight:300;
+    color:var(--text-4);
+  }
+  .card-niche.future .lbl{
+    font-family:var(--font-mono);font-size:.7rem;
+    letter-spacing:.14em;color:var(--text-3);
+  }
+
+  /* =============================================
+     KEYBOARD HINT + MOBILE NAV
      ============================================= */
   .kbd{
     position:fixed;bottom:1rem;right:1.25rem;
@@ -778,11 +663,7 @@
     transition:transform .2s var(--ease-out), background .2s, border-color .2s, opacity .2s;
     -webkit-tap-highlight-color:transparent;
   }
-  .mnav .mbtn:active{
-    transform:scale(.92);
-    background:var(--accent);
-    border-color:var(--accent);
-  }
+  .mnav .mbtn:active{transform:scale(.92);background:var(--accent);border-color:var(--accent)}
   .mnav .mbtn[disabled]{opacity:.3;pointer-events:none}
   .mnav .mbtn svg{width:18px;height:18px;display:block}
 
@@ -796,39 +677,28 @@
     }
     .section::-webkit-scrollbar{width:0}
     .w-sm,.w-md,.w-lg,.w-xl{width:100vw;min-width:auto}
-    .grid-2,.grid-3,.grid-4,.triple,.phon,.pfam,.hero-cands,.tiers,.pc{grid-template-columns:1fr;gap:1rem}
+    .grid-2,.grid-3,.compare,.phon,.roadmap{grid-template-columns:1fr;gap:1rem}
+    .arch{grid-template-columns:1fr;gap:1rem}
+    .arch .axis{display:none}
+    .arch .row{grid-template-columns:1fr;gap:.75rem;text-align:center}
+    .arch .row .concrete{border-left:none;border-top:1px dashed var(--border-md);padding-left:0;padding-top:.75rem}
+    .roadmap .cards{grid-template-columns:1fr}
     .topbar{padding:.75rem 1rem;font-size:.62rem}
-    .footer-meta{
-      position:relative;left:auto;right:auto;bottom:auto;
-      margin-top:2rem;flex-wrap:wrap;gap:.5rem;
-    }
+    .topbar .left .logo-mini{height:18px}
+    .footer-meta{position:relative;left:auto;right:auto;bottom:auto;margin-top:2rem;flex-wrap:wrap;gap:.5rem}
     .footer-meta::before{display:none}
     .arrow{display:none}
     .bg-numeral{font-size:clamp(8rem, 30vw, 14rem)}
-    .navdots{
-      bottom:.6rem;
-      max-width:calc(100vw - 8rem);
-      overflow-x:auto;scrollbar-width:none;
-      padding:.5rem .7rem;gap:.35rem;
-    }
+    .navdots{bottom:.6rem;max-width:calc(100vw - 8rem);overflow-x:auto;scrollbar-width:none;padding:.5rem .7rem;gap:.35rem}
     .navdots::-webkit-scrollbar{display:none}
     .navdots .nd{flex:0 0 auto}
     .mnav{display:flex}
     .kbd{display:none}
-    .section > *{max-width:100%}
     h1.title{font-size:clamp(1.875rem,8vw,2.75rem)}
     h2.title{font-size:clamp(1.625rem,6.5vw,2.5rem)}
-    .cover .seyai-mark{font-size:clamp(3.25rem,16vw,5.5rem)}
-    .cover .stat{margin-top:2.5rem;flex-wrap:wrap}
-    .cover .stat .n{font-size:clamp(2.75rem,14vw,4.5rem)}
-    .cover .meta-line{margin-bottom:2.25rem;font-size:.6rem}
-    .megnum{font-size:clamp(4.5rem,20vw,7rem)}
-    .quote{font-size:clamp(1.125rem,5vw,1.625rem)}
-    .triple,.tiers,.pc{margin-top:1.5rem}
-    .nlist .row{grid-template-columns:2.25rem 1fr;gap:.75rem;padding:.85rem 0}
-    .mtx{min-width:0;font-size:.78rem}
-    .mtx th,.mtx td{padding:.55rem .55rem}
-    .tree{font-size:.78rem;padding:1.25rem;line-height:1.85}
+    .logo--cover{height:18vh}
+    .app-mark{padding:1.25rem;flex-direction:column;gap:.6rem}
+    .app-mark .opus{font-size:2.25rem}
   }
   @media (max-width:390px){
     .section{padding:4rem 1rem 5rem}
@@ -838,11 +708,38 @@
 </style>
 </head>
 <body>
+
+<!-- ============================================
+     SVG SPRITE — logo SeyAI inline (reuso via <use>)
+     ============================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="seyai-grad" x1="489.82" y1="156.74" x2="515.86" y2="6.62" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#818CF8"/>
+    </linearGradient>
+    <symbol id="seyai-logo" viewBox="0 0 517.76 204.57">
+      <g>
+        <path fill="currentColor" d="M341.33,154.16L394.13,1.36h32.26l53.61,152.8h-30.67s-24.41-73.84-24.41-73.84c-2.94-9.57-5.93-19.91-8.97-31.02-3.04-11.11-6.27-23.33-9.69-36.66h7.18c-3.35,13.33-6.46,25.59-9.33,36.77-2.87,11.18-5.74,21.48-8.61,30.92l-23.89,73.84h-30.26ZM370.05,119.19v-24.71h81.22v24.71h-81.22Z"/>
+        <path fill="url(#seyai-grad)" d="M517.76,1.36v152.8h-28.49V1.36h28.49Z"/>
+        <path fill="currentColor" d="M63.43,157.31c-11.2,0-21.3-1.98-30.3-5.93-9-3.95-16.38-9.62-22.16-17.01-5.78-7.39-9.43-16.19-10.97-26.41l29.82-4.41c2.1,8.68,6.44,15.37,13.02,20.06,6.58,4.69,14.07,7.04,22.47,7.04,4.69,0,9.24-.73,13.65-2.2,4.41-1.47,8.03-3.64,10.87-6.51,2.84-2.87,4.25-6.41,4.25-10.61,0-1.54-.23-3.03-.68-4.46-.46-1.43-1.21-2.78-2.26-4.04-1.05-1.26-2.54-2.45-4.46-3.57-1.93-1.12-4.36-2.14-7.3-3.05l-39.28-11.55c-2.94-.84-6.35-2.03-10.24-3.57-3.89-1.54-7.65-3.75-11.29-6.62-3.64-2.87-6.67-6.67-9.08-11.39-2.42-4.73-3.62-10.69-3.62-17.9,0-10.15,2.55-18.59,7.67-25.31,5.11-6.72,11.94-11.72,20.48-15.02C42.57,1.54,52.02-.07,62.38,0c10.43.14,19.74,1.93,27.93,5.36,8.19,3.43,15.05,8.42,20.58,14.96,5.53,6.55,9.52,14.54,11.97,24l-30.87,5.25c-1.12-4.9-3.19-9.03-6.2-12.39-3.01-3.36-6.6-5.92-10.76-7.67-4.17-1.75-8.52-2.69-13.07-2.84-4.48-.14-8.7.47-12.65,1.84-3.96,1.36-7.18,3.34-9.66,5.93-2.49,2.59-3.73,5.67-3.73,9.24,0,3.29,1.01,5.97,3.05,8.03,2.03,2.07,4.58,3.73,7.67,4.99,3.08,1.26,6.23,2.31,9.45,3.15l26.25,7.14c3.92,1.05,8.26,2.43,13.02,4.15,4.76,1.72,9.33,4.09,13.7,7.14,4.37,3.05,7.98,7.05,10.82,12.02,2.84,4.97,4.25,11.27,4.25,18.9,0,8.12-1.7,15.21-5.09,21.27-3.4,6.06-7.96,11.06-13.7,15.02-5.74,3.96-12.23,6.91-19.48,8.87-7.25,1.96-14.72,2.94-22.42,2.94Z"/>
+        <path fill="currentColor" d="M192.49,157.31c-11.62,0-21.86-2.5-30.72-7.51-8.86-5-15.79-11.9-20.79-20.69-5.01-8.79-7.51-18.85-7.51-30.19,0-12.39,2.45-23.17,7.35-32.35,4.9-9.17,11.66-16.29,20.27-21.37,8.61-5.08,18.52-7.61,29.72-7.61,11.9,0,22.02,2.8,30.35,8.4,8.33,5.6,14.49,13.48,18.48,23.63,3.99,10.15,5.39,22.09,4.2,35.81h-28.25v-10.5c0-11.55-1.84-19.86-5.51-24.94-3.68-5.07-9.68-7.61-18.01-7.61-9.73,0-16.89,2.96-21.48,8.87-4.59,5.92-6.88,14.65-6.88,26.2,0,10.57,2.29,18.74,6.88,24.52,4.58,5.78,11.32,8.66,20.22,8.66,5.6,0,10.4-1.22,14.39-3.68,3.99-2.45,7.04-5.98,9.14-10.61l28.56,8.19c-4.27,10.36-11.01,18.41-20.22,24.15-9.21,5.74-19.27,8.61-30.19,8.61ZM154.9,105.44v-21.21h75.19v21.21h-75.19Z"/>
+        <path fill="currentColor" d="M271.36,204.57l20.84-60.07.42,17.64-49.36-121.4h29.61l33.18,85.9h-6.72l31.97-85.9h28.56l-62.06,163.82h-26.46Z"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
 <div class="progress" id="progress"></div>
 
 <div class="topbar">
-  <div class="left"><span><span class="dot"></span><strong>SeyA<span style="color:var(--accent);font-weight:400;opacity:.78">I</span></strong> · ARQUITETURA DE MARCA & PRODUTO</span></div>
-  <div class="right" id="counter">01 / 18</div>
+  <div class="left">
+    <span class="dot"></span>
+    <svg class="logo logo-mini" aria-label="SeyAI"><use href="#seyai-logo"/></svg>
+    <span class="sep">·</span>
+    <span>Arquitetura de Marca</span>
+  </div>
+  <div class="right" id="counter">01 / 08</div>
 </div>
 
 <div class="arrow left" id="prev" aria-label="Anterior">&larr;</div>
@@ -855,575 +752,265 @@
   <!-- 01 — CAPA -->
   <section class="section cover dark w-md" data-name="Capa">
     <span class="bg-numeral" data-parallax="0.4">01</span>
-    <div class="reveal close-wrap" style="height:100%;justify-content:center;gap:2.25rem">
-      <span class="sig">17 · 04 · 2026 · Marty / Brand Strategy Memo II</span>
-      <div class="seyai-mark" style="font-size:clamp(5rem,12vw,12rem)">SeyA<span class="seyai-i">I</span></div>
-      <p class="lead" style="color:var(--text-2);text-align:center;max-width:48rem">
-        Arquitetura de Marca &amp; Produto<br>
-        <span style="color:var(--text-3)">Teste de Hipóteses · Branded House <span style="opacity:.5">vs</span> Master+Tiers</span>
-      </p>
-      <div class="rule" style="background:var(--border-md);width:5rem;margin:.75rem auto"></div>
-      <p class="mono" style="color:var(--text-3);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase">
-        Pronúncia: ceia <span style="opacity:.5">·</span> say-eye &nbsp;&nbsp;|&nbsp;&nbsp; sayai.com.br
-      </p>
+    <div class="reveal cover">
+      <span class="sig">Arquitetura de Marca · 18 · 04 · 2026</span>
+      <svg class="logo logo--cover" aria-label="SeyAI"><use href="#seyai-logo"/></svg>
+      <p class="tagline">A mãe de todos os nichos.</p>
+      <p class="caption">sayai.com.br &nbsp;·&nbsp; seyai.com.br &nbsp;·&nbsp; pronúncia "ceia"</p>
     </div>
     <div class="footer-meta"><span style="color:var(--text-3)">01 — Capa</span><span style="color:var(--accent-2)">SeyAI · 2026</span></div>
   </section>
 
-  <!-- 02 — APRESENTAÇÃO DO NOME -->
-  <section class="section alt w-lg" data-name="O Nome SeyAI">
+  <!-- 02 — O NOME -->
+  <section class="section w-md" data-name="O Nome">
     <span class="bg-numeral" data-parallax="0.45">02</span>
     <div class="reveal"><span class="num"><span class="big">02</span> · O nome</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">Lê-se <span class="em">"ceia"</span>.</span><br><span class="mask-reveal">Escreve-se <span class="seyai-mark" style="font-size:1em;letter-spacing:-.025em">SeyA<span class="seyai-i">I</span></span>.</span></h2>
+    <div class="reveal" style="margin-top:1.25rem">
+      <h1 class="title"><span class="mask-reveal">SeyAI</span></h1>
     </div>
-    <div class="reveal grid-2" style="margin-top:2.625rem;gap:3.5rem">
-      <div>
-        <p class="lead">O <strong>I</strong> final é renderizado como uma barra de cursor: roxo accent, peso fino, opacidade reduzida e leve pulso. A boca lê <em>"SeyA"</em> e completa <em>"ceia"</em> em PT — em EN, a letra acende e vira <em>"say-eye"</em>. O glifo declara <strong>IA</strong> sem custar uma sílaba.</p>
-        <div class="rule"></div>
-        <ul class="b">
-          <li><strong>PT</strong> · "ceia" — refeição que reúne, metáfora central do produto.</li>
-          <li><strong>EN</strong> · "say-eye" — eco de OpenAI, leitura soletrada do setor.</li>
-          <li><strong>Domínio</strong> · <span class="mono">sayai.com.br</span> — grafia fonética para o mercado brasileiro.</li>
-        </ul>
-      </div>
-      <div>
-        <div class="block">
-          <div class="k">Por que o "I" acende</div>
-          <div class="v">"Sey + A" carrega o som.<br>O <span class="accent">I</span> carrega a categoria.</div>
-          <p>Assim como OpenAI se lê <em>"oupenei"</em> sem perder o "AI" do logo, SeyAI separa estrutura fonética (boca) de declaração de categoria (olho). Duas leituras válidas, dois mercados ao mesmo tempo.</p>
-        </div>
-      </div>
+    <div class="reveal" style="margin-top:1.75rem;max-width:46rem">
+      <p class="lead">O tratamento já está no símbolo: o <strong>I</strong> se atenua e funciona como um caret de IA. O olho lê <span class="em">SeyA</span> ("ceia") como palavra primária; o <span class="em">I</span> acende lateralmente declarando "isso é IA".</p>
     </div>
-    <div class="reveal phon" style="margin-top:2rem">
-      <div class="p">
-        <div class="lbl">Tratamento visual</div>
-        <div class="val">SeyA<span class="seyai-i" style="font-family:var(--font-display)">I</span></div>
-        <div class="desc">Cor <span class="mono">--accent #6366F1</span>, peso 400, opacity .78, kerning negativo, pulso lento como caret. Inspirado em barra de cursor de terminal.</div>
-      </div>
+    <div class="reveal phon">
       <div class="p">
         <div class="lbl">Pronúncia PT</div>
-        <div class="val">/ˈseɪ.ɐ/ · "ceia"</div>
-        <div class="desc">Ditongo "ei" + vogal aberta final. O "I" do logo é absorvido pelo "ei" — não soa como sílaba extra.</div>
+        <div class="val">ceia</div>
       </div>
       <div class="p">
         <div class="lbl">Pronúncia EN</div>
-        <div class="val">/seɪ aɪ/ · "say-eye"</div>
-        <div class="desc">Padrão de setor (cf. OpenAI, xAI). O "I" se separa fonicamente e vira marcador de categoria.</div>
+        <div class="val">say-eye</div>
       </div>
+    </div>
+    <div class="reveal" style="margin-top:2.25rem">
+      <svg class="logo logo--md" aria-label="SeyAI"><use href="#seyai-logo"/></svg>
     </div>
     <div class="footer-meta"><span>02 — O Nome</span><span>SeyAI</span></div>
   </section>
 
-  <!-- 03 — O QUE É SEYAI -->
-  <section class="section w-md" data-name="O que é SeyAI">
+  <!-- 03 — MUDANÇA CONCEITUAL -->
+  <section class="section alt w-lg section--scrollable" data-name="Mudança conceitual">
     <span class="bg-numeral" data-parallax="0.4">03</span>
-    <div class="reveal"><span class="num"><span class="big">03</span> · O que é</span></div>
-    <div class="reveal" style="margin-top:2.25rem">
-      <h2 class="title"><span class="mask-reveal">Uma empresa de IA</span><br><span class="mask-reveal">multi-agente <span class="em">coordenada</span>.</span></h2>
+    <div class="reveal"><span class="num"><span class="big">03</span> · Mudança conceitual</span></div>
+    <div class="reveal" style="margin-top:1.25rem">
+      <h2 class="title"><span class="mask-reveal">De entrega para nicho.</span></h2>
     </div>
-    <div class="reveal rule short"></div>
-    <div class="reveal grid-2 tight" style="margin-top:1.125rem">
-      <div>
-        <p class="lead">SeyAI é uma empresa de inteligência artificial cuja primeira vertical entra em <strong>beta</strong> com foco em lançamento de infoproduto. Não é um app de IA. É uma orquestra de agentes que opera como sistema único — você conversa, ela entrega.</p>
+    <div class="reveal" style="margin-top:1.5rem;max-width:54rem">
+      <p class="lead">Antes pensamos sub-marcas por tipo de entrega — Launch, Brand, Funnel, Copy. Isso fragmenta o motor coordenado e vira marketplace. Agora pensamos por <strong>mercado/nicho</strong>: 1 nicho = 1 produto que faz tudo coordenado.</p>
+    </div>
+
+    <div class="reveal compare">
+      <div class="col before">
+        <span class="ttl">Antes · Por entrega</span>
+        <h3>Fragmenta. Pulveriza.</h3>
+        <ul class="sku-list">
+          <li>SeyAI Launch</li><li>SeyAI Brand</li><li>SeyAI Funnel</li>
+          <li>SeyAI Copy</li><li>SeyAI Page</li><li>SeyAI VSL</li>
+          <li>SeyAI Email</li><li>SeyAI Ads</li><li>SeyAI CRM</li>
+          <li>SeyAI Analytics</li><li>SeyAI Creative</li><li>SeyAI Ops</li>
+          <li>+ N</li>
+        </ul>
       </div>
-      <div>
-        <div class="block">
-          <div class="k">Posicionamento corporativo</div>
-          <div class="v">Categoria: <span class="accent">empresa de IA</span>.<br>Não plataforma SaaS de marketing.</div>
-          <p>A diferença muda o múltiplo de avaliação, o tipo de talento, o tipo de capital e o tom da imprensa. SeyAI joga a liga de OpenAI, Anthropic, xAI — e libera o produto-herói para ser o que o cliente realmente toca.</p>
+      <div class="col after">
+        <span class="ttl">Agora · Por nicho</span>
+        <h3>Concentra. Coordena.</h3>
+        <ul class="sku-list">
+          <li>SeyAI Opus <span style="opacity:.6">· lançamento</span></li>
+          <li>SeyAI [Nicho 2]</li>
+          <li>SeyAI [Nicho 3]</li>
+        </ul>
+        <p class="body" style="margin-top:.5rem">Um produto por nicho. Coordenação ponta-a-ponta dentro dele.</p>
+      </div>
+    </div>
+
+    <p class="closing-line">Concentra em vez de pulverizar.</p>
+    <div class="footer-meta"><span>03 — Mudança conceitual</span><span>SeyAI</span></div>
+  </section>
+
+  <!-- 04 — ARQUITETURA MONOLÍTICA -->
+  <section class="section w-xl section--scrollable" data-name="Arquitetura monolítica">
+    <span class="bg-numeral" data-parallax="0.45">04</span>
+    <div class="reveal"><span class="num"><span class="big">04</span> · Arquitetura de marca</span></div>
+    <div class="reveal" style="margin-top:1.25rem">
+      <h2 class="title"><span class="mask-reveal">Monolítica.</span></h2>
+    </div>
+    <div class="reveal" style="margin-top:1.25rem;max-width:54rem">
+      <p class="lead">Spectrum de coesão. Vamos no segundo nível — <strong>mãe domina, nicho herda identidade</strong>.</p>
+    </div>
+
+    <div class="reveal arch">
+      <div class="axis">
+        <span class="top">Marca singular</span>
+        <span class="axis-line"></span>
+        <span>Marca separada</span>
+      </div>
+      <div class="rows">
+
+        <!-- Singular -->
+        <div class="row">
+          <div class="label">Singular<span class="sub">Uma marca, um produto</span></div>
+          <div class="abstract"><span class="shape sq"></span></div>
+          <div class="concrete">
+            <svg class="logo logo--xs" style="height:2.4rem"><use href="#seyai-logo"/></svg>
+          </div>
         </div>
+
+        <!-- Monolítica (highlight) -->
+        <div class="row hi">
+          <span class="badge">← nosso modelo</span>
+          <div class="label">Marcas monolíticas<span class="sub">Mãe + nicho herdado</span></div>
+          <div class="abstract" style="gap:1.2rem">
+            <div class="stack"><span class="shape sq"></span><span class="shape tri sm"></span></div>
+            <div class="stack"><span class="shape sq"></span><span class="shape tri sm alt"></span></div>
+            <div class="stack"><span class="shape sq"></span><span class="shape tri sm alt2"></span></div>
+          </div>
+          <div class="concrete">
+            <span class="compose">
+              <svg class="logo logo--xs" style="height:2.4rem"><use href="#seyai-logo"/></svg>
+              <span class="suffix">Opus</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Endossada -->
+        <div class="row">
+          <div class="label">Marca endossada<span class="sub">Identidade própria, mãe ao lado</span></div>
+          <div class="abstract" style="gap:1rem">
+            <span class="shape circ"></span>
+            <span class="shape dia"></span>
+            <span class="shape tri alt"></span>
+          </div>
+          <div class="concrete">
+            <span class="compose">
+              <span class="suffix" style="color:var(--accent-2)">◆ Opus</span>
+              <span class="by">by</span>
+              <svg class="logo logo--xs" style="height:1.8rem"><use href="#seyai-logo"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Independentes -->
+        <div class="row">
+          <div class="label">Independentes<span class="sub">Marcas distintas, sem vínculo visual</span></div>
+          <div class="abstract" style="gap:1.2rem">
+            <span class="shape circ alt"></span>
+            <span class="shape sq" style="background:#34D399"></span>
+          </div>
+          <div class="concrete">
+            <span class="empty">— sem aplicação —</span>
+          </div>
+        </div>
+
       </div>
     </div>
-    <div class="footer-meta"><span>03 — O que é</span><span>SeyAI</span></div>
+
+    <div class="footer-meta"><span>04 — Arquitetura monolítica</span><span>Modelo de referência: AtivoCerto → AtivoTech</span></div>
   </section>
 
-  <!-- 04 — A DECISÃO DE ARQUITETURA -->
-  <section class="section alt w-lg" data-name="A Decisão">
-    <span class="bg-numeral" data-parallax="0.35">04</span>
-    <div class="reveal"><span class="num"><span class="big">04</span> · A decisão</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">Dois padrões.</span><br><span class="mask-reveal">Uma <span class="em">arquitetura final</span>.</span></h2>
-    </div>
-    <div class="reveal grid-2" style="margin-top:2.625rem;gap:3rem">
-      <div>
-        <span class="chip">Padrão 01</span>
-        <h3 class="subtitle" style="margin-top:.875rem">Branded House Proton-style</h3>
-        <p class="body" style="margin-top:.625rem">Marca-mãe + descritor funcional curto. <em>SeyAI Launch · SeyAI Brand · SeyAI Funnel</em>. Default das plataformas SaaS-IA — Proton, Linear, Notion, Hugging Face.</p>
-      </div>
-      <div>
-        <span class="chip gold">Padrão 02</span>
-        <h3 class="subtitle" style="margin-top:.875rem">Master + Tiers (modelo OpenAI/Anthropic)</h3>
-        <p class="body" style="margin-top:.625rem">Empresa-mãe + produto-herói nomeado + linha de tiers. <em>OpenAI → ChatGPT → GPT-4 / o3 / o1</em>. Default dos players de modelo cru e da liga de IA frontier.</p>
-      </div>
-    </div>
-    <div class="reveal" style="margin-top:3rem">
-      <p class="body" style="max-width:54rem;color:var(--text-3)">As próximas seções dissecam cada padrão sob a marca SeyAI — convenção de nomenclatura, famílias de produto, candidatos a herói, prós e contras. No fim, a síntese híbrida.</p>
-    </div>
-    <div class="footer-meta"><span>04 — A Decisão</span><span>SeyAI</span></div>
-  </section>
-
-  <!-- 05 — PADRÃO 1 EXPLICADO -->
-  <section class="section w-lg" data-name="Padrão 1 · Branded House">
+  <!-- 05 — COMO PENSAMOS OS NICHOS -->
+  <section class="section alt w-lg" data-name="Princípios de nicho">
     <span class="bg-numeral" data-parallax="0.4">05</span>
-    <div class="reveal"><span class="num"><span class="big">05</span> · Padrão 01 — Branded House</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">A marca-mãe</span><br><span class="mask-reveal">empresta <span class="em">tudo</span> a tudo.</span></h2>
+    <div class="reveal"><span class="num"><span class="big">05</span> · Princípios de nicho</span></div>
+    <div class="reveal" style="margin-top:1.25rem">
+      <h2 class="title"><span class="mask-reveal">Cabeça, não braço.</span></h2>
     </div>
-    <div class="reveal grid-2" style="margin-top:2.625rem;gap:3.5rem">
-      <div>
-        <p class="lead">Uma única marca-mãe funciona como guarda-chuva de identidade. Cada produto recebe um <strong>descritor funcional curto</strong> em inglês — substantivo claro, capitalizado, acoplado ao nome-mãe sem hífen e sem letras de ligação.</p>
-        <div class="rule"></div>
-        <p class="body">Vantagem estrutural: cada produto novo herda 100% da reputação acumulada. Custo de lançamento marginal. O cliente entende em 1 segundo o que cada produto faz só pelo nome.</p>
+
+    <div class="reveal grid-3" style="margin-top:2.5rem">
+      <div class="block">
+        <div class="k">01 · Nome</div>
+        <div class="v">Nome abstrato.</div>
+        <p>Nunca termo óbvio. Premium, evocativo. <em>Opus</em>, não "Launch".</p>
       </div>
-      <div>
-        <div class="block">
-          <div class="k">Casos canônicos</div>
-          <div class="v">Proton Mail · Calendar · Drive<br>VPN · Pass · Wallet</div>
-          <p>Todos lockup vertical: <strong>Proton</strong> + <strong>[função]</strong>. Zero mistério. Cada novo produto vira extensão natural da marca de privacidade. Mesma lógica em Notion, Linear, Apple, Microsoft 365.</p>
-        </div>
+      <div class="block">
+        <div class="k">02 · Função</div>
+        <div class="v">Cabeça-de-nicho = oráculo.</div>
+        <p>Cada nicho tem um sábio que observa e organiza — não um agente operacional.</p>
+      </div>
+      <div class="block">
+        <div class="k">03 · Mãe</div>
+        <div class="v">SeyAI = mãe-mestre.</div>
+        <p>A inteligência que coordena todos os nichos. Internamente substitui o agente-mestre que hoje chamamos de Seiya.</p>
       </div>
     </div>
-    <div class="footer-meta"><span>05 — Padrão 1</span><span>SeyAI</span></div>
+
+    <div class="footer-meta"><span>05 — Princípios de nicho</span><span>SeyAI</span></div>
   </section>
 
-  <!-- 06 — CONVENÇÃO DE NOMENCLATURA -->
-  <section class="section alt w-md" data-name="Convenção">
-    <span class="bg-numeral" data-parallax="0.4">06</span>
-    <div class="reveal"><span class="num"><span class="big">06</span> · Convenção de nomenclatura</span></div>
-    <div class="reveal" style="margin-top:1.875rem">
-      <h2 class="title"><span class="mask-reveal">Uma regra.</span><br><span class="mask-reveal">Zero <span class="em">exceções</span>.</span></h2>
+  <!-- 06 — NICHO 01 · OPUS -->
+  <section class="section dark w-md" data-name="Nicho 01 · Opus">
+    <span class="bg-numeral" data-parallax="0.45">06</span>
+    <div class="reveal"><span class="num"><span class="big">06</span> · Nicho 01</span></div>
+    <div class="reveal" style="margin-top:1.25rem">
+      <h1 class="title"><span class="mask-reveal">SeyAI Opus</span></h1>
     </div>
-    <div class="reveal" style="margin-top:2.5rem">
-      <div class="block" style="max-width:48rem">
-        <div class="k">Fórmula</div>
-        <div class="v" style="font-family:var(--font-mono);font-size:1.5rem;letter-spacing:0">
-          <span class="seyai-mark" style="font-family:var(--font-mono);font-weight:700;letter-spacing:0">SeyA<span class="seyai-i" style="font-family:var(--font-mono)">I</span></span>
-          &nbsp;+&nbsp;
-          <span class="accent">[substantivo · EN · capitalizado]</span>
-        </div>
-        <p>Substantivo único. Sempre em inglês. Sempre capitalizado. Sempre 4–8 letras. Sem hífen, sem "by", sem "for", sem versão. Lockup horizontal, fonte Manrope 700, mesmo kerning do logo-mãe.</p>
-      </div>
+
+    <div class="reveal app-mark">
+      <svg class="logo logo--sm" aria-label="SeyAI"><use href="#seyai-logo"/></svg>
+      <span class="opus">Opus</span>
     </div>
-    <div class="reveal nlist" style="margin-top:2.625rem;max-width:54rem">
-      <div class="row"><span class="n">01</span><div><div class="ttl">Substantivo, nunca verbo</div><div class="desc">"SeyAI Launch", não "SeyAI Launches". Substantivo é categoria; verbo é ação contextual.</div></div></div>
-      <div class="row"><span class="n">02</span><div><div class="ttl">Inglês, nunca PT</div><div class="desc">Mesmo no Brasil. Vocabulário SaaS é global. PT só na comunicação, nunca no nome do produto.</div></div></div>
-      <div class="row"><span class="n">03</span><div><div class="ttl">Curto, nunca composto</div><div class="desc">"SeyAI Page", não "SeyAI Page Builder". O contexto do nome-mãe já estabelece o domínio.</div></div></div>
-      <div class="row"><span class="n">04</span><div><div class="ttl">Reservado, nunca cool</div><div class="desc">"SeyAI Studio" supera "SeyAI Forge". Marcas frontier não usam metáforas industriais — usam genéricos elegantes.</div></div></div>
+
+    <div class="reveal" style="max-width:48rem">
+      <p class="lead">Vertical: <strong>agência de lançamento de infoproduto</strong>. Opus é obra-prima — o oráculo do lançamento. Sabe o ritmo, conhece o nicho, organiza os agentes operacionais embaixo dele.</p>
     </div>
-    <div class="footer-meta"><span>06 — Convenção</span><span>SeyAI</span></div>
+
+    <div class="reveal" style="margin-top:2.25rem">
+      <p class="quote">Opus observa. Opus organiza. Opus aprova.</p>
+    </div>
+
+    <div class="footer-meta"><span>06 — Opus</span><span>SeyAI</span></div>
   </section>
 
-  <!-- 07 — FAMÍLIA LAUNCH/SALES -->
-  <section class="section section--scrollable w-lg" data-name="Família Launch · Sales">
+  <!-- 07 — ROADMAP -->
+  <section class="section w-lg" data-name="Roadmap">
     <span class="bg-numeral" data-parallax="0.4">07</span>
-    <div class="reveal"><span class="num"><span class="big">07</span> · Família 01 — Launch &amp; Sales (vertical beta)</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">Onde a empresa</span><br><span class="mask-reveal"><span class="em">nasce</span> comercialmente.</span></h2>
+    <div class="reveal"><span class="num"><span class="big">07</span> · Roadmap</span></div>
+    <div class="reveal" style="margin-top:1.25rem">
+      <h2 class="title"><span class="mask-reveal">Hoje · Amanhã.</span></h2>
     </div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <p class="body">A vertical de <strong>lançamento de infoproduto</strong> é o beta. Cinco produtos cobrem o ciclo de venda do início ao fim — da página de captura ao criativo de tráfego.</p>
-    </div>
-    <div class="reveal pfam" style="margin-top:2rem">
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Launch</div>
-        <div class="desc">Lançamento orquestrado de infoproduto — funil completo, do pré ao carrinho fechado.</div>
-        <div class="tag">Hero · Vertical Beta</div>
-      </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Funnel</div>
-        <div class="desc">Construção e otimização de funis de venda multi-etapa, com testes e variantes.</div>
-        <div class="tag">Conversão</div>
-      </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> VSL</div>
-        <div class="desc">Roteiros e produção de vídeos de vendas longos, em estrutura de oferta direta.</div>
-        <div class="tag">Vídeo</div>
-      </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Copy</div>
-        <div class="desc">Copy persuasiva — headlines, CTAs, e-mails, posts, anúncios — no tom da marca.</div>
-        <div class="tag">Texto</div>
-      </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Ads</div>
-        <div class="desc">Criativos e campanhas pagas — Meta, Google, TikTok — geradas e gerenciadas.</div>
-        <div class="tag">Tráfego</div>
-      </div>
-    </div>
-    <div class="footer-meta"><span>07 — Família Launch</span><span>SeyAI</span></div>
-  </section>
 
-  <!-- 08 — FAMÍLIA PRESENCE/CONTENT -->
-  <section class="section section--scrollable alt w-lg" data-name="Família Presence · Content">
-    <span class="bg-numeral" data-parallax="0.4">08</span>
-    <div class="reveal"><span class="num"><span class="big">08</span> · Família 02 — Presence &amp; Content</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">A presença</span><br><span class="mask-reveal">que <span class="em">sustenta</span> a oferta.</span></h2>
-    </div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <p class="body">Camada de presença permanente — site, e-mails, conteúdo orgânico e identidade visual. Onde o cliente conhece a marca antes do funil de venda.</p>
-    </div>
-    <div class="reveal pfam" style="margin-top:2rem">
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Page</div>
-        <div class="desc">Páginas web — institucional, captura, vendas, obrigado, blog post.</div>
-        <div class="tag">Web</div>
+    <div class="reveal roadmap">
+      <div class="col today">
+        <h4>Hoje</h4>
+        <div class="cards">
+          <div class="card-niche">
+            <svg class="logo" aria-label="SeyAI"><use href="#seyai-logo"/></svg>
+            <div class="nm">Opus</div>
+            <div class="lbl" style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;color:var(--text-3)">Lançamento de infoproduto</div>
+          </div>
+        </div>
       </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Email</div>
-        <div class="desc">Sequências de e-mail — boas-vindas, nutrição, retenção, recuperação.</div>
-        <div class="tag">Lifecycle</div>
-      </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Content</div>
-        <div class="desc">Conteúdo orgânico — posts, carrosséis, scripts curtos, calendário editorial.</div>
-        <div class="tag">Orgânico</div>
-      </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Brand</div>
-        <div class="desc">Identidade de marca — naming, logo, paleta, tom de voz, manual.</div>
-        <div class="tag">Identity</div>
-      </div>
-      <div class="pf" style="background:transparent;border:1px dashed var(--border-md);justify-content:center;align-items:center">
-        <div class="tag" style="margin:0">slot reservado</div>
-      </div>
-    </div>
-    <div class="footer-meta"><span>08 — Família Presence</span><span>SeyAI</span></div>
-  </section>
-
-  <!-- 09 — FAMÍLIA INFRA/PRO -->
-  <section class="section section--scrollable w-lg" data-name="Família Infra · Pro">
-    <span class="bg-numeral" data-parallax="0.4">09</span>
-    <div class="reveal"><span class="num"><span class="big">09</span> · Família 03 — Infra &amp; Pro (futuro)</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">A camada que</span><br><span class="mask-reveal"><span class="em">escala</span> o negócio.</span></h2>
-    </div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <p class="body">Linha de infraestrutura e produtos verticais para agências, devs e operações grandes. Aberta no roadmap quando o produto-herói consolidar mercado consumidor.</p>
-    </div>
-    <div class="reveal pfam" style="margin-top:2rem">
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Studio</div>
-        <div class="desc">Workspace completo — todos os produtos da casa em uma única superfície de trabalho.</div>
-        <div class="tag">Workspace</div>
-      </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Agency</div>
-        <div class="desc">Versão white-label para agências revenderem com a própria marca.</div>
-        <div class="tag">B2B2C</div>
-      </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Engine</div>
-        <div class="desc">API pública para devs integrarem os agentes em produtos de terceiros.</div>
-        <div class="tag">Developer</div>
-      </div>
-      <div class="pf">
-        <div class="nm">SeyA<span class="lite">I</span> Cloud</div>
-        <div class="desc">Infraestrutura — modelos privados, hospedagem dedicada, controle de dados.</div>
-        <div class="tag">Enterprise</div>
-      </div>
-      <div class="pf" style="background:transparent;border:1px dashed var(--border-md);justify-content:center;align-items:center">
-        <div class="tag" style="margin:0">slot reservado</div>
-      </div>
-    </div>
-    <div class="footer-meta"><span>09 — Família Infra</span><span>SeyAI</span></div>
-  </section>
-
-  <!-- 10 — PRÓS/CONTRAS PADRÃO 1 -->
-  <section class="section section--scrollable alt w-lg" data-name="Padrão 1 · Prós e Contras">
-    <span class="bg-numeral" data-parallax="0.4">10</span>
-    <div class="reveal"><span class="num"><span class="big">10</span> · Padrão 01 — balanço</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">O que se ganha.</span><br><span class="mask-reveal">O que <span class="em">se paga</span>.</span></h2>
-    </div>
-    <div class="reveal pc" style="margin-top:2.625rem">
-      <div class="col pro">
-        <h4>Ganhos</h4>
-        <ul>
-          <li><strong>Clareza funcional total.</strong> Nome anuncia função em 1 segundo. Onboarding zero.</li>
-          <li><strong>Escalabilidade por vertical.</strong> Cada nova função vira produto sem refazer marca.</li>
-          <li><strong>Custo de lançamento marginal.</strong> Cada produto herda reputação da mãe, dispensa nome novo.</li>
-          <li><strong>Pricing modular.</strong> Pode vender produto solto ou suite — flexibilidade comercial.</li>
-          <li><strong>SEO compostável.</strong> "SeyAI Funnel", "SeyAI Copy" — cada termo captura busca específica.</li>
-        </ul>
-      </div>
-      <div class="col con">
-        <h4>Perdas</h4>
-        <ul>
-          <li><strong>Dilui o "motor único coordenado".</strong> Cliente lê 9 produtos, não vê 1 sistema.</li>
-          <li><strong>Mais SKUs pra gerenciar.</strong> Cada nome tem domínio, página, posicionamento, suporte próprio.</li>
-          <li><strong>Risco de "feature como produto".</strong> Algumas linhas (Copy, Email) podem parecer leves demais para virar marca.</li>
-          <li><strong>Competição contra ferramentas únicas.</strong> "SeyAI Page" briga direto com Framer, Webflow — perde a ambição de plataforma.</li>
-          <li><strong>Sem produto-herói.</strong> Nada vira o "ChatGPT da casa" — o público consumidor não tem onde se apegar.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-meta"><span>10 — Padrão 1 · Balanço</span><span>SeyAI</span></div>
-  </section>
-
-  <!-- 11 — PADRÃO 2 EXPLICADO -->
-  <section class="section w-lg" data-name="Padrão 2 · Master + Tiers">
-    <span class="bg-numeral" data-parallax="0.4">11</span>
-    <div class="reveal"><span class="num"><span class="big">11</span> · Padrão 02 — Master + Tiers</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">A empresa cria.</span><br><span class="mask-reveal">O <span class="em">produto-herói</span> vence.</span></h2>
-    </div>
-    <div class="reveal grid-2" style="margin-top:2.625rem;gap:3.5rem">
-      <div>
-        <p class="lead">A marca corporativa carrega a categoria — talento, capital, narrativa frontier. Mas o que o público consome, recomenda e ama é um <strong>produto-herói</strong> separado, com nome próprio. Sob ele, uma linha de <em>tiers</em> ou modelos diferencia capacidade.</p>
-        <div class="rule"></div>
-        <p class="body">A marca corporativa raramente aparece em uso cotidiano. O usuário diz "abri o ChatGPT", "perguntei pro Claude", "rodei no Gemini" — não diz OpenAI, Anthropic, Google.</p>
-      </div>
-      <div>
-        <div class="block">
-          <div class="k">Casos canônicos</div>
-          <div class="v">OpenAI → ChatGPT → GPT-4 / o3<br>Anthropic → Claude → Sonnet / Opus<br>Google → Gemini → Pro / Flash<br>xAI → Grok 3 / 4<br>Mistral → Large / Medium</div>
-          <p>Padrão estabelecido para qualquer empresa que se posiciona como "frontier AI lab". O cliente B2B-dev espera essa estrutura.</p>
+      <div class="col future">
+        <h4>Amanhã</h4>
+        <div class="cards">
+          <div class="card-niche future">
+            <span class="q">?</span>
+            <span class="lbl">SeyAI [N2]</span>
+          </div>
+          <div class="card-niche future">
+            <span class="q">?</span>
+            <span class="lbl">SeyAI [N3]</span>
+          </div>
+          <div class="card-niche future">
+            <span class="q">?</span>
+            <span class="lbl">SeyAI [N4]</span>
+          </div>
         </div>
       </div>
     </div>
-    <div class="footer-meta"><span>11 — Padrão 2</span><span>SeyAI</span></div>
+
+    <p class="closing-line">Cada novo nicho ganha um cabeça abstrato. A mãe permanece.</p>
+    <div class="footer-meta"><span>07 — Roadmap</span><span>SeyAI</span></div>
   </section>
 
-  <!-- 12 — CANDIDATOS A PRODUTO-HERÓI -->
-  <section class="section section--scrollable alt w-xl" data-name="Produto-Herói · Candidatos">
-    <span class="bg-numeral" data-parallax="0.4">12</span>
-    <div class="reveal"><span class="num"><span class="big">12</span> · Produto-herói · 5 candidatos</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">Cinco nomes</span><br><span class="mask-reveal">para <span class="em">o herói</span> da casa.</span></h2>
-    </div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <p class="body">Sob a corporação SeyAI, o produto-herói carrega o uso, o afeto e o verbo cultural. Cinco candidatos com pronúncia, significado e vibe definidos.</p>
-    </div>
-    <div class="reveal hero-cands" style="margin-top:2rem">
-      <div class="hc hi">
-        <div class="nm">Seya</div>
-        <div class="pron">SEI-a · 4L</div>
-        <div class="mean">Curto, memorável, mesmo DNA fonético da mãe (Sey + a). Continuidade total com SeyAI sem repetir o "I".</div>
-        <div class="vibe">Recomendado · familiar</div>
-      </div>
-      <div class="hc">
-        <div class="nm">Theia</div>
-        <div class="pron">THE-ia · 5L</div>
-        <div class="mean">Titânide grega da luz, mãe de Hélio, Selene e Eos. Mitológico raro, IP zero, conota visão e clareza.</div>
-        <div class="vibe">Mitológico · luminoso</div>
-      </div>
-      <div class="hc">
-        <div class="nm">Kairo</div>
-        <div class="pron">KAI-ro · 5L</div>
-        <div class="mean">Do grego <em>kairós</em> — o momento certo, a oportunidade decisiva. Nome de ação para um produto de execução.</div>
-        <div class="vibe">Ação · momento certo</div>
-      </div>
-      <div class="hc">
-        <div class="nm">Cosmo</div>
-        <div class="pron">COS-mo · 5L</div>
-        <div class="mean">Universo, ordem cósmica. Alusão ao DNA Seiya (cosmo dos cavaleiros) sem conflito direto de IP.</div>
-        <div class="vibe">Universo · expansivo</div>
-      </div>
-      <div class="hc">
-        <div class="nm">Nova</div>
-        <div class="pron">NO-va · 4L</div>
-        <div class="mean">Estrela que nasce em explosão repentina. Curto, internacional, conota lançamento — encaixa na vertical beta.</div>
-        <div class="vibe">Estelar · novo começo</div>
-      </div>
-    </div>
-    <div class="reveal" style="margin-top:2rem">
-      <p class="body" style="color:var(--text-3)">Todos os cinco passam no teste de pronúncia em PT e EN, têm IP gerenciável e cabem no lockup <em>SeyAI presents [Hero]</em>. Critério de desempate: continuidade fonética com a marca-mãe.</p>
-    </div>
-    <div class="footer-meta"><span>12 — Candidatos a herói</span><span>SeyAI</span></div>
-  </section>
-
-  <!-- 13 — TIERS DO HERÓI -->
-  <section class="section w-lg" data-name="Tiers do Herói">
-    <span class="bg-numeral" data-parallax="0.4">13</span>
-    <div class="reveal"><span class="num"><span class="big">13</span> · Tiers — exemplo com Seya</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">Um herói.</span><br><span class="mask-reveal">Três <span class="em">capacidades</span>.</span></h2>
-    </div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <p class="body">Convenção <strong>Anthropic-style</strong>: três tiers nomeados por palavra (não por número), denotando capacidade crescente. Cliente escolhe pelo que precisa, não pela versão.</p>
-    </div>
-    <div class="reveal tiers">
-      <div class="ti">
-        <span class="lbl">Tier 01 · Entrada</span>
-        <div class="nm">Seya Spark</div>
-        <div class="desc">Velocidade. Tarefas curtas, alto volume, baixa latência. Para iteração rápida e operações em escala.</div>
-      </div>
-      <div class="ti" style="border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-dim) inset;background:linear-gradient(180deg, rgba(99,102,241,.10) 0%, var(--surface) 100%)">
-        <span class="lbl">Tier 02 · Padrão</span>
-        <div class="nm">Seya Core</div>
-        <div class="desc">Balanceado. Capacidade plena para o lançamento padrão de infoproduto. O default da casa.</div>
-      </div>
-      <div class="ti">
-        <span class="lbl">Tier 03 · Premium</span>
-        <div class="nm">Seya Max</div>
-        <div class="desc">Raciocínio profundo. Estratégia de longo prazo, peças críticas, lançamentos de alta complexidade.</div>
-      </div>
-    </div>
-    <div class="reveal" style="margin-top:2.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-      <span class="chip muted">Alternativa numérica</span>
-      <p class="mono" style="margin:0">Seya 1 &nbsp;·&nbsp; Seya 2 &nbsp;·&nbsp; Seya 3 &nbsp;<span style="color:var(--text-3)">— se preferirmos seguir GPT/Grok em vez de Claude.</span></p>
-    </div>
-    <div class="footer-meta"><span>13 — Tiers do Herói</span><span>SeyAI</span></div>
-  </section>
-
-  <!-- 14 — PRÓS/CONTRAS PADRÃO 2 -->
-  <section class="section section--scrollable alt w-lg" data-name="Padrão 2 · Prós e Contras">
-    <span class="bg-numeral" data-parallax="0.4">14</span>
-    <div class="reveal"><span class="num"><span class="big">14</span> · Padrão 02 — balanço</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">O que se ganha.</span><br><span class="mask-reveal">O que <span class="em">se paga</span>.</span></h2>
-    </div>
-    <div class="reveal pc" style="margin-top:2.625rem">
-      <div class="col pro">
-        <h4>Ganhos</h4>
-        <ul>
-          <li><strong>Liga frontier AI.</strong> Estrutura igual a OpenAI/Anthropic — categoria, talento, capital.</li>
-          <li><strong>Produto-herói memorável.</strong> Um nome curto vira verbo cultural ("rodei no Seya").</li>
-          <li><strong>Coerência multi-agente preservada.</strong> O cliente vê <em>uma</em> coisa, não nove.</li>
-          <li><strong>Pricing por tier, não por SKU.</strong> Estrutura simples de upgrade — Spark → Core → Max.</li>
-          <li><strong>Narrativa dual.</strong> Empresa fala com VC e imprensa; produto fala com usuário.</li>
-        </ul>
-      </div>
-      <div class="col con">
-        <h4>Perdas</h4>
-        <ul>
-          <li><strong>Custo de duas marcas.</strong> SeyAI corp + Seya hero precisam de dois sistemas visuais relacionados.</li>
-          <li><strong>Risco de eclipse.</strong> Se Seya virar muito grande, SeyAI some (cf. ChatGPT &gt; OpenAI no público).</li>
-          <li><strong>Menos clareza funcional.</strong> "Seya" não diz o que faz — exige pitch para entender categoria.</li>
-          <li><strong>Tiers exigem narrativa técnica.</strong> Spark/Core/Max só fazem sentido com diferenciação real explicada.</li>
-          <li><strong>Difícil escalar verticais.</strong> Como abrir "Seya para Ads"? Vira sub-produto, perde foco do herói.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-meta"><span>14 — Padrão 2 · Balanço</span><span>SeyAI</span></div>
-  </section>
-
-  <!-- 15 — MATRIZ COMPARATIVA -->
-  <section class="section section--scrollable w-xl" data-name="Matriz Comparativa">
-    <span class="bg-numeral" data-parallax="0.4">15</span>
-    <div class="reveal"><span class="num"><span class="big">15</span> · Matriz comparativa</span></div>
-    <div class="reveal" style="margin-top:1.125rem">
-      <h2 class="title"><span class="mask-reveal">Seis critérios.</span><br><span class="mask-reveal">Dois padrões. <span class="em">Uma síntese.</span></span></h2>
-    </div>
-    <div class="reveal" style="margin-top:1rem">
-      <p class="body" style="max-width:48rem">Avaliação 1–5 em cada critério. Soma final na última linha.</p>
-    </div>
-    <div class="reveal mtx-wrap" style="margin-top:1.875rem">
-      <table class="mtx">
-        <thead>
-          <tr>
-            <th style="width:32%">Critério</th>
-            <th style="width:34%">Padrão 01 · Branded House</th>
-            <th style="width:34%">Padrão 02 · Master + Tiers</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="nm">Clareza funcional</td><td class="good">5 — nome anuncia função</td><td>2 — exige pitch</td></tr>
-          <tr><td class="nm">Escala futura</td><td class="good">5 — abrir vertical é trivial</td><td>3 — herói não escala lateralmente</td></tr>
-          <tr><td class="nm">Custo de lançamento</td><td class="good">5 — herda mãe, custo marginal</td><td>3 — duas marcas em paralelo</td></tr>
-          <tr><td class="nm">Coerência multi-agente</td><td>2 — dilui em N produtos</td><td class="good">5 — um sistema único visível</td></tr>
-          <tr><td class="nm">Reconhecimento de mercado IA</td><td>3 — padrão SaaS, não frontier</td><td class="good">5 — liga OpenAI/Anthropic</td></tr>
-          <tr><td class="nm">Pricing flexibility</td><td class="good">4 — produto solto ou suite</td><td>4 — tier ladder simples</td></tr>
-          <tr class="hi"><td class="nm">Total</td><td class="good"><strong>24 / 30</strong></td><td class="good"><strong>22 / 30</strong></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="reveal" style="margin-top:2rem">
-      <p class="body" style="color:var(--text-3);max-width:62rem">A matriz fica <em>quase empatada</em>. Cada padrão é forte exatamente onde o outro é fraco. Branded House ganha em clareza e escala; Master+Tiers ganha em coerência e reconhecimento. A solução não é escolher — é combinar.</p>
-    </div>
-    <div class="footer-meta"><span>15 — Matriz</span><span>SeyAI</span></div>
-  </section>
-
-  <!-- 16 — HÍBRIDO RECOMENDADO -->
-  <section class="section section--scrollable dark w-lg" data-name="Híbrido Recomendado">
-    <span class="bg-numeral" data-parallax="0.4" style="color:var(--accent-2);opacity:.05">16</span>
-    <div class="reveal"><span class="num"><span class="big">16</span> · Síntese — híbrido recomendado</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">Três camadas.</span><br><span class="mask-reveal">Um <span style="color:var(--accent-2);font-weight:700">sistema único</span>.</span></h2>
-    </div>
-    <div class="reveal triple">
-      <div class="layer">
-        <span class="badge">Camada 01</span>
-        <div class="lbl">Corporate</div>
-        <h4>SeyA<span class="seyai-i" style="font-family:var(--font-display)">I</span></h4>
-        <p>A empresa de IA. Carrega categoria frontier para imprensa, capital, talento. Aparece em <em>about</em>, <em>careers</em>, manifesto, pitch para VC. Nunca em uso cotidiano do produto.</p>
-      </div>
-      <div class="layer">
-        <span class="badge">Camada 02</span>
-        <div class="lbl">Hero · Consumer-facing</div>
-        <h4>Seya</h4>
-        <p>O produto-herói. Carrega o uso, o afeto e o verbo cultural. <em>"Abri o Seya"</em>, <em>"rodei no Seya"</em>. Reconhecimento consumidor. Mesmo DNA fonético da mãe — "ceia".</p>
-      </div>
-      <div class="layer">
-        <span class="badge">Camada 03</span>
-        <div class="lbl">Extensions · Branded House</div>
-        <h4>Seya + [função]</h4>
-        <p>Quando uma função vira produto separado, segue convenção Proton: <em>Seya Launch · Seya Brand · Seya Funnel · Seya Copy · Seya Page</em>. Mesma marca, descritores funcionais.</p>
-      </div>
-    </div>
-    <div class="reveal" style="margin-top:2.5rem;max-width:62rem">
-      <p class="body">Resultado: SeyAI tem narrativa de <strong>empresa de IA</strong> (Padrão 02), mas opera com a <strong>escalabilidade funcional</strong> do Branded House (Padrão 01). Seya é o ponto de contato — verbo, hero, ancora afetiva. As extensões cobrem verticais sem inflar nomes corporativos. Nada se perde. Nada se sobrepõe.</p>
-    </div>
-    <div class="footer-meta"><span>16 — Híbrido</span><span style="color:var(--accent-2)">SeyAI</span></div>
-  </section>
-
-  <!-- 17 — ARQUITETURA VISUAL -->
-  <section class="section section--scrollable alt w-lg" data-name="Arquitetura Visual">
-    <span class="bg-numeral" data-parallax="0.4">17</span>
-    <div class="reveal"><span class="num"><span class="big">17</span> · Arquitetura visual — hierarquia</span></div>
-    <div class="reveal" style="margin-top:1.5rem">
-      <h2 class="title"><span class="mask-reveal">A árvore</span><br><span class="mask-reveal">de <span class="em">três níveis</span>.</span></h2>
-    </div>
-    <div class="reveal tree" style="max-width:64rem">
-<span class="root">SeyA<span class="seyai-i">I</span></span> <span class="lbl">corporate · empresa de IA</span>
-<span class="pipe">└──</span> <span class="hero">Seya</span> <span class="lbl">produto-herói · consumer-facing</span>
-      <span class="pipe">├──</span> <span class="leaf">Seya Launch</span> <span class="lbl">vertical beta · lançamento</span>
-      <span class="pipe">├──</span> <span class="leaf">Seya Brand</span> <span class="lbl">identidade</span>
-      <span class="pipe">├──</span> <span class="leaf">Seya Funnel</span> <span class="lbl">funis</span>
-      <span class="pipe">├──</span> <span class="leaf">Seya Copy</span> <span class="lbl">texto persuasivo</span>
-      <span class="pipe">├──</span> <span class="leaf">Seya Page</span> <span class="lbl">web</span>
-      <span class="pipe">├──</span> <span class="leaf">Seya Email</span> <span class="lbl">lifecycle</span>
-      <span class="pipe">├──</span> <span class="leaf">Seya Ads</span> <span class="lbl">tráfego</span>
-      <span class="pipe">└──</span> <span class="leaf">Seya VSL</span> <span class="lbl">vídeo</span>
-    </div>
-    <div class="reveal grid-2" style="margin-top:2.5rem;gap:3rem">
-      <div>
-        <span class="chip">Regra de uso</span>
-        <ul class="b" style="margin-top:1rem">
-          <li><strong>SeyAI</strong> aparece em capa, footer, sobre, contratos, pitch.</li>
-          <li><strong>Seya</strong> aparece em produto, app, marketing, suporte, comunidade.</li>
-          <li><strong>Seya + [função]</strong> aparece em landing pages de vertical específica.</li>
-        </ul>
-      </div>
-      <div>
-        <span class="chip gold">Regra de lockup</span>
-        <ul class="b" style="margin-top:1rem">
-          <li>SeyAI usa o tratamento <em>SeyA(I)</em> — I em accent, sempre.</li>
-          <li>Seya em peso 800, Manrope, branco puro. Sem variação.</li>
-          <li>Seya + função: mesma fonte, mesmo peso, mesma cor. Espaço único de separação.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-meta"><span>17 — Arquitetura visual</span><span>SeyAI</span></div>
-  </section>
-
-  <!-- 18 — FECHAMENTO -->
+  <!-- 08 — FECHAMENTO -->
   <section class="section dark w-md" data-name="Fechamento">
-    <span class="bg-numeral" data-parallax="0.5" style="color:var(--accent-2);opacity:.05">18</span>
-    <div class="reveal close-wrap" style="height:100%;justify-content:center">
-      <span class="sig">17 · 04 · 2026 · Marty / Brand Strategy Memo II</span>
-      <div class="seyai-mark" style="font-size:clamp(5rem,11vw,11rem);text-shadow:0 0 80px rgba(99,102,241,.2)">SeyA<span class="seyai-i">I</span></div>
-      <p class="lead" style="color:var(--text-2);text-align:center;max-width:46rem">
-        A empresa de IA brasileira que orquestra agentes<br>
-        em sistema único — e libera <em>Seya</em> para ser,<br>
-        simplesmente, o produto que o mundo usa.
-      </p>
-      <div class="rule" style="background:var(--border-md);width:5rem;margin:1.25rem auto"></div>
-      <p class="mono" style="color:var(--text-3);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase">SeyAI · A empresa · Brasil → Mundo · sayai.com.br</p>
+    <span class="bg-numeral" data-parallax="0.4">08</span>
+    <div class="reveal close-wrap">
+      <svg class="logo logo--md" aria-label="SeyAI"><use href="#seyai-logo"/></svg>
+      <span class="sig" style="font-family:var(--font);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-2);font-weight:500">18 · 04 · 2026 · SeyAI</span>
+      <p class="tagline" style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.5rem,2.6vw,2.25rem);line-height:1.25;color:var(--text);max-width:38rem;letter-spacing:-.02em">A mãe. O oráculo. O nicho.</p>
+      <p class="caption" style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;color:var(--text-3)">SeyAI · sayai.com.br · seyai.com.br</p>
     </div>
-    <div class="footer-meta"><span style="color:var(--text-3)">18 — Fim</span><span style="color:var(--accent-2)">SeyAI · 2026</span></div>
+    <div class="footer-meta"><span style="color:var(--text-3)">08 — Fechamento</span><span style="color:var(--accent-2)">SeyAI · 2026</span></div>
   </section>
 
 </div>
@@ -1440,7 +1027,7 @@
 </div>
 
 <script>
-  // ---- Deck navigation (1:1 da apresentacao-seiya) ----
+  // ---- Deck navigation engine (1:1 da versão anterior) ----
   const deck = document.getElementById('deck');
   const sections = Array.from(deck.querySelectorAll('.section'));
   const total = sections.length;
@@ -1534,21 +1121,6 @@
   }, { root: deck, threshold: [0.25, 0.5, 0.75] });
   sections.forEach(s => visibilityObserver.observe(s));
 
-  function animateCounter(el){
-    const target = parseInt(el.dataset.counter, 10);
-    if(isNaN(target)) return;
-    if(reduceMotion){ el.textContent = target; return; }
-    const duration = 1400;
-    const start = performance.now();
-    const ease = t => 1 - Math.pow(1-t, 3);
-    function tick(now){
-      const t = Math.min((now-start)/duration, 1);
-      el.textContent = Math.round(target * ease(t));
-      if(t<1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
   const revealObserver = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
@@ -1556,22 +1128,14 @@
         const siblings = Array.from(el.parentElement.children).filter(c=>c.classList.contains('reveal'));
         const idx = siblings.indexOf(el);
         const delay = Math.max(0, idx) * 90;
-        setTimeout(()=>{
-          el.classList.add('in');
-          el.querySelectorAll('[data-counter]').forEach(animateCounter);
-          if(el.dataset.counter) animateCounter(el);
-        }, delay);
+        setTimeout(()=>{ el.classList.add('in'); }, delay);
         revealObserver.unobserve(el);
       }
     });
   }, { root: deck, threshold: 0.12, rootMargin: '0px 8% 0px 8%' });
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  document.querySelectorAll('[data-counter]').forEach(el=>{
-    if(!el.closest('.reveal')) revealObserver.observe(el.classList.contains('reveal') ? el : (el.parentElement.classList.contains('reveal') ? el.parentElement : el));
-  });
-
-  // ---- Wheel routing ----
+  // ---- Wheel routing (linear horizontal + threshold 92% + lock 220ms) ----
   let isTransitioning = false;
   function getActiveSection(){
     const viewLeft = deck.scrollLeft;
@@ -1631,14 +1195,8 @@
       const maxTop = inner.scrollHeight - inner.clientHeight;
       const atBottom = inner.scrollTop >= maxTop - 1;
       const atTop = inner.scrollTop <= 0;
-      if(dy > 0 && !atBottom){
-        inner.scrollTop = Math.min(maxTop, inner.scrollTop + dy);
-        return true;
-      }
-      if(dy < 0 && !atTop){
-        inner.scrollTop = Math.max(0, inner.scrollTop + dy);
-        return true;
-      }
+      if(dy > 0 && !atBottom){ inner.scrollTop = Math.min(maxTop, inner.scrollTop + dy); return true; }
+      if(dy < 0 && !atTop){ inner.scrollTop = Math.max(0, inner.scrollTop + dy); return true; }
       const lat = lateralState(section);
       if(dy > 0 && !lat.atLateralEnd){
         if(scrollAnim){ cancelAnimationFrame(scrollAnim); scrollAnim = null; }
@@ -1661,12 +1219,7 @@
           if(dy > 0) targetInner.scrollTop = 0;
           else targetInner.scrollTop = targetInner.scrollHeight - targetInner.clientHeight;
         }
-        let targetLeft;
-        if(dy > 0){
-          targetLeft = targetSection.offsetLeft;
-        } else {
-          targetLeft = targetSection.offsetLeft + targetSection.offsetWidth - deck.clientWidth;
-        }
+        let targetLeft = dy > 0 ? targetSection.offsetLeft : targetSection.offsetLeft + targetSection.offsetWidth - deck.clientWidth;
         const maxDeck = deck.scrollWidth - deck.clientWidth;
         targetLeft = Math.max(0, Math.min(maxDeck, targetLeft));
         smoothScrollTo(targetLeft, 500);
@@ -1698,12 +1251,7 @@
           if(dy > 0) targetInner.scrollTop = 0;
           else targetInner.scrollTop = targetInner.scrollHeight - targetInner.clientHeight;
         }
-        let targetLeft;
-        if(dy > 0){
-          targetLeft = targetSection.offsetLeft;
-        } else {
-          targetLeft = targetSection.offsetLeft + targetSection.offsetWidth - deck.clientWidth;
-        }
+        let targetLeft = dy > 0 ? targetSection.offsetLeft : targetSection.offsetLeft + targetSection.offsetWidth - deck.clientWidth;
         const maxDeck = deck.scrollWidth - deck.clientWidth;
         targetLeft = Math.max(0, Math.min(maxDeck, targetLeft));
         smoothScrollTo(targetLeft, 500);
@@ -1784,11 +1332,8 @@
 
     if(isMobileViewport()){
       if(!touchMode){
-        if(Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)*1.4){
-          touchMode = 'horizontal-pan';
-        } else if(Math.abs(dy) > 6){
-          touchMode = 'vertical-as-wheel';
-        }
+        if(Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)*1.4){ touchMode = 'horizontal-pan'; }
+        else if(Math.abs(dy) > 6){ touchMode = 'vertical-as-wheel'; }
       }
       if(touchMode === 'vertical-as-wheel'){
         if(e.cancelable) e.preventDefault();
@@ -1815,9 +1360,7 @@
   deck.addEventListener('touchend',()=>{
     if(isMobileViewport() && !isTransitioning){
       const aligned = getFullyAlignedSection();
-      if(!aligned){
-        scrollToSection(nearestSectionIdx());
-      }
+      if(!aligned){ scrollToSection(nearestSectionIdx()); }
     }
     touchStartX=null; touchStartY=null; touchLastY=null; touchMode=null;
   },{passive:true});
