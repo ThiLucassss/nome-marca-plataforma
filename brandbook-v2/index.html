@@ -48,11 +48,21 @@ em{color:var(--text);font-style:italic}
 
 /* HEADER */
 .site-header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,13,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.bb-progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:101;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-2) 60%,var(--accent-3) 100%);box-shadow:0 0 12px rgba(99,102,241,.5);transition:width .12s linear;pointer-events:none}
+.bb-arrow{position:fixed;top:50%;transform:translateY(-50%);width:2.5rem;height:2.5rem;border-radius:50%;background:rgba(15,15,22,.7);border:1px solid var(--border-md);display:none;align-items:center;justify-content:center;cursor:pointer;z-index:40;color:var(--text);font-size:.95rem;opacity:0;transition:opacity .3s var(--ease-out),background .2s,border-color .2s,transform .2s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.bb-arrow.show{display:flex}
+body:hover .bb-arrow.show{opacity:.6}
+.bb-arrow.show:hover{opacity:1;background:var(--accent);border-color:var(--accent);transform:translateY(-50%) scale(1.08);box-shadow:0 0 24px rgba(99,102,241,.45)}
+.bb-arrow.left{left:1rem}
+.bb-arrow.right{right:1rem}
+@media (max-width:900px){.bb-arrow{display:none!important}}
 .header-inner{max-width:1240px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:1rem;height:60px}
 .brand{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
 .brand-logo{height:26px;width:auto;display:block;color:#fff}
 .brand-logo svg{height:100%;width:auto;display:block}
 .brand-tag{font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);padding-left:.7rem;border-left:1px solid var(--border-md);font-family:var(--font-mono)}
+.brand-version{flex-shrink:0;font-size:.68rem;font-weight:500;letter-spacing:.06em;color:rgba(255,255,255,0.4);font-family:var(--font);margin-right:.75rem;white-space:nowrap}
+.brand-version--drawer{display:block;padding:.55rem .25rem;margin:0 0 .5rem;border-bottom:1px solid var(--border);font-size:.66rem;letter-spacing:.08em;color:var(--text-3);text-transform:uppercase}
 .brand-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(99,102,241,.6);animation:pulse 2.4s var(--ease-in-out) infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 10px rgba(99,102,241,.6);transform:scale(1)}50%{box-shadow:0 0 18px rgba(99,102,241,.9);transform:scale(1.15)}}
 
@@ -325,6 +335,7 @@ em{color:var(--text);font-style:italic}
 /* RESPONSIVE */
 @media (max-width:900px){
   .tab-nav-wrap,.dl-brandbook{display:none}
+  .header-inner > .brand-version{display:none}
   .menu-toggle{display:inline-flex}
   .header-inner{justify-content:space-between}
 }
@@ -406,7 +417,6 @@ em{color:var(--text);font-style:italic}
     <a href="#" class="brand" onclick="showTab('capa');return false;" aria-label="SeyAI">
       <span class="brand-dot"></span>
       <span class="brand-logo"><svg><use href="#seyai-logo"></use></svg></span>
-      <span class="brand-tag">Brandbook · v3</span>
     </a>
     <div class="tab-nav-wrap"><nav class="tab-nav" id="tabNav">
       <button class="tab-btn active" onclick="showTab('capa',this)">Capa</button>
@@ -420,10 +430,12 @@ em{color:var(--text);font-style:italic}
       <button class="tab-btn" onclick="showTab('contrato',this)">Contrato</button>
       <button class="tab-btn" onclick="showTab('design-system',this)">Design System</button>
     </nav></div>
+    <span class="brand-version" aria-label="Versão do brandbook">Brandbook Estratégico · v2.0</span>
     <button class="dl-brandbook" onclick="downloadBrandbook()" title="Baixar brandbook completo (.md)"><span class="arr">↓</span> Brandbook</button>
     <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
   </div>
   <div class="mobile-drawer" id="mobileDrawer">
+    <span class="brand-version brand-version--drawer">Brandbook Estratégico · v2.0</span>
     <button class="tab-btn active" onclick="showTab('capa',this);toggleMenu()">Capa</button>
     <button class="tab-btn" onclick="showTab('manifesto',this);toggleMenu()">Manifesto</button>
     <button class="tab-btn" onclick="showTab('essencia',this);toggleMenu()">Essência</button>
@@ -437,6 +449,10 @@ em{color:var(--text);font-style:italic}
     <button class="dl-brandbook" style="display:inline-flex" onclick="downloadBrandbook();toggleMenu()"><span class="arr">↓</span> Brandbook (.md)</button>
   </div>
 </header>
+
+<div class="bb-progress" id="bbProgress"></div>
+<div class="bb-arrow left" id="bbPrev" aria-label="Anterior">&larr;</div>
+<div class="bb-arrow right" id="bbNext" aria-label="Próximo">&rarr;</div>
 
 <!-- ==================== TAB 01 · CAPA (HORIZONTAL) ==================== -->
 <div id="capa" class="tab-panel capa-panel active">
@@ -494,15 +510,6 @@ em{color:var(--text);font-style:italic}
         <span class="eyebrow">Princípio · Arquitetura</span>
         <h2 class="dtitle"><span class="mask-wipe">SeyAI é a mãe. Cada nicho ganha</span><br><span class="mask-wipe">um cabeça-oráculo abstrato.</span></h2>
         <p class="dlead">No vertical de lançamento, o cabeça-oráculo se chama <strong style="color:var(--accent-2)">Opus</strong> — é o exemplo concreto desta arquitetura. Embaixo dele, 19 agentes operacionais simultâneos — copy, criativo, funil, email, página, oferta, headline, prova, objeção, sequência, CTA, segmentação, ads, landing, evento, métricas, captura, branding, narrativa.</p>
-        <div class="arch-diag" style="background:transparent;border:none;padding:1.5rem 0;align-items:center">
-          <div class="arch-node mother"><span class="meta">Cabeça-mestre</span>SeyAI</div>
-          <div class="arch-line"></div>
-          <div class="arch-node oracle"><span class="meta">Oráculo · Vertical lançamento</span>Opus</div>
-          <div class="arch-line"></div>
-          <div class="arch-agents">
-            <div class="arch-agent">01</div><div class="arch-agent">02</div><div class="arch-agent">03</div><div class="arch-agent">04</div><div class="arch-agent">05</div><div class="arch-agent">06</div><div class="arch-agent">07</div><div class="arch-agent">08</div><div class="arch-agent">09</div><div class="arch-agent">10</div><div class="arch-agent">11</div><div class="arch-agent">12</div><div class="arch-agent">13</div><div class="arch-agent">14</div><div class="arch-agent">15</div><div class="arch-agent">16</div><div class="arch-agent">17</div><div class="arch-agent">18</div><div class="arch-agent">19</div>
-          </div>
-        </div>
       </div>
       <div class="dfooter"><span>SeyAI → Opus → 19 agentes</span><span>05 / 06</span></div>
     </section>
@@ -1639,6 +1646,73 @@ function toggleMenu(){
   deck.addEventListener('touchend',()=>{ tStartX=tStartY=tLastY=null; tMode=null; }, {passive:true});
 
   if(dotEls[0]) dotEls[0].classList.add('active');
+
+  // Expose for arrows + progress bar
+  window.__capaDeck = {
+    deck,
+    sections,
+    scrollToSection,
+    getActiveIdx: ()=>activeIdx,
+    total
+  };
+  // Notify progress on horizontal scroll
+  deck.addEventListener('scroll', ()=>{ if(window.__updateBBProgress) window.__updateBBProgress(); }, {passive:true});
+})();
+
+/* ============== PROGRESS BAR + SIDE ARROWS ============== */
+(function(){
+  const bar = document.getElementById('bbProgress');
+  const prev = document.getElementById('bbPrev');
+  const next = document.getElementById('bbNext');
+  if(!bar || !prev || !next) return;
+
+  function isCapaActive(){
+    const capa = document.getElementById('capa');
+    return capa && capa.classList.contains('active');
+  }
+  function updateProgress(){
+    let ratio = 0;
+    if(isCapaActive() && window.__capaDeck){
+      const d = window.__capaDeck.deck;
+      const max = d.scrollWidth - d.clientWidth;
+      ratio = max > 0 ? d.scrollLeft / max : 0;
+    } else {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      ratio = max > 0 ? window.scrollY / max : 0;
+    }
+    ratio = Math.max(0, Math.min(1, ratio));
+    bar.style.width = (ratio*100) + '%';
+  }
+  window.__updateBBProgress = updateProgress;
+
+  function updateArrows(){
+    const show = isCapaActive();
+    prev.classList.toggle('show', show);
+    next.classList.toggle('show', show);
+  }
+
+  prev.addEventListener('click', ()=>{
+    if(!isCapaActive() || !window.__capaDeck) return;
+    window.__capaDeck.scrollToSection(window.__capaDeck.getActiveIdx() - 1);
+  });
+  next.addEventListener('click', ()=>{
+    if(!isCapaActive() || !window.__capaDeck) return;
+    window.__capaDeck.scrollToSection(window.__capaDeck.getActiveIdx() + 1);
+  });
+
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  window.addEventListener('resize', updateProgress);
+
+  // Hook into showTab to reset state on tab change
+  const originalShowTab = window.showTab;
+  window.showTab = function(id, btn){
+    const r = originalShowTab.apply(this, arguments);
+    requestAnimationFrame(()=>{ updateArrows(); updateProgress(); });
+    return r;
+  };
+
+  updateArrows();
+  updateProgress();
 })();
 
 /* ============== COUNTER DEMO (DS) ============== */
