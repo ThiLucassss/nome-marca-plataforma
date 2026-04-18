@@ -61,9 +61,6 @@ body:hover .bb-arrow.show{opacity:.6}
 .brand-logo{height:26px;width:auto;display:block;color:#fff}
 .brand-logo svg{height:100%;width:auto;display:block}
 .brand-tag{font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);padding-left:.7rem;border-left:1px solid var(--border-md);font-family:var(--font-mono)}
-.brand-version{flex-shrink:0;font-size:.68rem;font-weight:500;letter-spacing:.06em;color:rgba(255,255,255,0.4);font-family:var(--font);margin-right:.75rem;white-space:nowrap}
-.brand-version--drawer{display:block;padding:.55rem .25rem;margin:0 0 .5rem;border-bottom:1px solid var(--border);font-size:.66rem;letter-spacing:.08em;color:var(--text-3);text-transform:uppercase}
-.brand-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(99,102,241,.6);animation:pulse 2.4s var(--ease-in-out) infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 10px rgba(99,102,241,.6);transform:scale(1)}50%{box-shadow:0 0 18px rgba(99,102,241,.9);transform:scale(1.15)}}
 
 .tab-nav-wrap{flex:1;min-width:0;position:relative;display:flex;justify-content:center;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 24px,#000 calc(100% - 24px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 24px,#000 calc(100% - 24px),transparent 100%)}
@@ -201,8 +198,38 @@ body:hover .bb-arrow.show{opacity:.6}
 .voice-table th.col-yes{color:var(--allow-text)}
 .voice-table th.col-no{color:var(--deny-text)}
 .voice-table td{padding:.9rem 1rem;border-top:1px solid var(--border);font-size:.88rem;line-height:1.5}
-.voice-table .cell-yes{color:var(--allow-text);background:rgba(99,102,241,0.04)}
-.voice-table .cell-no{color:var(--deny-text);background:rgba(239,68,68,0.04);border-left:1px solid var(--border)}
+.voice-table .cell-yes{color:var(--text);background:rgba(74,222,128,0.05);border-left:2px solid rgba(74,222,128,0.4)}
+.voice-table .cell-no{color:var(--text);background:rgba(248,113,113,0.05);border-left:2px solid rgba(248,113,113,0.4)}
+.voice-table th.col-yes{color:#4ade80}
+.voice-table th.col-no{color:#f87171}
+
+/* Vocab 2 columns (9b) */
+.vocab-twocol{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media (max-width:768px){.vocab-twocol{grid-template-columns:1fr}}
+
+/* Larger DS swatches (9d) */
+.ds-swatch-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.25rem}
+.ds-swatch-color{height:120px;min-height:120px}
+.ds-swatch-name{font-size:.78rem;font-weight:600}
+.ds-swatch-value{font-size:.72rem;font-weight:600;color:var(--text-2)}
+@media (max-width:768px){.ds-swatch-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.85rem}.ds-swatch-color{height:90px;min-height:90px}}
+
+/* Fade-up vertical sections (9e) */
+.tab-panel:not(.capa-panel) .section,.tab-panel:not(.capa-panel) .hero-block{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
+.tab-panel:not(.capa-panel) .section.in-view,.tab-panel:not(.capa-panel) .hero-block.in-view{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.tab-panel:not(.capa-panel) .section,.tab-panel:not(.capa-panel) .hero-block{opacity:1;transform:none;transition:none}}
+
+/* Tab footer (9h) */
+.tab-footer{border-top:1px solid rgba(255,255,255,0.06);padding:2rem 0 1rem;text-align:center;font-size:.7rem;color:rgba(255,255,255,0.3);letter-spacing:.12em;text-transform:uppercase;margin-top:3rem;font-family:var(--font-mono)}
+
+/* Arch matrix polish (9g) */
+.arch-rows{gap:1.5rem;background:transparent;border:none;border-radius:0}
+.arch-level{border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border);min-height:140px}
+.arch-level > *{min-height:140px}
+.arch-level-abstract svg.arch-svg{max-height:96px}
+.arch-axis-top,.arch-axis-bot{font-size:.7rem;letter-spacing:.14em;color:var(--text-2)}
+.arch-level--ours{box-shadow:inset 0 0 0 1px rgba(99,102,241,.5),0 0 60px rgba(99,102,241,.18)}
+.arch-level-badge{background:transparent;color:var(--accent-2);border:1px solid rgba(99,102,241,.5);padding:.3rem .7rem;border-radius:9999px;font-size:.62rem}
 
 .promise-card{display:grid;grid-template-columns:2.5rem 1fr;gap:1.25rem;padding:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:.75rem;transition:border-color var(--transition)}
 .promise-card:hover{border-color:rgba(99,102,241,.2)}
@@ -335,7 +362,6 @@ body:hover .bb-arrow.show{opacity:.6}
 /* RESPONSIVE */
 @media (max-width:900px){
   .tab-nav-wrap,.dl-brandbook{display:none}
-  .header-inner > .brand-version{display:none}
   .menu-toggle{display:inline-flex}
   .header-inner{justify-content:space-between}
 }
@@ -414,12 +440,11 @@ body:hover .bb-arrow.show{opacity:.6}
 <!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
-    <a href="#" class="brand" onclick="showTab('capa');return false;" aria-label="SeyAI">
-      <span class="brand-dot"></span>
+    <a href="#" class="brand" onclick="showTab('marca');return false;" aria-label="SeyAI">
       <span class="brand-logo"><svg><use href="#seyai-logo"></use></svg></span>
     </a>
     <div class="tab-nav-wrap"><nav class="tab-nav" id="tabNav">
-      <button class="tab-btn active" onclick="showTab('capa',this)">Capa</button>
+      <button class="tab-btn active" onclick="showTab('marca',this)">Marca</button>
       <button class="tab-btn" onclick="showTab('manifesto',this)">Manifesto</button>
       <button class="tab-btn" onclick="showTab('essencia',this)">Essência</button>
       <button class="tab-btn" onclick="showTab('arquetipos',this)">Arquétipos</button>
@@ -430,13 +455,11 @@ body:hover .bb-arrow.show{opacity:.6}
       <button class="tab-btn" onclick="showTab('contrato',this)">Contrato</button>
       <button class="tab-btn" onclick="showTab('design-system',this)">Design System</button>
     </nav></div>
-    <span class="brand-version" aria-label="Versão do brandbook">Brandbook Estratégico · v2.0</span>
     <button class="dl-brandbook" onclick="downloadBrandbook()" title="Baixar brandbook completo (.md)"><span class="arr">↓</span> Brandbook</button>
     <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
   </div>
   <div class="mobile-drawer" id="mobileDrawer">
-    <span class="brand-version brand-version--drawer">Brandbook Estratégico · v2.0</span>
-    <button class="tab-btn active" onclick="showTab('capa',this);toggleMenu()">Capa</button>
+    <button class="tab-btn active" onclick="showTab('marca',this);toggleMenu()">Marca</button>
     <button class="tab-btn" onclick="showTab('manifesto',this);toggleMenu()">Manifesto</button>
     <button class="tab-btn" onclick="showTab('essencia',this);toggleMenu()">Essência</button>
     <button class="tab-btn" onclick="showTab('arquetipos',this);toggleMenu()">Arquétipos</button>
@@ -454,75 +477,46 @@ body:hover .bb-arrow.show{opacity:.6}
 <div class="bb-arrow left" id="bbPrev" aria-label="Anterior">&larr;</div>
 <div class="bb-arrow right" id="bbNext" aria-label="Próximo">&rarr;</div>
 
-<!-- ==================== TAB 01 · CAPA (HORIZONTAL) ==================== -->
-<div id="capa" class="tab-panel capa-panel active">
+<!-- ==================== TAB 01 · MARCA (HORIZONTAL — 3 SEÇÕES) ==================== -->
+<div id="marca" class="tab-panel capa-panel active">
   <div class="deck" id="deck">
 
-    <!-- 1. Nome grande -->
-    <section class="dsec dark w-md" data-name="Capa">
+    <!-- 1. Logo gigante -->
+    <section class="dsec dark w-md" data-name="Marca">
       <div class="cover-stack">
         <div class="cover-logo reveal"><svg><use href="#seyai-logo"></use></svg></div>
-        <div class="cover-tag reveal"><span class="mask-wipe">A mesa onde 19 agentes se sentam — e o seu marketing nasce coordenado.</span></div>
-        <div class="cover-meta reveal">seyai.com.br · lê-se "ceia" (PT) · "say-eye" (EN)</div>
+        <div class="cover-meta reveal">seyai.com.br · pronúncia "ceia"</div>
       </div>
-      <div class="dfooter"><span>SeyAI · Brandbook</span><span>01 / 06</span></div>
+      <div class="dfooter"><span>SeyAI · Brandbook</span><span>01 / 03</span></div>
     </section>
 
-    <!-- 2. O que somos -->
-    <section class="dsec w-md" data-name="O que somos">
+    <!-- 2. Sonoridade -->
+    <section class="dsec w-md" data-name="Sonoridade">
       <span class="bg-numeral" data-parallax="0.35">02</span>
       <div class="reveal">
-        <span class="eyebrow">Essência</span>
-        <h2 class="dtitle"><span class="mask-wipe">Uma empresa de IA que produz</span><br><span class="mask-wipe">marketing inteiro — coordenado,</span><br><span class="mask-wipe">não fragmentado.</span></h2>
-        <p class="dlead">Não é assistente que ajuda você a fazer. Não é gerador de pedaços. É a operação inteira, montada por uma orquestra de agentes especializados que falam entre si.</p>
-        <span class="dmono">SeyAI · 19 agentes · especialistas de nicho por vertical</span>
+        <span class="eyebrow">Sonoridade</span>
+        <h2 class="dtitle"><span class="mask-wipe">Lê-se "ceia".</span><br><span class="mask-wipe">Escreve-se SeyAI.</span></h2>
+        <table style="margin-top:2rem;border-collapse:collapse;font-size:.95rem;max-width:24rem">
+          <thead><tr><th style="text-align:left;font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);padding:.6rem 1.5rem .6rem 0;border-bottom:1px solid var(--border-md)">Idioma</th><th style="text-align:left;font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);padding:.6rem 0;border-bottom:1px solid var(--border-md)">Pronúncia</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:.7rem 1.5rem .7rem 0;border-bottom:1px solid var(--border);color:var(--text)">Português</td><td style="padding:.7rem 0;border-bottom:1px solid var(--border);color:var(--accent-2);font-family:var(--font-mono)">ceia</td></tr>
+            <tr><td style="padding:.7rem 1.5rem .7rem 0;color:var(--text)">English</td><td style="padding:.7rem 0;color:var(--accent-2);font-family:var(--font-mono)">say-eye</td></tr>
+          </tbody>
+        </table>
+        <p class="dlead" style="margin-top:1.75rem;font-size:.95rem;max-width:36rem">O "I" funciona como caret de IA — atenuado, em accent indigo.</p>
       </div>
-      <div class="dfooter"><span>SeyAI</span><span>02 / 06</span></div>
+      <div class="dfooter"><span>SeyAI · sonoridade</span><span>02 / 03</span></div>
     </section>
 
-    <!-- 3. O que NÃO somos -->
-    <section class="dsec w-md" data-name="Antítese">
-      <span class="bg-numeral" data-parallax="0.35">03</span>
-      <div class="reveal">
-        <span class="eyebrow" style="color:#F87171">Antítese</span>
-        <h2 class="dtitle" style="color:#FCA5A5"><span class="mask-wipe">Não somos marketplace de agentes.</span><br><span class="mask-wipe">Não somos biblioteca de prompts.</span><br><span class="mask-wipe">Não somos rascunho.</span></h2>
-        <p class="dlead">O mercado virou uma feira de pedaços. Você compra ferramentas em paralelo e ainda precisa costurar tudo no fim. SeyAI nasce do oposto: já chega coordenada.</p>
-      </div>
-      <div class="dfooter"><span>SeyAI</span><span>03 / 06</span></div>
-    </section>
-
-    <!-- 4. Pra quem -->
-    <section class="dsec w-md" data-name="Para quem">
-      <span class="bg-numeral" data-parallax="0.35">04</span>
-      <div class="reveal">
-        <span class="eyebrow">Vertical hoje</span>
-        <h2 class="dtitle"><span class="mask-wipe">Agências de lançamento</span><br><span class="mask-wipe">de infoproduto.</span></h2>
-        <p class="dlead">Mentores, cursos, treinamentos, consultorias. Quem opera com equipe enxuta e precisa entregar campanha de operação grande. O nicho onde a oferta merece mais do que a equipe consegue produzir no prazo.</p>
-        <span class="dmono">Vertical inicial: lançamento · Próximos: a definir</span>
-      </div>
-      <div class="dfooter"><span>SeyAI · vertical lançamento</span><span>04 / 06</span></div>
-    </section>
-
-    <!-- 5. Como pensamos -->
-    <section class="dsec w-lg dsec-scroll" data-name="Princípio" data-allow-vscroll="1" style="overflow-y:auto;justify-content:flex-start;padding-top:5rem">
-      <span class="bg-numeral" data-parallax="0.35">05</span>
-      <div class="reveal">
-        <span class="eyebrow">Princípio · Arquitetura</span>
-        <h2 class="dtitle"><span class="mask-wipe">SeyAI é a mãe. Cada nicho ganha</span><br><span class="mask-wipe">um cabeça-oráculo abstrato.</span></h2>
-        <p class="dlead">No vertical de lançamento, o cabeça-oráculo se chama <strong style="color:var(--accent-2)">Opus</strong> — é o exemplo concreto desta arquitetura. Embaixo dele, 19 agentes operacionais simultâneos — copy, criativo, funil, email, página, oferta, headline, prova, objeção, sequência, CTA, segmentação, ads, landing, evento, métricas, captura, branding, narrativa.</p>
-      </div>
-      <div class="dfooter"><span>SeyAI → Opus → 19 agentes</span><span>05 / 06</span></div>
-    </section>
-
-    <!-- 6. Continue -->
+    <!-- 3. Continue -->
     <section class="dsec dark w-md" data-name="Continue">
-      <span class="bg-numeral" data-parallax="0.35">06</span>
+      <span class="bg-numeral" data-parallax="0.35">03</span>
       <div class="cta-card reveal">
-        <div class="ct">Esta é a capa.</div>
-        <p>O brandbook completo continua na vertical — Manifesto, Essência, Arquétipos, Posicionamento, Voz, Vocabulário, Jornada, Contrato e Design System.</p>
-        <button class="cta-btn" onclick="showTab('manifesto')">Continuar para o Manifesto →</button>
+        <div class="ct">Esta é a marca.</div>
+        <p>O brandbook completo continua na vertical.</p>
+        <button class="cta-btn" onclick="showTab('manifesto')">Continuar →</button>
       </div>
-      <div class="dfooter"><span>SeyAI · Brandbook</span><span>06 / 06</span></div>
+      <div class="dfooter"><span>SeyAI · Brandbook</span><span>03 / 03</span></div>
     </section>
 
   </div>
@@ -535,41 +529,42 @@ body:hover .bb-arrow.show{opacity:.6}
   <div class="container">
     <div class="hero-block">
       <div class="hero-eyebrow">02 — Manifesto da Marca</div>
-      <h1 class="hero-headline">O mercado normalizou a <span class="accent">fragmentação</span>.</h1>
-      <p class="hero-sub">E vendeu isso como se fosse modernidade. Como se ter 17 ferramentas abertas ao mesmo tempo fosse sinônimo de produtividade.</p>
+      <h1 class="hero-headline">O mercado normalizou o <span class="accent">"quase-pronto"</span>.</h1>
+      <p class="hero-sub">E esse foi o maior problema que ninguém nomeou — até agora.</p>
     </div>
 
     <div class="section">
       <div class="manifesto-text">
-        <p>Normalizou o marketplace que vende prompt avulso e chama de "agente". Normalizou a biblioteca de templates que entrega rascunho e diz que automatizou. Normalizou a IA que gera pedaço — uma headline aqui, um parágrafo ali, um esqueleto de funil acolá — e empurra para você a tarefa real: <strong>costurar tudo isso e fazer parecer uma campanha</strong>. O mercado normalizou a coordenação como problema do operador. E o mais perverso: normalizou a culpa que você sente quando o resultado fica desconexo — como se o problema fosse seu, e não da arquitetura que entregou peças soltas.</p>
+        <p>Normalizou a ferramenta que gera um rascunho e chama de entrega. Normalizou a IA que escreve um parágrafo e diz que fez copy. Normalizou a plataforma que monta um esqueleto de funil e espera que você passe as próximas 14 horas dando carne, pele e sangue para aquilo virar algo publicável. O mercado normalizou a promessa de automação que, no fim das contas, ainda depende inteiramente de você para funcionar. E o mais perverso: normalizou a culpa que você sente quando o resultado fica aquém — como se o problema fosse seu, e não da ferramenta que parou no meio do caminho.</p>
 
-        <p>Você conhece esse ciclo. Você é o gestor de lançamento que acorda às 5h com 47 abas abertas, 6 ferramentas pagas, e a certeza silenciosa de que a campanha não vai sair no nível que a oferta merece. Não porque você não sabe o que fazer — você sabe exatamente. O problema nunca foi estratégia. O problema é que entre saber o que precisa ser feito e ter tudo pronto para publicar existe um abismo de <strong>coordenação</strong> que exige 12 pessoas, 3 semanas e um orçamento que você não tem. Então você improvisa. Adapta. Corta. E lança sabendo que poderia ter sido melhor.</p>
+        <p>Você conhece esse ciclo. Você é o gestor de lançamento que acorda às 5h com 47 tarefas abertas e a certeza silenciosa de que a campanha não vai sair no nível que a oferta merece. Não porque você não sabe o que fazer — você sabe exatamente. O problema nunca foi estratégia. O problema é que entre saber o que precisa ser feito e ter tudo pronto para publicar existe um abismo de produção que exige 12 pessoas, 3 semanas e um orçamento que você não tem. Então você improvisa. Adapta. Corta. E lança sabendo que poderia ter sido melhor.</p>
 
-        <p><strong>SeyAI</strong> existe porque essa equação está quebrada. Não somos marketplace. Não somos biblioteca. Não somos plug-and-play. Somos uma <strong>orquestra</strong>: 19 agentes especializados que trabalham simultaneamente, coordenados pela cabeça-mestre — SeyAI — e por um especialista de nicho dedicado a cada vertical (lançamento, ecommerce e o que vier depois). Não há custura no fim. A coordenação acontece o tempo todo, dentro do sistema — não na sua cabeça às 23h.</p>
+        <p>SeyAI existe porque essa equação está quebrada. Não deveria ser necessário escolher entre qualidade e velocidade, entre profundidade criativa e tamanho de equipe, entre a campanha que você imaginou e a campanha que você conseguiu produzir. O nível de execução não deveria ser o fator que determina se uma grande ideia chega ao mercado como uma grande campanha — ou como uma versão diminuída dela mesma.</p>
 
-        <p>O que acontece dentro da plataforma não é sugestão. Não é rascunho. Não é "ponto de partida para você desenvolver". <strong>19 agentes especializados</strong> trabalham em paralelo, cada um dominando uma função específica do marketing, conversando entre si através do especialista do nicho que você ativou. Copy final. Criativo finalizado. Funil configurado. Sequência de emails escrita. Página montada. Tudo conversando, tudo coerente. Não 80% pronto. <strong>Pronto.</strong></p>
+        <p>O que acontece dentro da plataforma não é sugestão. Não é rascunho. Não é "ponto de partida para você desenvolver". <strong>Agentes orquestrados</strong> trabalham em paralelo, cada um dominando uma função específica do marketing de lançamento, e nenhum deles para até que o output esteja pronto para publicação. Copy final. Criativo finalizado. Funil configurado. Sequência de emails escrita. Página montada. Não 80% pronto. <strong>Pronto.</strong></p>
 
-        <p>A diferença entre o que você tinha antes e o que você tem agora não é incremental — é categórica. Você sai do paradigma "monto a campanha juntando peças de 6 ferramentas" e entra no paradigma "recebo a campanha inteira, coordenada desde o briefing".</p>
+        <p>A diferença entre o que você tinha antes e o que você tem agora não é incremental — é categórica.</p>
       </div>
 
       <div style="margin-top:2.5rem">
         <div class="quote-block">
-          <p class="quote-text manifesto-closing">A diferença entre montar uma campanha e receber uma campanha. A diferença entre marketplace e orquestra.</p>
+          <p class="quote-text manifesto-closing">A diferença entre montar uma campanha e receber uma campanha.</p>
         </div>
       </div>
     </div>
 
     <div class="section">
       <div class="stat-strip">
-        <div class="stat-item"><span class="stat-value">19</span><span class="stat-label">Agentes simultâneos</span></div>
+        <div class="stat-item"><span class="stat-value">∞</span><span class="stat-label">Agentes orquestrados</span></div>
         <div class="stat-divider"></div>
-        <div class="stat-item"><span class="stat-value">1</span><span class="stat-label">Mãe (SeyAI)</span></div>
+        <div class="stat-item"><span class="stat-value">100%</span><span class="stat-label">Pronto para publicar</span></div>
         <div class="stat-divider"></div>
-        <div class="stat-item"><span class="stat-value">N</span><span class="stat-label">Especialistas de nicho</span></div>
+        <div class="stat-item"><span class="stat-value">0</span><span class="stat-label">Rascunhos entregues</span></div>
         <div class="stat-divider"></div>
-        <div class="stat-item"><span class="stat-value">0</span><span class="stat-label">Fragmentação</span></div>
+        <div class="stat-item"><span class="stat-value">1</span><span class="stat-label">Briefing necessário</span></div>
       </div>
     </div>
+    <div class="tab-footer">───────────── &nbsp;&nbsp;SeyAI · 2026 · Brandbook&nbsp;&nbsp; ─────────────</div>
   </div>
 </div>
 
@@ -584,11 +579,11 @@ body:hover .bb-arrow.show{opacity:.6}
     <div class="section">
       <div class="section-header"><div class="section-number">Essência</div><h2>O núcleo</h2></div>
       <div class="quote-block"><p class="quote-text" style="font-size:1.5rem;font-weight:600;letter-spacing:-.02em">Briefing entra. Campanha sai. Coordenada.</p></div>
-      <p style="margin-top:1.5rem;max-width:620px;color:var(--text-2)">Sete palavras. Três frases. Um gap implícito entre elas onde 19 agentes trabalham em orquestra. A essência não promete — descreve. E a descrição é tão desproporcional que funciona como promessa.</p>
+      <p style="margin-top:1.5rem;max-width:620px;color:var(--text-2)">Sete palavras. Três frases. Um gap implícito entre elas onde agentes orquestrados trabalham juntos. A essência não promete — descreve. E a descrição é tão desproporcional que funciona como promessa.</p>
 
       <div class="card card-accent" style="max-width:720px;margin-top:2rem">
         <h4>Arquitetura conceitual da marca</h4>
-        <p style="color:var(--text);margin:0"><strong>A mãe:</strong> SeyAI. <strong>A operação:</strong> 19 agentes especializados, simultâneos, coordenados. <strong>Os especialistas de nicho:</strong> uma cabeça dedicada por vertical (lançamento, ecommerce, etc).</p>
+        <p style="color:var(--text);margin:0"><strong>A mãe:</strong> SeyAI. <strong>A operação:</strong> agentes orquestrados, simultâneos, coordenados. <strong>Os especialistas de nicho:</strong> uma cabeça dedicada por vertical (lançamento, ecommerce, etc).</p>
       </div>
 
       <!-- FIX 8 · Naming & sonoridade -->
@@ -612,7 +607,7 @@ body:hover .bb-arrow.show{opacity:.6}
     <div class="section">
       <div class="section-header"><div class="section-number">Missão</div><h2>Para que existimos</h2></div>
       <div class="card card-accent" style="max-width:720px">
-        <p style="color:var(--text);line-height:1.75;margin:0">Transformar briefings de lançamento em campanhas completas, coordenadas e prontas para publicação — do copy ao criativo, do funil ao asset — entregues por uma orquestra de 19 agentes especializados, para agências de qualquer tamanho que recusam aceitar que equipe pequena signifique resultado pequeno.</p>
+        <p style="color:var(--text);line-height:1.75;margin:0">Transformar briefings de lançamento em campanhas completas, coordenadas e prontas para publicação — do copy ao criativo, do funil ao asset — entregues por uma orquestra de agentes especializados, para agências de qualquer tamanho que recusam aceitar que equipe pequena signifique resultado pequeno.</p>
       </div>
     </div>
 
@@ -626,7 +621,7 @@ body:hover .bb-arrow.show{opacity:.6}
     <div class="section">
       <div class="section-header"><div class="section-number">Os 6 Valores</div><h2>O que não negociamos</h2></div>
       <div class="grid-3" style="margin-top:1.5rem">
-        <div class="value-card"><div class="value-number">Valor 01</div><div class="value-name">Coordenado, não montado</div><p style="font-size:.85rem;margin:0">Os 19 agentes não trabalham em silos. Conversam pelo especialista do nicho. O output é uma campanha — não 19 arquivos soltos para você costurar.</p></div>
+        <div class="value-card"><div class="value-number">Valor 01</div><div class="value-name">Coordenado, não montado</div><p style="font-size:.85rem;margin:0">Os agentes orquestrados não trabalham em silos. Conversam pelo especialista do nicho. O output é uma campanha — não arquivos soltos para você costurar.</p></div>
         <div class="value-card"><div class="value-number">Valor 02</div><div class="value-name">Padrão, não palpite</div><p style="font-size:.85rem;margin:0">Toda decisão criativa é fundamentada em padrões reais extraídos de milhares de lançamentos. Não é intuição. Não é tendência. É evidência processada com método.</p></div>
         <div class="value-card"><div class="value-number">Valor 03</div><div class="value-name">Autoria é de quem publica</div><p style="font-size:.85rem;margin:0">O output é da agência. A campanha leva o nome dela. SeyAI é invisível no resultado final, e isso é uma decisão de design.</p></div>
         <div class="value-card"><div class="value-number">Valor 04</div><div class="value-name">Criação real</div><p style="font-size:.85rem;margin:0">Existe uma diferença entre gerar texto e criar copy. Os outputs não são variantes de um molde genérico — são criações com voz, ritmo, lógica criativa e coerência de campanha.</p></div>
@@ -639,7 +634,7 @@ body:hover .bb-arrow.show{opacity:.6}
       <div class="section-header"><div class="section-number">Golden Circle</div><h2>Por quê. Como. O quê.</h2></div>
       <div class="gc-block">
         <div class="gc-cell"><div class="gc-label">Por que</div><div class="gc-title">A equação está fragmentada</div><p style="font-size:.88rem;margin:0">Acreditamos que a coordenação não deveria ser problema do operador. Uma grande ideia merece uma grande campanha — coordenada desde a primeira linha, não costurada às pressas no final.</p></div>
-        <div class="gc-cell"><div class="gc-label">Como</div><div class="gc-title">19 agentes, 1 especialista de nicho</div><p style="font-size:.88rem;margin:0">Dezenove agentes especializados trabalham em paralelo — copy, criativo, funil, email, página — coordenados pela cabeça-mestre SeyAI e pelo especialista do nicho ativo. Nenhum para antes do output estar pronto e coerente com o resto.</p></div>
+        <div class="gc-cell"><div class="gc-label">Como</div><div class="gc-title">Agentes orquestrados, 1 especialista de nicho</div><p style="font-size:.88rem;margin:0">Agentes especializados trabalham em paralelo — copy, criativo, funil, email, página — coordenados pela cabeça-mestre SeyAI e pelo especialista do nicho ativo. Nenhum para antes do output estar pronto e coerente com o resto.</p></div>
         <div class="gc-cell"><div class="gc-label">O que</div><div class="gc-title">Campanhas coordenadas</div><p style="font-size:.88rem;margin:0">SeyAI é a plataforma que transforma briefings em campanhas completas e coordenadas. Do copy ao criativo, do funil ao asset. Tudo produzido, finalizado e entregue pronto para publicar.</p></div>
       </div>
     </div>
@@ -649,16 +644,17 @@ body:hover .bb-arrow.show{opacity:.6}
       <div class="card" style="padding:0;overflow:hidden">
         <table class="bs-table">
           <tr><td class="bs-act">Ato 1</td><td class="bs-elem">Herói</td><td class="bs-desc">O gestor de lançamento que opera com equipe enxuta e carrega a responsabilidade de entregar campanhas com qualidade de grande operação. Sabe exatamente o que precisa ser feito. O gap não é de conhecimento — é de capacidade de coordenação e produção.</td></tr>
-          <tr><td class="bs-act">Ato 2</td><td class="bs-elem">Guia</td><td class="bs-desc">SeyAI — a mãe que abriga a orquestra. Os especialistas de nicho — uma cabeça por vertical. Juntos, coordenam 19 agentes que processaram padrões de milhares de campanhas reais. Não ensinam o herói a fazer marketing — reconhecem que ele já sabe.</td></tr>
+          <tr><td class="bs-act">Ato 2</td><td class="bs-elem">Guia</td><td class="bs-desc">SeyAI — a mãe que abriga a orquestra. Os especialistas de nicho — uma cabeça por vertical. Juntos, coordenam os agentes orquestrados que processaram padrões de milhares de campanhas reais. Não ensinam o herói a fazer marketing — reconhecem que ele já sabe.</td></tr>
           <tr><td class="bs-act">Ato 3</td><td class="bs-elem">Problema Externo</td><td class="bs-desc">Produzir todos os elementos de uma campanha exige equipe grande, tempo longo e orçamento alto. As ferramentas existentes ajudam em partes isoladas, criam o problema da costura.</td></tr>
           <tr><td class="bs-act">Ato 4</td><td class="bs-elem">Problema Interno</td><td class="bs-desc">A frustração de saber que existe um nível acima. A sensação constante de que a qualidade do output não reflete a qualidade da estratégia. A tensão entre o que a oferta merece e o que a equipe consegue coordenar no prazo.</td></tr>
           <tr><td class="bs-act">Ato 5</td><td class="bs-elem">Problema Filosófico</td><td class="bs-desc">Tamanho não deveria determinar qualidade. Coordenação não deveria ser problema do operador. A tecnologia para mudar isso já existe — falta só montar a orquestra certa.</td></tr>
-          <tr><td class="bs-act">Ato 6</td><td class="bs-elem">O Plano</td><td class="bs-desc"><strong style="color:var(--accent-2)">1.</strong> Briefing estratégico. <strong style="color:var(--accent-2)">2.</strong> 19 agentes coordenados pelo especialista do nicho produzem em paralelo. <strong style="color:var(--accent-2)">3.</strong> Você revisa e aplica julgamento criativo. <strong style="color:var(--accent-2)">4.</strong> Publica. Tudo pronto, tudo coerente.</td></tr>
+          <tr><td class="bs-act">Ato 6</td><td class="bs-elem">O Plano</td><td class="bs-desc"><strong style="color:var(--accent-2)">1.</strong> Briefing estratégico. <strong style="color:var(--accent-2)">2.</strong> Agentes orquestrados pelo especialista do nicho produzem em paralelo. <strong style="color:var(--accent-2)">3.</strong> Você revisa e aplica julgamento criativo. <strong style="color:var(--accent-2)">4.</strong> Publica. Tudo pronto, tudo coerente.</td></tr>
           <tr><td class="bs-act">Ato 7a</td><td class="bs-elem">Sucesso</td><td class="bs-desc">Uma campanha completa e coordenada com a profundidade de uma operação de 20 pessoas — entregue por uma equipe de 2. O gestor abre o material e reconhece: isso é o nível que eu sempre quis entregar.</td></tr>
           <tr><td class="bs-act">Ato 7b</td><td class="bs-elem">Fracasso Evitado</td><td class="bs-desc">Lançar com campanha desconexa. Email que contradiz a página. Criativo genérico. Funil pela metade. O resultado fragmentado não porque a estratégia era ruim, mas porque a coordenação ficou nas costas do operador.</td></tr>
         </table>
       </div>
     </div>
+    <div class="tab-footer">───────────── &nbsp;&nbsp;SeyAI · 2026 · Brandbook&nbsp;&nbsp; ─────────────</div>
   </div>
 </div>
 
@@ -700,7 +696,7 @@ body:hover .bb-arrow.show{opacity:.6}
       <div class="archetype-card">
         <div class="archetype-header"><div><h4>Arquétipo Secundário</h4><div class="archetype-name">O Sábio</div></div><div class="archetype-pct" style="color:var(--accent-2)">25%</div></div>
         <div class="archetype-body">
-          <p><strong>Justificativa estratégica:</strong> O Sábio é o segundo arquétipo porque a orquestra não opera por acaso. A "magia" do Mago sem o Sábio seria percebida como truque ou caixa-preta perigosa. O Sábio garante que a coordenação tem fundamento: padrões reais de milhares de campanhas, processados pelo especialista do nicho e distribuídos aos 19 agentes. A inteligência é verificável.</p>
+          <p><strong>Justificativa estratégica:</strong> O Sábio é o segundo arquétipo porque a orquestra não opera por acaso. A "magia" do Mago sem o Sábio seria percebida como truque ou caixa-preta perigosa. O Sábio garante que a coordenação tem fundamento: padrões reais de milhares de campanhas, processados pelo especialista do nicho e distribuídos aos agentes orquestrados. A inteligência é verificável.</p>
           <div class="divider"></div>
           <div class="grid-2" style="margin-bottom:1.5rem">
             <div class="grid-2-cell"><h4>Motivação Central</h4><p style="margin:0">Compreender os padrões que governam o sucesso e aplicá-los com precisão. Substituir achismo por evidência.</p></div>
@@ -708,7 +704,7 @@ body:hover .bb-arrow.show{opacity:.6}
             <div class="grid-2-cell"><h4>Promessa ao Cliente</h4><p style="margin:0">Não é sorte. São padrões. Cada decisão criativa dentro da campanha tem fundamento em dados reais.</p></div>
             <div class="grid-2-cell"><h4>Referência de Mercado</h4><p style="margin:0">Google. Você não pergunta como ele encontrou. Você confia porque ele sempre encontra.</p></div>
           </div>
-          <div class="inline-quote">No tom: autoridade que não precisa ser barulhenta. O oráculo fala pouco e fala denso.</div>
+          <div class="inline-quote">No tom: autoridade que não precisa ser barulhenta. O especialista de nicho fala pouco e fala denso.</div>
         </div>
       </div>
     </div>
@@ -729,6 +725,7 @@ body:hover .bb-arrow.show{opacity:.6}
         </div>
       </div>
     </div>
+    <div class="tab-footer">───────────── &nbsp;&nbsp;SeyAI · 2026 · Brandbook&nbsp;&nbsp; ─────────────</div>
   </div>
 </div>
 
@@ -738,7 +735,7 @@ body:hover .bb-arrow.show{opacity:.6}
     <div class="hero-block">
       <div class="hero-eyebrow">05 — Posicionamento Estratégico</div>
       <h1 class="hero-headline">Onde estamos.<br>Por que importa.</h1>
-      <p class="hero-sub">Arquitetura monolítica (branded house, no modelo AtivoCerto/AtivoTech). Uma marca-mãe (SeyAI), especialistas de nicho por vertical (Opus para lançamento), 19 agentes embaixo.</p>
+      <p class="hero-sub">Arquitetura monolítica (branded house, no modelo AtivoCerto/AtivoTech). Uma marca-mãe (SeyAI), especialistas de nicho por vertical, agentes orquestrados embaixo.</p>
     </div>
 
     <div class="section">
@@ -801,7 +798,7 @@ body:hover .bb-arrow.show{opacity:.6}
             </div>
             <div class="arch-level-concrete">
               <div class="arch-logo-mock arch-endorsed">
-                <span class="arch-endorsed-mark">◆ Opus</span>
+                <span class="arch-endorsed-mark">◆ [Vertical]</span>
                 <span class="arch-endorsed-by">by <svg viewBox="0 0 517.76 204.57" style="height:14px;color:var(--text-2);vertical-align:middle"><use href="#seyai-logo"></use></svg></span>
               </div>
             </div>
@@ -823,13 +820,13 @@ body:hover .bb-arrow.show{opacity:.6}
 
         </div>
       </div>
-      <p style="font-size:.85rem;color:var(--text-3);margin:1.25rem 0 0;max-width:640px">SeyAI vive na linha 02. Uma marca-mãe forte, oráculos por vertical (Opus no lançamento) construídos sobre o mesmo sistema visual e tipográfico. Modelo inspirado em AtivoCerto / AtivoTech.</p>
+      <p style="font-size:.85rem;color:var(--text-3);margin:1.25rem 0 0;max-width:640px">SeyAI vive na linha 02. Uma marca-mãe forte, especialistas de nicho por vertical (Opus é o exemplo concreto, no lançamento) construídos sobre o mesmo sistema visual e tipográfico. Modelo inspirado em AtivoCerto / AtivoTech.</p>
     </div>
 
     <div class="section">
       <div class="section-header"><div class="section-number">Declaração de Posicionamento</div><h2>Em uma frase</h2></div>
       <div class="pos-statement">
-        <strong>SeyAI</strong> é a única plataforma de produção de campanhas de lançamento com IA <strong>coordenada</strong> que entrega todos os assets prontos para publicação — orquestrados por 19 agentes especializados embaixo do oráculo <strong>Opus</strong> — para agências de lançamento com equipes enxutas que precisam produzir no nível de grandes operações sem ampliar headcount, ao contrário de marketplaces de agentes, bibliotecas de prompts e ferramentas de IA generativas que entregam pedaços e empurram a coordenação para o operador.
+        <strong>SeyAI</strong> é a única plataforma de produção de campanhas de lançamento com IA <strong>coordenada</strong> que entrega todos os assets prontos para publicação — orquestrados por agentes especializados embaixo do especialista do nicho ativo — para agências de lançamento com equipes enxutas que precisam produzir no nível de grandes operações sem ampliar headcount, ao contrário de marketplaces de agentes, bibliotecas de prompts e ferramentas de IA generativas que entregam pedaços e empurram a coordenação para o operador.
       </div>
     </div>
 
@@ -842,7 +839,7 @@ body:hover .bb-arrow.show{opacity:.6}
       </div>
       <div class="grid-2" style="margin-top:1.5rem">
         <div class="grid-2-cell"><h4>O padrão do mercado</h4><p style="margin:0;font-size:.88rem">A IA fez 30% e vendeu como se tivesse feito 90%. Esse padrão é insidioso porque cria a ilusão de produtividade. A agência compra 4 ferramentas, assina 6 plataformas, e no fim do dia o gestor ainda está acordado às 23h costurando peças.</p></div>
-        <div class="grid-2-cell"><h4>Nossa resposta</h4><p style="margin:0;font-size:.88rem">SeyAI existe para eliminar a fragmentação como padrão aceitável. A única entrega que conta é a campanha pronta, coerente e publicável — coordenada pelos 19 agentes embaixo do especialista do nicho ativo. Não há costura no fim porque a coordenação acontece o tempo todo, dentro do sistema.</p></div>
+        <div class="grid-2-cell"><h4>Nossa resposta</h4><p style="margin:0;font-size:.88rem">SeyAI existe para eliminar a fragmentação como padrão aceitável. A única entrega que conta é a campanha pronta, coerente e publicável — coordenada pelos agentes orquestrados embaixo do especialista do nicho ativo. Não há costura no fim porque a coordenação acontece o tempo todo, dentro do sistema.</p></div>
       </div>
     </div>
 
@@ -851,7 +848,7 @@ body:hover .bb-arrow.show{opacity:.6}
       <div class="grid-3">
         <div class="card"><h4>Contra ChatGPT solo</h4><p style="font-size:.88rem;margin:0">Solo é assistente. Você precisa pedir cada peça. SeyAI é orquestra: você dá o briefing e a campanha inteira chega.</p></div>
         <div class="card"><h4>Contra biblioteca de prompts</h4><p style="font-size:.88rem;margin:0">Biblioteca é estoque de receitas. SeyAI é o restaurante — a refeição já chega coordenada.</p></div>
-        <div class="card"><h4>Contra marketplace de agentes</h4><p style="font-size:.88rem;margin:0">Marketplace vende peças avulsas. SeyAI entrega a orquestra montada — 19 agentes que já se conhecem e conversam.</p></div>
+        <div class="card"><h4>Contra marketplace de agentes</h4><p style="font-size:.88rem;margin:0">Marketplace vende peças avulsas. SeyAI entrega a orquestra montada — agentes que já se conhecem e conversam.</p></div>
       </div>
     </div>
 
@@ -862,6 +859,7 @@ body:hover .bb-arrow.show{opacity:.6}
         <p style="margin-top:1rem;margin-bottom:0;font-size:.9rem">"Coordenação" evoca o Sábio — método, padrão, fundamento. "Impossível" evoca o Mago — a transformação que desafia expectativas. Juntos, definem uma marca que entrega uma campanha inteira, coerente, coordenada — algo que não deveria ser possível com o input que você deu, mas é.</p>
       </div>
     </div>
+    <div class="tab-footer">───────────── &nbsp;&nbsp;SeyAI · 2026 · Brandbook&nbsp;&nbsp; ─────────────</div>
   </div>
 </div>
 
@@ -877,7 +875,7 @@ body:hover .bb-arrow.show{opacity:.6}
     <div class="section">
       <div class="grid-3">
         <div class="card card-elevated"><h4>Adjetivo 01</h4><h3>Tranquila</h3><p style="font-size:.88rem;margin:0">SeyAI fala como quem não precisa convencer. Sem urgência artificial, sem superlativos, sem exclamações. A confiança está na cadência, não no volume. Quando você já sabe que o resultado fala por si, você não precisa gritar.</p></div>
-        <div class="card card-elevated"><h4>Adjetivo 02</h4><h3>Densa</h3><p style="font-size:.88rem;margin:0">Cada frase carrega peso. Não há preenchimento, não há floreio. Não é minimalismo estético — é precisão comunicativa. Menos palavras, mais impacto por palavra. O oráculo fala pouco e fala denso.</p></div>
+        <div class="card card-elevated"><h4>Adjetivo 02</h4><h3>Densa</h3><p style="font-size:.88rem;margin:0">Cada frase carrega peso. Não há preenchimento, não há floreio. Não é minimalismo estético — é precisão comunicativa. Menos palavras, mais impacto por palavra. O especialista de nicho fala pouco e fala denso.</p></div>
         <div class="card card-elevated"><h4>Adjetivo 03</h4><h3>Reveladora</h3><p style="font-size:.88rem;margin:0">O tom não é de pitch — é de revelação. Como se SeyAI estivesse mostrando algo que sempre esteve ali mas ninguém tinha nomeado. A fragmentação que você aceitava sem questionar.</p></div>
       </div>
     </div>
@@ -886,10 +884,10 @@ body:hover .bb-arrow.show{opacity:.6}
       <div class="section-header"><div class="section-number">Manifestação por Touchpoint</div><h2>A voz em contexto</h2></div>
       <div style="display:flex;flex-direction:column;gap:.75rem">
         <div class="card"><h4>Headline de Produto</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin:0">"Briefing entra. Campanha sai. Coordenada."</p></div>
-        <div class="card"><h4>Sub-headline · Mãe + Agentes</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin:0">"SeyAI é a mãe. Cada vertical tem seu especialista de nicho. Embaixo, 19 agentes em orquestra."</p></div>
-        <div class="card"><h4>Descrição de Feature</h4><p style="font-size:.9rem;color:var(--text-2);margin:0">"O agente de copy não trabalha sozinho. Ele lê o briefing junto com os outros 18 agentes, sob a coordenação do especialista do nicho. Quando a copy chega, ela já conversa com o criativo, com o email, com a página. Não é paralelo solto — é orquestra."</p></div>
+        <div class="card"><h4>Sub-headline · Mãe + Agentes</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin:0">"SeyAI é a mãe. Cada vertical tem seu especialista de nicho. Embaixo, agentes orquestrados."</p></div>
+        <div class="card"><h4>Descrição de Feature</h4><p style="font-size:.9rem;color:var(--text-2);margin:0">"O agente de copy não trabalha sozinho. Ele lê o briefing junto com os outros agentes orquestrados, sob a coordenação do especialista do nicho. Quando a copy chega, ela já conversa com o criativo, com o email, com a página. Não é paralelo solto — é orquestra."</p></div>
         <div class="card"><h4>CTA Principal</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin:0">"Envie seu primeiro briefing à SeyAI."</p></div>
-        <div class="card"><h4>Email de Onboarding · Dia 1</h4><p style="font-size:.9rem;color:var(--text-2);margin:0">"Você tem acesso à SeyAI. Os 19 agentes já estão à mesa, com o especialista do seu nicho coordenando, esperando o seu briefing. Comece com um caso real ou um fictício — nos dois, o resultado é uma campanha inteira, coordenada, pronta para publicar."</p></div>
+        <div class="card"><h4>Email de Onboarding · Dia 1</h4><p style="font-size:.9rem;color:var(--text-2);margin:0">"Você tem acesso à SeyAI. Os agentes orquestrados já estão à mesa, com o especialista do seu nicho coordenando, esperando o seu briefing. Comece com um caso real ou um fictício — nos dois, o resultado é uma campanha inteira, coordenada, pronta para publicar."</p></div>
         <div class="card"><h4>Mensagem de Erro</h4><p style="font-size:.9rem;color:var(--text-2);margin:0">"Algo no fluxo da orquestra travou. Estamos coordenando a correção. Você será notificado quando o output estiver pronto — e ele vai estar pronto."</p></div>
       </div>
     </div>
@@ -900,17 +898,18 @@ body:hover .bb-arrow.show{opacity:.6}
         <table class="voice-table">
           <thead><tr><th class="col-yes" style="width:50%;padding:1rem 1.25rem">Assim SIM</th><th class="col-no" style="width:50%;padding:1rem 1.25rem;border-left:1px solid var(--border)">Assim NÃO</th></tr></thead>
           <tbody>
-            <tr><td class="cell-yes">"19 agentes. 1 especialista de nicho. Campanha coordenada."</td><td class="cell-no">"Nossa revolucionária plataforma de IA com 19 agentes inteligentes potencializa seus lançamentos!"</td></tr>
+            <tr><td class="cell-yes">"Agentes orquestrados. 1 especialista de nicho. Campanha coordenada."</td><td class="cell-no">"Nossa revolucionária plataforma de IA com agentes inteligentes potencializa seus lançamentos!"</td></tr>
             <tr><td class="cell-yes">"O output está pronto para publicar. Não pronto para revisar."</td><td class="cell-no">"Gere conteúdo incrível em segundos com IA disruptiva!"</td></tr>
             <tr><td class="cell-yes">"SeyAI é a mãe. Cada vertical, seu especialista. Embaixo, a orquestra."</td><td class="cell-no">"Acesse nosso marketplace de agentes especializados!"</td></tr>
             <tr><td class="cell-yes">"A agência de 2 que entrega como a de 20."</td><td class="cell-no">"Escale sua agência com automação ponta a ponta!"</td></tr>
             <tr><td class="cell-yes">"Não é sorte. São padrões de milhares de campanhas, processados pelo especialista do seu nicho."</td><td class="cell-no">"Algoritmo proprietário com machine learning analisa milhões de data points!"</td></tr>
-            <tr><td class="cell-yes">"19 agentes. 1 promessa. 0 fragmentação."</td><td class="cell-no">"Plug-and-play, modular, escalável e infinitamente customizável."</td></tr>
+            <tr><td class="cell-yes">"Agentes orquestrados. 1 promessa. 0 fragmentação."</td><td class="cell-no">"Plug-and-play, modular, escalável e infinitamente customizável."</td></tr>
             <tr><td class="cell-yes">"Coordenado, não montado."</td><td class="cell-no">"Junte vários prompts e monte seu próprio fluxo!"</td></tr>
           </tbody>
         </table>
       </div>
     </div>
+    <div class="tab-footer">───────────── &nbsp;&nbsp;SeyAI · 2026 · Brandbook&nbsp;&nbsp; ─────────────</div>
   </div>
 </div>
 
@@ -925,71 +924,76 @@ body:hover .bb-arrow.show{opacity:.6}
     <div class="section">
       <div class="section-header"><div class="section-number">Truelines & Taglines</div><h2>As frases que nos definem</h2></div>
       <div style="display:flex;flex-direction:column;gap:1.25rem">
-        <div class="card card-elevated"><h4>Tagline Principal · Assinatura</h4><div class="tagline-hero">Briefing entra<span class="dot">.</span> Campanha sai<span class="dot">.</span> Coordenada<span class="dot">.</span></div><p class="tagline-context">Sete palavras. Três frases. Um gap implícito entre elas onde 19 agentes trabalham em orquestra. Não promete. Descreve.</p></div>
-        <div class="card"><h4>Hero Statement · Homepage</h4><p style="font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"A mesa onde 19 agentes se sentam — e o seu marketing nasce coordenado."</p><p class="tagline-context">A imagem da mesa torna concreta a ideia de orquestra. Implica que outros vendem cadeiras avulsas.</p></div>
-        <div class="card"><h4>Pacto · Marca-promessa</h4><p style="font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"19 agentes. 1 promessa. 0 fragmentação."</p><p class="tagline-context">Ritmo numérico. Funciona em ad, em palco, em rodapé. O pacto-resumo da marca.</p></div>
-        <div class="card"><h4>Posicionamento Direto · Proposta Comercial</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"19 agentes especializados, coordenados pelo especialista do seu nicho, produzem sua campanha completa — do briefing ao asset final. Pronto para publicar, não para revisar."</p><p class="tagline-context">Para contextos onde clareza operacional importa mais que impacto emocional.</p></div>
-        <div class="card"><h4>Brand Essence · Bio de Redes Sociais</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"SeyAI · Campanhas coordenadas por 19 agentes. Um especialista por vertical."</p><p class="tagline-context">Funcional, claro, pesquisável.</p></div>
+        <div class="card card-elevated"><h4>Tagline Principal · Assinatura</h4><div class="tagline-hero">Briefing entra<span class="dot">.</span> Campanha sai<span class="dot">.</span> Coordenada<span class="dot">.</span></div><p class="tagline-context">Sete palavras. Três frases. Um gap implícito entre elas onde agentes orquestrados trabalham juntos. Não promete. Descreve.</p></div>
+        <div class="card"><h4>Hero Statement · Homepage</h4><p style="font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"A mesa onde agentes orquestrados se sentam — e o seu marketing nasce coordenado."</p><p class="tagline-context">A imagem da mesa torna concreta a ideia de orquestra. Implica que outros vendem cadeiras avulsas.</p></div>
+        <div class="card"><h4>Pacto · Marca-promessa</h4><p style="font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"Agentes orquestrados. 1 promessa. 0 fragmentação."</p><p class="tagline-context">Ritmo. Funciona em ad, em palco, em rodapé. O pacto-resumo da marca.</p></div>
+        <div class="card"><h4>Posicionamento Direto · Proposta Comercial</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"Agentes orquestrados, coordenados pelo especialista do seu nicho, produzem sua campanha completa — do briefing ao asset final. Pronto para publicar, não para revisar."</p><p class="tagline-context">Para contextos onde clareza operacional importa mais que impacto emocional.</p></div>
+        <div class="card"><h4>Brand Essence · Bio de Redes Sociais</h4><p style="font-size:1rem;font-weight:500;color:var(--text);margin-bottom:.5rem">"SeyAI · Campanhas coordenadas por agentes orquestrados. Um especialista por vertical."</p><p class="tagline-context">Funcional, claro, pesquisável.</p></div>
         <div class="card"><h4>Tom Inspiracional · Palcos e Eventos</h4><p style="font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;letter-spacing:-.015em">"O tamanho da equipe nunca mais vai determinar o tamanho da campanha."</p><p class="tagline-context">Para keynotes e palestras. O "por quê" comprimido em uma única sentença.</p></div>
         <div class="card" style="border-color:rgba(239,68,68,0.15);background:rgba(239,68,68,0.03)"><h4 style="color:var(--deny-text)">Anti-Tagline · Uso Interno</h4><p style="font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.5rem">"Nós não fazemos rascunhos. Nós não vendemos pedaços."</p><p class="tagline-context">Filtro interno para toda decisão de produto e comunicação. Se algo pudesse ser descrito como "rascunho" ou "pedaço", não está no nível.</p></div>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-header"><div class="section-number">Palavras de Poder</div><h2>Usar sempre</h2></div>
-      <div class="card" style="padding:0;overflow:hidden">
-        <table class="brand-table">
-          <thead><tr><th>Palavra</th><th>Por que usar</th></tr></thead>
-          <tbody>
-            <tr><td class="col-key vocab-power">Coordenado / Coordenação</td><td>O diferencial estrutural. SeyAI não é "rápido" — é coordenado. Substitui "integrado".</td></tr>
-            <tr><td class="col-key vocab-power">Orquestra</td><td>Imagem central. Cada agente é instrumento. O oráculo é o maestro. SeyAI é a sala de concerto.</td></tr>
-            <tr><td class="col-key vocab-power">Mãe</td><td>SeyAI é a mãe. Termo afetivo + arquitetural. Estabelece hierarquia sem hierarquia fria.</td></tr>
-            <tr><td class="col-key vocab-power">Especialista de nicho</td><td>O cabeça-de-nicho de cada vertical. Termo padrão de uso geral. Evita revelar o nome interno do especialista (que pertence ao Posicionamento e à Arquitetura).</td></tr>
-            <tr><td class="col-key vocab-power">Cabeça-de-nicho</td><td>Sinônimo afetivo de "especialista de nicho". Evoca autoridade silenciosa.</td></tr>
-            <tr><td class="col-key vocab-power">Vertical</td><td>Cada setor que SeyAI atende. Hoje: lançamento. Próximos: ecommerce, infoproduto, serviço.</td></tr>
-            <tr><td class="col-key vocab-power">Lançamento</td><td>Vertical-âncora atual. Use como exemplo concreto sempre que precisar mostrar a arquitetura aplicada.</td></tr>
-            <tr><td class="col-key vocab-power">Ecommerce</td><td>Vertical de expansão prevista. Use como exemplo de "próximo nicho" para reforçar o modelo monolítico.</td></tr>
-            <tr><td class="col-key vocab-power">Simultâneo / Simultaneamente</td><td>Os 19 agentes não trabalham em fila. Trabalham juntos. Substitui "paralelo" quando o paralelismo é o ponto.</td></tr>
-            <tr><td class="col-key vocab-power">19 agentes</td><td>O número específico vira pacto. Não diga "vários agentes" — diga 19.</td></tr>
-            <tr><td class="col-key vocab-power">Pronto</td><td>A palavra que mais diferencia. Não "quase", não "rascunho" — pronto.</td></tr>
-            <tr><td class="col-key vocab-power">Campanha</td><td>Reforça que a entrega é completa e integrada, não peças soltas.</td></tr>
-            <tr><td class="col-key vocab-power">Publicar</td><td>O verbo que define a linha de chegada real — o asset no ar.</td></tr>
-            <tr><td class="col-key vocab-power">Briefing</td><td>O único input que o usuário precisa dar.</td></tr>
-            <tr><td class="col-key vocab-power">Padrões</td><td>O fundamento do Sábio. Substitui "algoritmo" e "dados" com mais substância.</td></tr>
-            <tr><td class="col-key vocab-power">Output</td><td>Técnico o suficiente para ser preciso, acessível para ser claro.</td></tr>
-            <tr><td class="col-key vocab-power">Coerência</td><td>O diferencial entre peças soltas e campanha integrada.</td></tr>
-            <tr><td class="col-key vocab-power">Nível</td><td>"Entregar no nível" — eleva sem ser arrogante.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <div class="vocab-twocol">
+        <div>
+          <div class="section-header"><div class="section-number">Palavras de Poder</div><h2>Usar sempre</h2></div>
+          <div class="card" style="padding:0;overflow:hidden">
+            <table class="brand-table">
+              <thead><tr><th>Palavra</th><th>Por que usar</th></tr></thead>
+              <tbody>
+                <tr><td class="col-key vocab-power">Coordenado / Coordenação</td><td>O diferencial estrutural. SeyAI não é "rápido" — é coordenado. Substitui "integrado".</td></tr>
+                <tr><td class="col-key vocab-power">Orquestra</td><td>Imagem central. Cada agente é instrumento. O especialista de nicho é o maestro. SeyAI é a sala de concerto.</td></tr>
+                <tr><td class="col-key vocab-power">Mãe</td><td>SeyAI é a mãe. Termo afetivo + arquitetural. Estabelece hierarquia sem hierarquia fria.</td></tr>
+                <tr><td class="col-key vocab-power">Especialista de nicho</td><td>O cabeça-de-nicho de cada vertical. Termo padrão de uso geral.</td></tr>
+                <tr><td class="col-key vocab-power">Cabeça-de-nicho</td><td>Sinônimo afetivo de "especialista de nicho". Evoca autoridade silenciosa.</td></tr>
+                <tr><td class="col-key vocab-power">Vertical</td><td>Cada setor que SeyAI atende. Hoje: lançamento. Próximos: ecommerce, infoproduto, serviço.</td></tr>
+                <tr><td class="col-key vocab-power">Lançamento</td><td>Vertical-âncora atual. Use como exemplo concreto sempre que precisar mostrar a arquitetura aplicada.</td></tr>
+                <tr><td class="col-key vocab-power">Ecommerce</td><td>Vertical de expansão prevista. Use como exemplo de "próximo nicho" para reforçar o modelo monolítico.</td></tr>
+                <tr><td class="col-key vocab-power">Simultâneo / Simultaneamente</td><td>Os agentes orquestrados não trabalham em fila. Trabalham juntos.</td></tr>
+                <tr><td class="col-key vocab-power">Agentes orquestrados</td><td>Use no lugar de contagens específicas. A força está na orquestração, não no número.</td></tr>
+                <tr><td class="col-key vocab-power">Pronto</td><td>A palavra que mais diferencia. Não "quase", não "rascunho" — pronto.</td></tr>
+                <tr><td class="col-key vocab-power">Campanha</td><td>Reforça que a entrega é completa e integrada, não peças soltas.</td></tr>
+                <tr><td class="col-key vocab-power">Publicar</td><td>O verbo que define a linha de chegada real — o asset no ar.</td></tr>
+                <tr><td class="col-key vocab-power">Briefing</td><td>O único input que o usuário precisa dar.</td></tr>
+                <tr><td class="col-key vocab-power">Padrões</td><td>O fundamento do Sábio. Substitui "algoritmo" e "dados" com mais substância.</td></tr>
+                <tr><td class="col-key vocab-power">Output</td><td>Técnico o suficiente para ser preciso, acessível para ser claro.</td></tr>
+                <tr><td class="col-key vocab-power">Coerência</td><td>O diferencial entre peças soltas e campanha integrada.</td></tr>
+                <tr><td class="col-key vocab-power">Nível</td><td>"Entregar no nível" — eleva sem ser arrogante.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-    <div class="section">
-      <div class="section-header"><div class="section-number">Palavras Proibidas</div><h2>Nunca usar</h2></div>
-      <div class="card" style="padding:0;overflow:hidden;border-color:rgba(239,68,68,0.12)">
-        <table class="brand-table">
-          <thead><tr><th>Palavra</th><th>Por que evitar</th></tr></thead>
-          <tbody>
-            <tr><td class="col-key vocab-forbidden">Marketplace</td><td>SeyAI é o oposto disso. Marketplace vende peças. Nós entregamos a orquestra.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Biblioteca (de prompts/agentes)</td><td>Biblioteca é estoque. SeyAI não é estoque — é operação coordenada.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Agentes individuais / avulsos</td><td>Os 19 agentes só fazem sentido juntos, sob o oráculo. Falar deles em separado quebra a metáfora.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Plug-and-play</td><td>Linguagem de modularidade. SeyAI é o oposto: monolítica, integrada, coordenada.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Prompt avulso</td><td>O que vendemos não é prompt. É orquestra de agentes especializados.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Revolucionário</td><td>Clichê de startup. Todo mundo é "revolucionário". Ninguém acredita mais.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Disruptivo</td><td>White noise de pitch deck.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Incrível</td><td>Superlativo vazio. SeyAI mostra, não adjetiva.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Potencializar</td><td>Jargão corporativo que não diz nada concreto.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Escalar</td><td>Linguagem de growth hacking que não pertence ao tom.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Automatizar</td><td>Reduz SeyAI a uma ferramenta de automação. Ela coordena, não automatiza.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Hack / Growth</td><td>Cultura de atalho. SeyAI é sobre qualidade de output, não truques.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Mágico</td><td>Sendo Mago, nunca se auto-rotule. O Mago não diz que é mágico.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Garantido</td><td>Promessa que gera desconfiança.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Ilimitado</td><td>Promessa impossível. SeyAI é precisa, não hiperbólica.</td></tr>
-            <tr><td class="col-key vocab-forbidden">Futuro</td><td>SeyAI entrega no presente. "Futuro do marketing" é clichê sem substância.</td></tr>
-          </tbody>
-        </table>
+        <div>
+          <div class="section-header"><div class="section-number">Palavras Proibidas</div><h2>Nunca usar</h2></div>
+          <div class="card" style="padding:0;overflow:hidden;border-color:rgba(239,68,68,0.12)">
+            <table class="brand-table">
+              <thead><tr><th>Palavra</th><th>Por que evitar</th></tr></thead>
+              <tbody>
+                <tr><td class="col-key vocab-forbidden">Marketplace</td><td>SeyAI é o oposto disso. Marketplace vende peças. Nós entregamos a orquestra.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Biblioteca (de prompts/agentes)</td><td>Biblioteca é estoque. SeyAI não é estoque — é operação coordenada.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Agentes individuais / avulsos</td><td>Os agentes orquestrados só fazem sentido juntos, sob o especialista de nicho. Falar deles em separado quebra a metáfora.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Plug-and-play</td><td>Linguagem de modularidade. SeyAI é o oposto: monolítica, integrada, coordenada.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Prompt avulso</td><td>O que vendemos não é prompt. É orquestra de agentes especializados.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Revolucionário</td><td>Clichê de startup. Todo mundo é "revolucionário". Ninguém acredita mais.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Disruptivo</td><td>White noise de pitch deck.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Incrível</td><td>Superlativo vazio. SeyAI mostra, não adjetiva.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Potencializar</td><td>Jargão corporativo que não diz nada concreto.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Escalar</td><td>Linguagem de growth hacking que não pertence ao tom.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Automatizar</td><td>Reduz SeyAI a uma ferramenta de automação. Ela coordena, não automatiza.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Hack / Growth</td><td>Cultura de atalho. SeyAI é sobre qualidade de output, não truques.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Mágico</td><td>Sendo Mago, nunca se auto-rotule. O Mago não diz que é mágico.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Garantido</td><td>Promessa que gera desconfiança.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Ilimitado</td><td>Promessa impossível. SeyAI é precisa, não hiperbólica.</td></tr>
+                <tr><td class="col-key vocab-forbidden">Futuro</td><td>SeyAI entrega no presente. "Futuro do marketing" é clichê sem substância.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="tab-footer">───────────── &nbsp;&nbsp;SeyAI · 2026 · Brandbook&nbsp;&nbsp; ─────────────</div>
   </div>
 </div>
 
@@ -999,7 +1003,7 @@ body:hover .bb-arrow.show{opacity:.6}
     <div class="hero-block">
       <div class="hero-eyebrow">08 — Jornada do Cliente</div>
       <h1 class="hero-headline">Como o ceticismo<br>vira dependência estrutural.</h1>
-      <p class="hero-sub">4 fases. O cliente entra pelo vertical do seu nicho (hoje: lançamento) e descobre, ao longo do caminho, que existe uma mãe — SeyAI — e uma orquestra de 19 agentes coordenados pelo especialista do nicho.</p>
+      <p class="hero-sub">4 fases. O cliente entra pelo vertical do seu nicho (hoje: lançamento) e descobre, ao longo do caminho, que existe uma mãe — SeyAI — e uma orquestra de agentes coordenados pelo especialista do nicho.</p>
     </div>
 
     <div class="section">
@@ -1009,7 +1013,7 @@ body:hover .bb-arrow.show{opacity:.6}
           <div class="phase-label">Fase 1 · Porta de entrada · vertical do nicho</div>
           <div class="phase-title">Ceticismo Curioso</div>
           <div class="phase-quote">"Isso não pode ser real."</div>
-          <p style="font-size:.9rem;margin-bottom:.75rem">O gestor descobre <strong>SeyAI</strong> via indicação ou por um exemplo de output coordenado que viu e não acreditou que foi feito por IA. Ele visita seyai.com.br, lê a promessa de "19 agentes coordenados pelo especialista do nicho", e a reação imediata é desconfiança produtiva. Já viu marketplace de IA prometer demais. Mas algo é diferente: a comunicação não é empolgada — é precisa.</p>
+          <p style="font-size:.9rem;margin-bottom:.75rem">O gestor descobre <strong>SeyAI</strong> via indicação ou por um exemplo de output coordenado que viu e não acreditou que foi feito por IA. Ele visita seyai.com.br, lê a promessa de "agentes orquestrados pelo especialista do nicho", e a reação imediata é desconfiança produtiva. Já viu marketplace de IA prometer demais. Mas algo é diferente: a comunicação não é empolgada — é precisa.</p>
           <div class="inline-quote">"Vou testar com algo pequeno. Se voltar fragmentado como tudo que já testei, pelo menos confirmo rápido."</div>
         </div>
       </div>
@@ -1047,6 +1051,7 @@ body:hover .bb-arrow.show{opacity:.6}
         </div>
       </div>
     </div>
+    <div class="tab-footer">───────────── &nbsp;&nbsp;SeyAI · 2026 · Brandbook&nbsp;&nbsp; ─────────────</div>
   </div>
 </div>
 
@@ -1061,28 +1066,28 @@ body:hover .bb-arrow.show{opacity:.6}
     <div class="section">
       <div class="card card-accent" style="background:linear-gradient(135deg,rgba(99,102,241,.10),rgba(99,102,241,.02));max-width:760px;margin-bottom:1rem">
         <h4>O Pacto SeyAI</h4>
-        <div style="font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.02em;font-family:var(--font-display);line-height:1.3">19 agentes. 1 promessa. 0 fragmentação.</div>
+        <div style="font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.02em;font-family:var(--font-display);line-height:1.3">Agentes orquestrados. 1 promessa. 0 fragmentação.</div>
       </div>
     </div>
 
     <div class="section">
       <div class="section-header"><div class="section-number">5 Promessas da Marca ao Cliente</div><h2>O que não se negocia</h2></div>
 
-      <div class="promise-card"><div class="promise-num">01</div><div><div class="promise-title">O output vai estar pronto para publicar</div><p style="font-size:.88rem;margin:0">Não pronto para revisar. Não pronto para "dar uma ajustada". Pronto para ir ao ar. Esse é o padrão mínimo e inegociável dos 19 agentes.</p></div></div>
+      <div class="promise-card"><div class="promise-num">01</div><div><div class="promise-title">O output vai estar pronto para publicar</div><p style="font-size:.88rem;margin:0">Não pronto para revisar. Não pronto para "dar uma ajustada". Pronto para ir ao ar. Esse é o padrão mínimo e inegociável dos agentes orquestrados.</p></div></div>
 
-      <div class="promise-card"><div class="promise-num">02</div><div><div class="promise-title">A campanha vai ter coerência interna</div><p style="font-size:.88rem;margin:0">Os 19 agentes não produzem peças isoladas. Produzem uma campanha coordenada pelo especialista do nicho. O tom do email conversa com o tom da página. O criativo reforça o argumento do copy. A sequência do funil tem lógica narrativa. Você recebe uma campanha, não uma coleção de arquivos.</p></div></div>
+      <div class="promise-card"><div class="promise-num">02</div><div><div class="promise-title">A campanha vai ter coerência interna</div><p style="font-size:.88rem;margin:0">Os agentes orquestrados não produzem peças isoladas. Produzem uma campanha coordenada pelo especialista do nicho. O tom do email conversa com o tom da página. O criativo reforça o argumento do copy. A sequência do funil tem lógica narrativa. Você recebe uma campanha, não uma coleção de arquivos.</p></div></div>
 
       <div class="promise-card"><div class="promise-num">03</div><div><div class="promise-title">A autoria percebida é sua</div><p style="font-size:.88rem;margin:0">O output final não tem marca d'água da SeyAI — literal ou figurativa. Não tem "cara de IA", não tem padrão genérico reconhecível. O que sai daqui, você assina com orgulho.</p></div></div>
 
-      <div class="promise-card"><div class="promise-num">04</div><div><div class="promise-title">O fundamento é real</div><p style="font-size:.88rem;margin:0">Cada decisão criativa é baseada em padrões extraídos de campanhas reais, processados pelo especialista do nicho e distribuídos aos 19 agentes. Não é geração aleatória. Não é template requentado.</p></div></div>
+      <div class="promise-card"><div class="promise-num">04</div><div><div class="promise-title">O fundamento é real</div><p style="font-size:.88rem;margin:0">Cada decisão criativa é baseada em padrões extraídos de campanhas reais, processados pelo especialista do nicho e distribuídos aos agentes orquestrados. Não é geração aleatória. Não é template requentado.</p></div></div>
 
-      <div class="promise-card"><div class="promise-num">05</div><div><div class="promise-title">O padrão se mantém</div><p style="font-size:.88rem;margin:0">A primeira campanha que você produzir com SeyAI não vai ser melhor que a décima. Vai ser igual. Consistência não é bônus — é arquitetura. Os 19 agentes operam sob o mesmo especialista de nicho, com o mesmo padrão, toda vez.</p></div></div>
+      <div class="promise-card"><div class="promise-num">05</div><div><div class="promise-title">O padrão se mantém</div><p style="font-size:.88rem;margin:0">A primeira campanha que você produzir com SeyAI não vai ser melhor que a décima. Vai ser igual. Consistência não é bônus — é arquitetura. Os agentes orquestrados operam sob o mesmo especialista de nicho, com o mesmo padrão, toda vez.</p></div></div>
     </div>
 
     <div class="section">
       <div class="section-header"><div class="section-number">4 Expectativas da Marca do Cliente</div><h2>O que pedimos em troca</h2></div>
       <div class="grid-2">
-        <div class="grid-2-cell"><h4>Expectativa 01</h4><h3 style="font-size:1rem;margin-bottom:.5rem">Invista no briefing</h3><p style="font-size:.88rem;margin:0">A qualidade do output dos 19 agentes é diretamente proporcional à qualidade do briefing que chega ao especialista do nicho. Faça do briefing o melhor trabalho do processo.</p></div>
+        <div class="grid-2-cell"><h4>Expectativa 01</h4><h3 style="font-size:1rem;margin-bottom:.5rem">Invista no briefing</h3><p style="font-size:.88rem;margin:0">A qualidade do output dos agentes orquestrados é diretamente proporcional à qualidade do briefing que chega ao especialista do nicho. Faça do briefing o melhor trabalho do processo.</p></div>
         <div class="grid-2-cell"><h4>Expectativa 02</h4><h3 style="font-size:1rem;margin-bottom:.5rem">Revise com julgamento, não com desconfiança</h3><p style="font-size:.88rem;margin:0">Sua função na revisão não é "verificar se a IA errou" — é aplicar seu julgamento estratégico. Faça o que um diretor criativo faz: eleve, não reconstrua.</p></div>
         <div class="grid-2-cell"><h4>Expectativa 03</h4><h3 style="font-size:1rem;margin-bottom:.5rem">Não explique como foi feito</h3><p style="font-size:.88rem;margin:0">A autoria é sua. SeyAI foi desenhada para que o output seja indistinguível de trabalho humano de alto nível. Você não precisa explicar a orquestra.</p></div>
         <div class="grid-2-cell"><h4>Expectativa 04</h4><h3 style="font-size:1rem;margin-bottom:.5rem">Use o especialista certo para cada nicho</h3><p style="font-size:.88rem;margin:0">Cada vertical tem seu especialista de nicho. Use o de lançamento para lançamento, o de ecommerce para ecommerce. Não force uma vertical fora do seu domínio — outros nichos chegam embaixo da mesma mãe SeyAI.</p></div>
@@ -1092,13 +1097,14 @@ body:hover .bb-arrow.show{opacity:.6}
     <div class="section" style="border-bottom:none">
       <div class="card" style="text-align:center;padding:3rem 2rem">
         <div style="font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:1.5rem">Status da Marca</div>
-        <div style="font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:1rem;letter-spacing:-.015em">SeyAI · 19 agentes · ativo</div>
+        <div style="font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:1rem;letter-spacing:-.015em">SeyAI · agentes orquestrados · ativo</div>
         <p style="color:var(--text-3);font-size:.85rem;max-width:520px;margin:0 auto">seyai.com.br · lê-se "ceia" (PT) · "say-eye" (EN)</p>
         <div class="pill-row" style="justify-content:center;margin-top:1.5rem">
-          <span class="tag">Manifesto ✓</span><span class="tag">Essência ✓</span><span class="tag">Arquétipos ✓</span><span class="tag">Posicionamento ✓</span><span class="tag">Voz ✓</span><span class="tag">Vocabulário ✓</span><span class="tag">Jornada ✓</span><span class="tag">Contrato ✓</span><span class="tag">Design System ✓</span>
+          <span class="tag">Marca ✓</span><span class="tag">Manifesto ✓</span><span class="tag">Essência ✓</span><span class="tag">Arquétipos ✓</span><span class="tag">Posicionamento ✓</span><span class="tag">Voz ✓</span><span class="tag">Vocabulário ✓</span><span class="tag">Jornada ✓</span><span class="tag">Contrato ✓</span><span class="tag">Design System ✓</span>
         </div>
       </div>
     </div>
+    <div class="tab-footer">───────────── &nbsp;&nbsp;SeyAI · 2026 · Brandbook&nbsp;&nbsp; ─────────────</div>
   </div>
 </div>
 
@@ -1228,7 +1234,7 @@ body:hover .bb-arrow.show{opacity:.6}
           </div>
           <div class="ds-type-row">
             <div class="ds-type-meta"><div class="ds-type-tag">Heading / H2 · Inter</div><div class="ds-type-spec">clamp(1.4rem,3vw,2rem) · 600 · -0.02em</div></div>
-            <div style="font-size:clamp(1.2rem,2.5vw,1.75rem);font-weight:600;letter-spacing:-.02em;line-height:1.2;color:var(--text)">19 agentes. 1 oráculo.</div>
+            <div style="font-size:clamp(1.2rem,2.5vw,1.75rem);font-weight:600;letter-spacing:-.02em;line-height:1.2;color:var(--text)">Agentes orquestrados. 1 mãe.</div>
           </div>
           <div class="ds-type-row">
             <div class="ds-type-meta"><div class="ds-type-tag">Subheading / H3</div><div class="ds-type-spec">clamp(1rem,2vw,1.25rem) · 600 · -0.015em</div></div>
@@ -1240,7 +1246,7 @@ body:hover .bb-arrow.show{opacity:.6}
           </div>
           <div class="ds-type-row">
             <div class="ds-type-meta"><div class="ds-type-tag">Editorial · Instrument Sans</div><div class="ds-type-spec">clamp(1.05rem,1.8vw,1.4rem) · italic</div></div>
-            <div style="font-family:var(--font-edit);font-style:italic;font-size:1.2rem;color:var(--text)">A mesa onde 19 agentes se sentam.</div>
+            <div style="font-family:var(--font-edit);font-style:italic;font-size:1.2rem;color:var(--text)">A mesa onde agentes se sentam.</div>
           </div>
           <div class="ds-type-row">
             <div class="ds-type-meta"><div class="ds-type-tag">Body · Inter</div><div class="ds-type-spec">0.95rem · 400 · 1.75 line-height</div></div>
@@ -1291,13 +1297,13 @@ body:hover .bb-arrow.show{opacity:.6}
         <span class="tag" style="background:var(--surface-2);color:var(--text-3);border-color:var(--border-md)">Neutro</span>
       </div></div>
 
-      <div class="ds-comp-row"><div class="ds-comp-label">Quote Block</div><div style="flex:1"><div class="quote-block"><p class="quote-text">19 agentes. 1 promessa. 0 fragmentação.</p></div></div></div>
+      <div class="ds-comp-row"><div class="ds-comp-label">Quote Block</div><div style="flex:1"><div class="quote-block"><p class="quote-text">Agentes orquestrados. 1 promessa. 0 fragmentação.</p></div></div></div>
 
       <div class="ds-comp-row"><div class="ds-comp-label">Inline Quote</div><div style="flex:1"><div class="inline-quote">"Briefing entra. Campanha sai. Coordenada."</div></div></div>
 
       <div class="ds-comp-row"><div class="ds-comp-label">Stat Strip</div><div style="flex:1">
         <div class="stat-strip">
-          <div class="stat-item"><span class="stat-value">19</span><span class="stat-label">Agentes</span></div>
+          <div class="stat-item"><span class="stat-value">∞</span><span class="stat-label">Agentes</span></div>
           <div class="stat-divider"></div>
           <div class="stat-item"><span class="stat-value">100%</span><span class="stat-label">Pronto</span></div>
           <div class="stat-divider"></div>
@@ -1306,7 +1312,7 @@ body:hover .bb-arrow.show{opacity:.6}
       </div></div>
 
       <div class="ds-comp-row"><div class="ds-comp-label">Mark / Wipe</div><div style="flex:1">
-        <div class="reveal in" style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--text)"><span class="mask-wipe">SeyAI · Opus · 19 agentes</span></div>
+        <div class="reveal in" style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--text)"><span class="mask-wipe">SeyAI · agentes orquestrados</span></div>
       </div></div>
 
       <div class="ds-comp-row"><div class="ds-comp-label">Dividers</div><div style="flex:1;display:flex;flex-direction:column;gap:1rem">
@@ -1322,7 +1328,6 @@ body:hover .bb-arrow.show{opacity:.6}
         <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem"><div style="width:48px;height:48px;background:var(--accent-dim);border:1px solid rgba(99,102,241,.2);border-radius:9999px"></div><span style="font-size:.68rem;color:var(--text-3)">full</span></div>
       </div></div>
 
-      <div class="ds-comp-row"><div class="ds-comp-label">Pulse Dot (topbar)</div><div style="flex:1;display:flex;align-items:center;gap:.6rem"><span class="brand-dot"></span><span style="font-size:.8rem;color:var(--text-2);font-family:var(--font-mono)">2.4s · cubic-bezier(.65,0,.35,1) · infinite</span></div></div>
     </div>
 
     <!-- ANIMATIONS · NEW SECTION -->
@@ -1363,7 +1368,7 @@ body:hover .bb-arrow.show{opacity:.6}
         <div class="anim-card">
           <h4>Reveal Blur+Slide</h4>
           <p style="font-size:.85rem;margin:0">Bloco entra com blur(4px) e translate3d(28px,4px,0), perde blur e desliza ao entrar no viewport.</p>
-          <div class="demo demo-blur"><span>19 agentes</span></div>
+          <div class="demo demo-blur"><span>agentes orquestrados</span></div>
           <span class="anim-spec">opacity .8s + transform .9s + filter .7s</span>
         </div>
         <div class="anim-card">
@@ -1375,7 +1380,7 @@ body:hover .bb-arrow.show{opacity:.6}
         <div class="anim-card">
           <h4>Parallax Horizontal</h4>
           <p style="font-size:.85rem;margin:0">Numerais de fundo (bg-numeral) deslocam em factor 0.35 do scroll horizontal — profundidade sem ruído.</p>
-          <div class="demo" style="font-family:var(--font-display);font-size:3rem;color:var(--accent);opacity:.15">19</div>
+          <div class="demo" style="font-family:var(--font-display);font-size:3rem;color:var(--accent);opacity:.15">∞</div>
           <span class="anim-spec">translate3d(scrollLeft × factor, 0, 0)</span>
         </div>
         <div class="anim-card">
@@ -1417,6 +1422,7 @@ body:hover .bb-arrow.show{opacity:.6}
       </div>
     </div>
 
+    <div class="tab-footer">───────────── &nbsp;&nbsp;SeyAI · 2026 · Brandbook&nbsp;&nbsp; ─────────────</div>
   </div>
 </div>
 
@@ -1436,10 +1442,10 @@ function showTab(id, btn){
   // Sync header tab also into view
   const headerTab = document.querySelector('#tabNav .tab-btn.active');
   if(headerTab){ try{headerTab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}catch(e){} }
-  const isCapa = id==='capa';
-  document.getElementById('navdots').classList.toggle('show', isCapa);
-  document.querySelector('.kbd-hint').classList.toggle('show', isCapa);
-  if(!isCapa){ window.scrollTo(0,0); }
+  const isMarca = id==='marca';
+  document.getElementById('navdots').classList.toggle('show', isMarca);
+  document.querySelector('.kbd-hint').classList.toggle('show', isMarca);
+  if(!isMarca){ window.scrollTo(0,0); }
 }
 
 function toggleMenu(){
@@ -1606,7 +1612,7 @@ function toggleMenu(){
     return false;
   }
   deck.addEventListener('wheel', (e)=>{
-    if(!document.getElementById('capa').classList.contains('active')) return;
+    if(!document.getElementById('marca').classList.contains('active')) return;
     if(Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
     e.preventDefault();
     routeVerticalDelta(e.deltaY);
@@ -1614,7 +1620,7 @@ function toggleMenu(){
 
   /* Keyboard */
   window.addEventListener('keydown', (e)=>{
-    if(!document.getElementById('capa').classList.contains('active')) return;
+    if(!document.getElementById('marca').classList.contains('active')) return;
     if(e.key==='ArrowRight'){ e.preventDefault(); scrollToSection(activeIdx+1); }
     else if(e.key==='ArrowLeft'){ e.preventDefault(); scrollToSection(activeIdx-1); }
     else if(e.key==='Home'){ e.preventDefault(); scrollToSection(0); }
@@ -1667,8 +1673,8 @@ function toggleMenu(){
   if(!bar || !prev || !next) return;
 
   function isCapaActive(){
-    const capa = document.getElementById('capa');
-    return capa && capa.classList.contains('active');
+    const marca = document.getElementById('marca');
+    return marca && marca.classList.contains('active');
   }
   function updateProgress(){
     let ratio = 0;
@@ -1722,7 +1728,7 @@ function toggleMenu(){
   const obs = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
       if(!e.isIntersecting) return;
-      const start = performance.now(), dur = 1400, target = 19;
+      const start = performance.now(), dur = 1400, target = 100;
       const ease = t => 1 - Math.pow(1-t, 3);
       function tick(now){
         const t = Math.min((now-start)/dur, 1);
@@ -1736,11 +1742,28 @@ function toggleMenu(){
   obs.observe(el);
 })();
 
+/* ============== FADE-UP VERTICAL SECTIONS (9e) ============== */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.tab-panel:not(.capa-panel) .section, .tab-panel:not(.capa-panel) .hero-block').forEach(el=>el.classList.add('in-view'));
+    return;
+  }
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach((entry,i)=>{
+      if(entry.isIntersecting){
+        setTimeout(()=>entry.target.classList.add('in-view'), i*60);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.tab-panel:not(.capa-panel) .section, .tab-panel:not(.capa-panel) .hero-block').forEach(el=>obs.observe(el));
+})();
+
 /* ============== DOWNLOADS ============== */
 function downloadDS(){
   const md = `# SeyAI · Design System
 
-> Branded house monolítica. Mãe: SeyAI. Especialistas de nicho por vertical (Opus = lançamento). 19 agentes operacionais.
+> Branded house monolítica. Mãe: SeyAI. Especialistas de nicho por vertical. Agentes orquestrados.
 > Domínio: seyai.com.br · pronúncia "ceia" (PT) / "say-eye" (EN)
 
 ---
@@ -1917,13 +1940,13 @@ Tamanhos canônicos:
 function downloadBrandbook(){
   const md = `# SeyAI · Brandbook Estratégico
 
-> A mesa onde 19 agentes se sentam — e o seu marketing nasce coordenado.
+> A mesa onde agentes orquestrados se sentam — e o seu marketing nasce coordenado.
 > Domínio: seyai.com.br · pronúncia "ceia" (PT) / "say-eye" (EN)
-> Arquitetura: SeyAI (mãe) → especialista de nicho por vertical (Opus = lançamento) → 19 agentes operacionais simultâneos
+> Arquitetura: SeyAI (mãe) → especialista de nicho por vertical → agentes orquestrados simultâneos
 
 ---
 
-## 00 · Naming · Sonoridade
+## 00 · Marca · Sonoridade
 
 **Lê-se "ceia". Escreve-se SeyAI.**
 
@@ -1932,37 +1955,31 @@ function downloadBrandbook(){
 | Português | ceia (o "I" do AI é absorvido pelo ditongo) |
 | English | say-eye (linhagem OpenAI / xAI) |
 
-A ambiguidade é ativo, não bug — a marca sugere "todos à mesma mesa" (ceia) e ao mesmo tempo carrega o AI explícito. Design: o "I" da logo é tratado como caret de IA (vertical, em accent indigo), visualmente atenuado para reforçar a leitura como "SeyA".
+A ambiguidade é ativo, não bug — a marca sugere "todos à mesma mesa" (ceia) e ao mesmo tempo carrega o AI explícito. O "I" funciona como caret de IA — atenuado, em accent indigo.
 
 ---
 
-## 01 · Capa
+## 01 · Marca
 
-### O que somos
-Uma empresa de IA que produz marketing inteiro — coordenado, não fragmentado.
+Logo SeyAI · seyai.com.br · pronúncia "ceia" (PT) / "say-eye" (EN).
 
-### O que NÃO somos
-Não somos marketplace de agentes. Não somos biblioteca de prompts. Não somos rascunho.
-
-### Para quem
-Agências e operações enxutas. Vertical inicial: **lançamento** de infoproduto. Próximos verticais previstos: ecommerce, infoproduto, serviço.
-
-### Como pensamos
-SeyAI é a mãe. Cada vertical ganha um especialista de nicho dedicado. Hoje, no vertical de lançamento, esse especialista chama-se **Opus**. Embaixo dele, 19 agentes operacionais simultâneos.
+A marca vive horizontalmente em três planos: logo, sonoridade, continuação. O conteúdo profundo (Manifesto, Essência, Arquétipos, Posicionamento, Voz, Vocabulário, Jornada, Contrato, Design System) segue na vertical.
 
 ---
 
 ## 02 · Manifesto
 
-**O mercado normalizou a fragmentação.** E vendeu isso como se fosse modernidade.
+**O mercado normalizou o "quase-pronto".** E esse foi o maior problema que ninguém nomeou — até agora.
 
-Normalizou o marketplace que vende prompt avulso e chama de "agente". Normalizou a biblioteca de templates que entrega rascunho e diz que automatizou. Normalizou a IA que gera pedaço — e empurra para você a tarefa real: costurar tudo. O mercado normalizou a coordenação como problema do operador.
+Normalizou a ferramenta que gera um rascunho e chama de entrega. Normalizou a IA que escreve um parágrafo e diz que fez copy. Normalizou a plataforma que monta um esqueleto de funil e espera que você passe as próximas 14 horas dando carne, pele e sangue para aquilo virar algo publicável.
 
-**SeyAI** existe porque essa equação está quebrada. Não somos marketplace. Não somos biblioteca. Não somos plug-and-play. Somos uma **orquestra**: 19 agentes especializados que trabalham simultaneamente, coordenados pela cabeça-mestre (SeyAI) e pelo especialista do nicho ativo.
+Você é o gestor de lançamento que acorda às 5h com 47 tarefas abertas e a certeza silenciosa de que a campanha não vai sair no nível que a oferta merece. O problema nunca foi estratégia. O problema é o abismo de produção que exige 12 pessoas, 3 semanas e um orçamento que você não tem.
 
-> A diferença entre montar uma campanha e receber uma campanha. A diferença entre marketplace e orquestra.
+SeyAI existe porque essa equação está quebrada. O que acontece dentro da plataforma não é sugestão. Não é rascunho. **Agentes orquestrados** trabalham em paralelo, cada um dominando uma função específica do marketing de lançamento, e nenhum deles para até que o output esteja pronto para publicação. Não 80% pronto. **Pronto.**
 
-**19 agentes simultâneos · 1 mãe (SeyAI) · N especialistas de nicho · 0 fragmentação**
+> A diferença entre montar uma campanha e receber uma campanha.
+
+**Agentes orquestrados · 100% Pronto para publicar · 0 Rascunhos · 1 Briefing necessário**
 
 ---
 
@@ -1971,16 +1988,16 @@ Normalizou o marketplace que vende prompt avulso e chama de "agente". Normalizou
 ### Núcleo
 > Briefing entra. Campanha sai. Coordenada.
 
-A mãe: SeyAI. A operação: 19 agentes especializados, simultâneos, coordenados. Os especialistas de nicho: uma cabeça por vertical.
+A mãe: SeyAI. A operação: agentes orquestrados, simultâneos, coordenados. Os especialistas de nicho: uma cabeça por vertical.
 
 ### Missão
-Transformar briefings em campanhas completas, coordenadas e prontas para publicação — entregues por uma orquestra de 19 agentes especializados, sob a coordenação de um especialista de nicho.
+Transformar briefings em campanhas completas, coordenadas e prontas para publicação — entregues por uma orquestra de agentes especializados, sob a coordenação de um especialista de nicho.
 
 ### Visão
 Um mercado onde a qualidade de uma campanha é determinada pela qualidade da ideia e da estratégia — nunca pelo tamanho da equipe ou pela habilidade de quem costura pedaços. SeyAI começa pelo lançamento; cada vertical (ecommerce, serviço, infoproduto) ganha o seu próprio especialista embaixo da mesma mãe.
 
 ### Os 6 Valores
-1. **Coordenado, não montado** — Os 19 agentes conversam pelo especialista do nicho.
+1. **Coordenado, não montado** — Os agentes orquestrados conversam pelo especialista do nicho.
 2. **Padrão, não palpite** — Decisões fundamentadas em padrões reais.
 3. **Autoria é de quem publica** — SeyAI é invisível no resultado final.
 4. **Criação real** — Outputs com voz, ritmo, lógica criativa.
@@ -1989,7 +2006,7 @@ Um mercado onde a qualidade de uma campanha é determinada pela qualidade da ide
 
 ### Golden Circle
 - **Por que:** A coordenação não deveria ser problema do operador.
-- **Como:** 19 agentes coordenados pela mãe SeyAI e pelo especialista do nicho ativo.
+- **Como:** Agentes orquestrados pela mãe SeyAI e pelo especialista do nicho ativo.
 - **O quê:** Campanhas completas e coordenadas — começando pelo lançamento.
 
 ---
@@ -2012,17 +2029,17 @@ Um mercado onde a qualidade de uma campanha é determinada pela qualidade da ide
 ## 05 · Posicionamento
 
 ### Arquitetura monolítica (branded house)
-**SeyAI** (mãe) → especialista de nicho por vertical (**Opus** no lançamento) → 19 agentes operacionais. Modelo inspirado em AtivoCerto / AtivoTech.
+**SeyAI** (mãe) → especialista de nicho por vertical → agentes orquestrados. Modelo inspirado em AtivoCerto / AtivoTech.
 
 ### Espectro de arquitetura
 Quatro níveis (Singular ↔ Marca separada):
 1. **Singular** — uma marca, um logo (ex.: SeyAI sozinho).
-2. **Marcas monolíticas — nosso modelo.** Marca-mãe forte, sub-marcas tipográficas (SeyAI Opus, SeyAI [próximo vertical]).
-3. **Marca endossada** — sub-marcas com identidade própria + endosso (ex.: Opus by SeyAI).
+2. **Marcas monolíticas — nosso modelo.** Marca-mãe forte, sub-marcas tipográficas (ex.: SeyAI Opus, no vertical de lançamento).
+3. **Marca endossada** — sub-marcas com identidade própria + endosso.
 4. **Independentes** — marcas sem relação visual nem nominal (sem exemplo concreto na nossa arquitetura).
 
 ### Declaração
-**SeyAI** é a única plataforma de produção de campanhas com IA **coordenada** que entrega todos os assets prontos para publicação — orquestrados por 19 agentes especializados embaixo do especialista do nicho ativo (hoje **Opus**, no lançamento) — para operações enxutas que precisam produzir no nível de grandes operações.
+**SeyAI** é a única plataforma de produção de campanhas com IA **coordenada** que entrega todos os assets prontos para publicação — orquestrados por agentes especializados embaixo do especialista do nicho ativo — para operações enxutas que precisam produzir no nível de grandes operações.
 
 ### Inimigo da Marca
 **A Fragmentação.** ChatGPT solo que faz pedaço. Biblioteca de prompts que vende script. Marketplace de agentes que cobra por unidade.
@@ -2044,11 +2061,11 @@ Três adjetivos: **Tranquila · Densa · Reveladora**.
 ### Assim SIM · Assim NÃO
 | SIM | NÃO |
 |---|---|
-| 19 agentes. 1 especialista de nicho. Campanha coordenada. | Nossa revolucionária plataforma de IA com 19 agentes potencializa seus lançamentos! |
+| Agentes orquestrados. 1 especialista de nicho. Campanha coordenada. | Nossa revolucionária plataforma de IA com agentes inteligentes potencializa seus lançamentos! |
 | O output está pronto para publicar. Não pronto para revisar. | Gere conteúdo incrível em segundos com IA disruptiva! |
 | SeyAI é a mãe. Cada vertical, seu especialista. Embaixo, a orquestra. | Acesse nosso marketplace de agentes especializados! |
 | A agência de 2 que entrega como a de 20. | Escale sua agência com automação ponta a ponta! |
-| 19 agentes. 1 promessa. 0 fragmentação. | Plug-and-play, modular, escalável. |
+| Agentes orquestrados. 1 promessa. 0 fragmentação. | Plug-and-play, modular, escalável. |
 | Coordenado, não montado. | Junte vários prompts e monte seu próprio fluxo! |
 
 ---
@@ -2057,17 +2074,15 @@ Três adjetivos: **Tranquila · Densa · Reveladora**.
 
 ### Truelines & Taglines
 - **Assinatura:** Briefing entra. Campanha sai. Coordenada.
-- **Hero:** A mesa onde 19 agentes se sentam — e o seu marketing nasce coordenado.
-- **Pacto:** 19 agentes. 1 promessa. 0 fragmentação.
+- **Hero:** A mesa onde agentes orquestrados se sentam — e o seu marketing nasce coordenado.
+- **Pacto:** Agentes orquestrados. 1 promessa. 0 fragmentação.
 - **Anti-tagline (interno):** Nós não fazemos rascunhos. Nós não vendemos pedaços.
 
 ### Palavras de Poder (usar sempre)
-Coordenado · Orquestra · Mãe · Especialista de nicho · Cabeça-de-nicho · Vertical · Lançamento · Ecommerce · Simultâneo · 19 agentes · Pronto · Campanha · Publicar · Briefing · Padrões · Output · Coerência · Nível
+Coordenado · Orquestra · Mãe · Especialista de nicho · Cabeça-de-nicho · Vertical · Lançamento · Ecommerce · Simultâneo · Agentes orquestrados · Pronto · Campanha · Publicar · Briefing · Padrões · Output · Coerência · Nível
 
 ### Palavras Proibidas (nunca usar)
 Marketplace · Biblioteca · Agentes individuais · Plug-and-play · Prompt avulso · Revolucionário · Disruptivo · Incrível · Potencializar · Escalar · Automatizar · Hack/Growth · Mágico · Garantido · Ilimitado · Futuro
-
-> **Atenção:** "Opus" não é palavra de poder genérica. Use Opus apenas em contextos de **arquitetura de marca** (Posicionamento) e raros exemplos concretos. Para todos os outros contextos, use "especialista de nicho" ou "cabeça-de-nicho".
 
 ---
 
@@ -2090,11 +2105,11 @@ SeyAI vira infraestrutura. "Eu não consigo imaginar entregar sem isso."
 ## 09 · Contrato
 
 ### O Pacto
-> 19 agentes. 1 promessa. 0 fragmentação.
+> Agentes orquestrados. 1 promessa. 0 fragmentação.
 
 ### 5 Promessas
 1. O output vai estar pronto para publicar.
-2. A campanha vai ter coerência interna (os 19 conversam pelo especialista do nicho).
+2. A campanha vai ter coerência interna (os agentes orquestrados conversam pelo especialista do nicho).
 3. A autoria percebida é sua.
 4. O fundamento é real (padrões processados pelo especialista do nicho).
 5. O padrão se mantém.
@@ -2103,12 +2118,16 @@ SeyAI vira infraestrutura. "Eu não consigo imaginar entregar sem isso."
 1. Invista no briefing.
 2. Revise com julgamento, não com desconfiança.
 3. Não explique como foi feito.
-4. Use o especialista certo para cada vertical (Opus para lançamento; outros especialistas chegam embaixo da mesma mãe).
+4. Use o especialista certo para cada vertical.
 
 ---
 
-**Status:** SeyAI · 19 agentes · ativo
+**Status:** SeyAI · agentes orquestrados · ativo
 **Domínio:** seyai.com.br
+
+---
+
+_Brandbook Estratégico · v2.0 · SeyAI · 2026_
 `;
   const blob = new Blob([md], {type:'text/markdown'});
   const url = URL.createObjectURL(blob);
